@@ -2,15 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { PuzzleComponent } from './games/puzzle/puzzle.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 
 const routes: Routes = [
   // { path: '', redirectTo: 'loginBroker', pathMatch: 'full' },  //change it from login
-  { path: '', component: HomeComponent, },
+  { path: '', component: HomeComponent, 
+
   //   canActivate:[AuthGuard],
   //   canDeactivate:[CanDeactivateGuard],
   //   canActivateChild:[AuthGuard],
-  //   children: [
+    children: [
+          {path: 'welcome', component: WelcomeComponent},
+          {path : 'puzzle', component: PuzzleComponent},
   //     { path: '', component: DashboardMainComponent},
   //     { path: 'legacy', component: IframeComponent},
   //     { path: 'api', component: ApiconnectComponent },
@@ -41,7 +46,7 @@ const routes: Routes = [
   //     { path: 'transactions', component: TransactionsComponent, },
   
   //     { path: 'apiconnect', component: ApiconnectComponent, },
-  // ] },
+  ] },
   // { path: 'login', component: LoginComponent },
   // { path: 'loginBroker', component: LoginBrokerComponent },
   // { path: 'loginAuth', component: LoginAuthComponent },
