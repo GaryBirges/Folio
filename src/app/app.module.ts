@@ -16,11 +16,15 @@ import {MatSidenavModule,
         MatButtonToggleModule,
         MatToolbarModule,
         MatListModule,
-        MatMenuModule,} 
+        MatMenuModule,
+      } 
         from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import { PuzzleComponent } from './games/puzzle/puzzle.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { Puzzle2Component } from './games/puzzle2/puzzle2.component';
+import { GridsterModule } from 'angular-gridster2';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
     HomeComponent,
     MessagesComponent,
     PuzzleComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    Puzzle2Component
   ],
   imports: [
     BrowserModule,
@@ -46,6 +51,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
     MatToolbarModule,
     MatListModule,
     MatMenuModule,
+    DragDropModule,
+    GridsterModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

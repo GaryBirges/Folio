@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { PuzzleComponent } from './games/puzzle/puzzle.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { Puzzle2Component } from './games/puzzle2/puzzle2.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
     children: [
           {path: 'welcome', component: WelcomeComponent},
           {path : 'puzzle', component: PuzzleComponent},
+          {path : 'puzzle2', component: Puzzle2Component},
   //     { path: '', component: DashboardMainComponent},
   //     { path: 'legacy', component: IframeComponent},
   //     { path: 'api', component: ApiconnectComponent },

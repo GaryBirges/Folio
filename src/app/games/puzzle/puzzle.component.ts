@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, timer  } from 'rxjs';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {  GridsterConfig, GridsterItem, CompactType, DisplayGrid, GridsterComponentInterface, GridsterItemComponentInterface,
+  GridType } from 'angular-gridster2';
 
 @Component({
   selector: 'app-puzzle',
@@ -9,6 +12,10 @@ import { Observable, timer  } from 'rxjs';
 export class PuzzleComponent implements OnInit {
 
   constructor() { }
+  options: GridsterConfig;
+  dashboard: Array<GridsterItem>;
+
+
 
   imageUrl: string = '../assets/DSC_0627a.jpg';
   imageSize: number = 500;
@@ -30,6 +37,116 @@ export class PuzzleComponent implements OnInit {
 
   ngOnInit() {
     this.startGame();
+    this.options = {
+      minCols: 4,
+      maxCols: 4,
+      minRows: 4,
+      maxRows: 4,
+      /*
+       gridType?: gridTypes;
+    fixedColWidth?: number;
+    fixedRowHeight?: number;
+    keepFixedHeightInMobile?: boolean;
+    keepFixedWidthInMobile?: boolean;
+    setGridSize?: boolean;
+    compactType?: compactTypes;
+    mobileBreakpoint?: number;
+    minCols?: number;
+    maxCols?: number;
+    minRows?: number;
+    maxRows?: number;
+    defaultItemCols?: number;
+    defaultItemRows?: number;
+    maxItemCols?: number;
+    maxItemRows?: number;
+    minItemCols?: number;
+    minItemRows?: number;
+    minItemArea?: number;
+    maxItemArea?: number;
+    margin?: number;
+    outerMargin?: boolean;
+    outerMarginTop?: number | null;
+    outerMarginRight?: number | null;
+    outerMarginBottom?: number | null;
+    outerMarginLeft?: number | null;
+    useTransformPositioning?: boolean;
+    scrollSensitivity?: number | null;
+    scrollSpeed?: number;
+    initCallback?: (gridster: GridsterComponentInterface) => void;
+    destroyCallback?: (gridster: GridsterComponentInterface) => void;
+    gridSizeChangedCallback?: (gridster: GridsterComponentInterface) => void;
+    itemChangeCallback?: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
+    itemResizeCallback?: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
+    itemInitCallback?: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
+    itemRemovedCallback?: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
+    itemValidateCallback?: (item: GridsterItem) => boolean;
+    draggable?: Draggable;
+    resizable?: Resizable;
+    swap?: boolean;
+    pushItems?: boolean;
+    disablePushOnDrag?: boolean;
+    disablePushOnResize?: boolean;
+    disableAutoPositionOnConflict?: boolean;
+    pushDirections?: PushDirections;
+    pushResizeItems?: boolean;
+    displayGrid?: displayGrids;
+    disableWindowResize?: boolean;
+    disableWarnings?: boolean;
+    scrollToNewItems?: boolean;
+    enableEmptyCellClick?: boolean;
+    enableEmptyCellContextMenu?: boolean;
+    enableEmptyCellDrop?: boolean;
+    enableEmptyCellDrag?: boolean;
+    emptyCellClickCallback?: (event: MouseEvent, item: GridsterItem) => void;
+    emptyCellContextMenuCallback?: (event: MouseEvent, item: GridsterItem) => void;
+    emptyCellDropCallback?: (event: MouseEvent, item: GridsterItem) => void;
+    emptyCellDragCallback?: (event: MouseEvent, item: GridsterItem) => void;
+    emptyCellDragMaxCols?: number;
+    emptyCellDragMaxRows?: number;
+    ignoreMarginInRow?: boolean;
+    api?: {
+        resize?: () => void;
+        optionsChanged?: () => void;
+        getNextPossiblePosition?: (newItem: GridsterItem) => boolean;
+        getFirstPossiblePosition?: (item: GridsterItem) => GridsterItem;
+        getLastPossiblePosition?: (item: GridsterItem) => GridsterItem;
+    };
+    [propName: string]: any;
+      */
+      itemChangeCallback: PuzzleComponent.itemChange,
+      itemResizeCallback: PuzzleComponent.itemResize,
+      Resizable:false
+    };
+
+    this.dashboard = [
+      // {cols: 2, rows: 2, y: 0, x: 0, hasTitle: true, dragEnabled: true, chart: "line", title: "Yearly Profit", id: "YearlyProfit", image: this.Image[1] },
+      // {cols: 2, rows: 2, y: 0, x: 2, hasTitle: true, dragEnabled: true, chart: "line", title: "Yearly Profit", id: "YearlyProfit",image: this.Image[0] },
+      // {cols: 2, rows: 2, y: 0, x: 0, hasTitle: true, dragEnabled: true, chart: "line", title: "Yearly Profit", id: "YearlyProfit", image: this.Image[2] },
+      // {cols: 2, rows: 2, y: 0, x: 2, hasTitle: true, dragEnabled: true, chart: "line", title: "Yearly Profit", id: "YearlyProfit",image: this.Image[3] }
+    ];
+    console.log(
+      this.dashboard  
+    )
+    let numberOfRows=2
+    let numberOfCols=2
+    let pieceNo=0
+    for(let i=0;i<numberOfRows; i++){
+      for(let j=0;j<numberOfCols; j++){
+        console.log(pieceNo)
+        this.dashboard.push({cols: 1, rows: 1, y: j, x: i, hasTitle: true, dragEnabled: true,  id: pieceNo, index:this.Image[pieceNo].index, image: this.Image[pieceNo]})
+        pieceNo++
+      }
+    }
+  }
+
+  static itemChange(item, itemComponent) {
+    // console.info('id', item.id);
+    // console.info('index', item.index);
+    console.log(itemComponent)
+  }
+
+  static itemResize(item, itemComponent) {
+    // console.info('itemResized', item, itemComponent);
   }
 
   isSorted(indexes): Boolean {
@@ -61,7 +178,10 @@ export class PuzzleComponent implements OnInit {
   onDragStart(event: any, data: any): void {
     event.dataTransfer.setData('data', event.target.id);
   }
-  onDrop(event: any, data: any): void {
+  onDrop(event: any ): void {
+    console.log(event)
+    console.log(event.dataTransfer.getData('data'))
+
     let origin = event.dataTransfer.getData('data');
     let dest = event.target.id;
 
@@ -75,9 +195,16 @@ export class PuzzleComponent implements OnInit {
 
     destEl.style.cssText = origincss;
     originEl.style.cssText = destcss;
+
+    console.log(destEl.style.cssText)
+    console.log(originEl.style.cssText)
+    console.log(origincss)
+    console.log(destcss)
+
     originEl.id = dest;
     destEl.id = origin;
-
+    console.log(this.position)
+    console.log(this.Image)
 
     for (let i = 0; i < this.position.length; i++) {
       if (this.position[i].toString() === originEl.id) {
@@ -99,6 +226,34 @@ export class PuzzleComponent implements OnInit {
     }
 
    
+  }
+  drop(event: CdkDragDrop<string[]>) {
+    console.log(event)
+    let origin = event.previousIndex
+    let dest = event.currentIndex;
+
+
+    let originEl = document.getElementById(`${origin}`);
+    let destEl = document.getElementById(dest.toString());
+    console.log(origin)
+    console.log(originEl)
+    let origincss = originEl.style.cssText;
+    let destcss = destEl.style.cssText;
+
+
+    destEl.style.cssText = origincss;
+    originEl.style.cssText = destcss;
+
+    // console.log(destEl.style.cssText)
+    // console.log(originEl.style.cssText)
+    // console.log(origincss)
+    // console.log(destcss)
+
+    originEl.id = dest.toString();
+    destEl.id = origin.toString();
+    console.log(this.position)
+    // console.log(this.Image)
+    moveItemInArray(this.position, event.previousIndex, event.currentIndex);
   }
 
   allowDrop(event): void {
@@ -148,6 +303,7 @@ export class PuzzleComponent implements OnInit {
       this.indexes.push(this.index);
       this.Image.push(img);
     }
+    console.log(this.Image[0])
     this.boxSize = this.imageSize / this.gridsize;
   }
 
