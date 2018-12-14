@@ -3,6 +3,7 @@ import { Observable, timer  } from 'rxjs';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {  GridsterConfig, GridsterItem, CompactType, DisplayGrid, GridsterComponentInterface, GridsterItemComponentInterface,
   GridType } from 'angular-gridster2';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-puzzle',
@@ -14,8 +15,9 @@ export class PuzzleComponent implements OnInit {
   constructor() { }
   options: GridsterConfig;
   dashboard: Array<GridsterItem>;
-
-
+  resizeForm: FormGroup;
+  startPos
+  randomPos
 
   imageUrl: string = '../assets/DSC_0627a.jpg';
   imageSize: number = 500;
@@ -36,90 +38,31 @@ export class PuzzleComponent implements OnInit {
   position: number[] = [];
 
   ngOnInit() {
+    this.resizeForm = new FormGroup({
+      'row': new FormControl(),
+      // 'col': new FormControl()
+    })
+    /* test*/
+    this.resizeForm.patchValue({row:2})
+
+
+    /** testend */
     this.startGame();
     this.options = {
-      minCols: 4,
-      maxCols: 4,
-      minRows: 4,
-      maxRows: 4,
-      /*
-       gridType?: gridTypes;
-    fixedColWidth?: number;
-    fixedRowHeight?: number;
-    keepFixedHeightInMobile?: boolean;
-    keepFixedWidthInMobile?: boolean;
-    setGridSize?: boolean;
-    compactType?: compactTypes;
-    mobileBreakpoint?: number;
-    minCols?: number;
-    maxCols?: number;
-    minRows?: number;
-    maxRows?: number;
-    defaultItemCols?: number;
-    defaultItemRows?: number;
-    maxItemCols?: number;
-    maxItemRows?: number;
-    minItemCols?: number;
-    minItemRows?: number;
-    minItemArea?: number;
-    maxItemArea?: number;
-    margin?: number;
-    outerMargin?: boolean;
-    outerMarginTop?: number | null;
-    outerMarginRight?: number | null;
-    outerMarginBottom?: number | null;
-    outerMarginLeft?: number | null;
-    useTransformPositioning?: boolean;
-    scrollSensitivity?: number | null;
-    scrollSpeed?: number;
-    initCallback?: (gridster: GridsterComponentInterface) => void;
-    destroyCallback?: (gridster: GridsterComponentInterface) => void;
-    gridSizeChangedCallback?: (gridster: GridsterComponentInterface) => void;
-    itemChangeCallback?: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
-    itemResizeCallback?: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
-    itemInitCallback?: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
-    itemRemovedCallback?: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
-    itemValidateCallback?: (item: GridsterItem) => boolean;
-    draggable?: Draggable;
-    resizable?: Resizable;
-    swap?: boolean;
-    pushItems?: boolean;
-    disablePushOnDrag?: boolean;
-    disablePushOnResize?: boolean;
-    disableAutoPositionOnConflict?: boolean;
-    pushDirections?: PushDirections;
-    pushResizeItems?: boolean;
-    displayGrid?: displayGrids;
-    disableWindowResize?: boolean;
-    disableWarnings?: boolean;
-    scrollToNewItems?: boolean;
-    enableEmptyCellClick?: boolean;
-    enableEmptyCellContextMenu?: boolean;
-    enableEmptyCellDrop?: boolean;
-    enableEmptyCellDrag?: boolean;
-    emptyCellClickCallback?: (event: MouseEvent, item: GridsterItem) => void;
-    emptyCellContextMenuCallback?: (event: MouseEvent, item: GridsterItem) => void;
-    emptyCellDropCallback?: (event: MouseEvent, item: GridsterItem) => void;
-    emptyCellDragCallback?: (event: MouseEvent, item: GridsterItem) => void;
-    emptyCellDragMaxCols?: number;
-    emptyCellDragMaxRows?: number;
-    ignoreMarginInRow?: boolean;
-    api?: {
-        resize?: () => void;
-        optionsChanged?: () => void;
-        getNextPossiblePosition?: (newItem: GridsterItem) => boolean;
-        getFirstPossiblePosition?: (item: GridsterItem) => GridsterItem;
-        getLastPossiblePosition?: (item: GridsterItem) => GridsterItem;
-    };
-    [propName: string]: any;
-      */
-      itemChangeCallback: PuzzleComponent.itemChange,
+      minCols: 2,
+      maxCols: 2,
+      minRows: 2,
+      maxRows: 2,
+      // this.
+      /**/
+
+      itemChangeCallback: this.itemChange,
       itemResizeCallback: PuzzleComponent.itemResize,
       Resizable:false
     };
-
+    this.options.itemChangeCallback = this.itemChange.bind(this)
     this.dashboard = [
-      // {cols: 2, rows: 2, y: 0, x: 0, hasTitle: true, dragEnabled: true, chart: "line", title: "Yearly Profit", id: "YearlyProfit", image: this.Image[1] },
+      // {cols: 2, rows: 2, y: 0, x: 0, hasTitle: true, dragEnabled: false,  id: "Main", image: this.Image[1] },
       // {cols: 2, rows: 2, y: 0, x: 2, hasTitle: true, dragEnabled: true, chart: "line", title: "Yearly Profit", id: "YearlyProfit",image: this.Image[0] },
       // {cols: 2, rows: 2, y: 0, x: 0, hasTitle: true, dragEnabled: true, chart: "line", title: "Yearly Profit", id: "YearlyProfit", image: this.Image[2] },
       // {cols: 2, rows: 2, y: 0, x: 2, hasTitle: true, dragEnabled: true, chart: "line", title: "Yearly Profit", id: "YearlyProfit",image: this.Image[3] }
@@ -127,29 +70,97 @@ export class PuzzleComponent implements OnInit {
     console.log(
       this.dashboard  
     )
-    let numberOfRows=2
-    let numberOfCols=2
+    this.onResizeSubmit()
+  }
+
+  onResizeSubmit(){
+    this.dashboard = []
+    this.startPos=[]
+    this.options.minCols=this.resizeForm.value.row
+    this.options.maxCols=this.resizeForm.value.row
+    this.options.minRows=this.resizeForm.value.row
+    this.options.maxRows=this.resizeForm.value.row
+    // console.log(this.resizeForm.value)
+    
+    this.options.api.optionsChanged()
+    // this.options.api.resize();
+    this.difficulty=this.resizeForm.value.row
+    this.startGame()
+    let numberOfRows=this.resizeForm.value.row
+    let numberOfCols=this.resizeForm.value.row
     let pieceNo=0
     for(let i=0;i<numberOfRows; i++){
       for(let j=0;j<numberOfCols; j++){
-        console.log(pieceNo)
-        this.dashboard.push({cols: 1, rows: 1, y: j, x: i, hasTitle: true, dragEnabled: true,  id: pieceNo, index:this.Image[pieceNo].index, image: this.Image[pieceNo]})
+        // console.log(pieceNo)
+        this.dashboard.push({cols: 1, rows: 1, y: i, x: j, hasTitle: true, dragEnabled: true,  id: pieceNo, index:this.Image[pieceNo].index, image: this.Image[pieceNo]})
+        this.startPos.push({y: i, x: j,})
         pieceNo++
       }
     }
+
+  }
+  saveGrid(){
+    console.log(this.dashboard)
+    console.log(this.startPos)
+    
   }
 
-  static itemChange(item, itemComponent) {
-    // console.info('id', item.id);
-    // console.info('index', item.index);
-    console.log(itemComponent)
+   itemChange( item, itemComponent) {
+    //  console.log(this.dashboard[0])
+    //  console.log(this.startPos[0])
+    for(let i=0; i<this.dashboard.length; i++){
+      if(this.dashboard[i].x!==this.startPos[i].x||this.dashboard[i].y!==this.startPos[i].y){
+        return false
+      }
+    }
+    console.log("solved")
+    return true
+
+  }
+
+  // randomGrid(dashboard, numberOfRows){
+  randomGrid(){
+    this.randomPos=this.startPos.slice(0);
+    while(JSON.stringify(this.randomPos)==JSON.stringify(this.startPos)){
+      this.shuffle(this.randomPos)
+    }
+    console.log(this.randomPos)
+    console.log(this.startPos)
+    for(let i=0; i<this.dashboard.length; i++){
+      this.dashboard[i].x= this.randomPos[i].x
+      this.dashboard[i].y= this.randomPos[i].y
+      // while (imageParts[ran] == null) {
+      //         ran = Math.floor(Math.random() * numberOfRows-1);
+      //       }
+    }
+    console.log(this.dashboard)
+    this.options.api.optionsChanged()
+  }
+
+  shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
   }
 
   static itemResize(item, itemComponent) {
     // console.info('itemResized', item, itemComponent);
   }
 
-  isSorted(indexes): Boolean {
+  public isSorted(indexes): Boolean {
     let i: number = 0;
     for (i = 0; i < indexes.length; i++) {
       if (indexes[i] !== i) {
@@ -159,21 +170,21 @@ export class PuzzleComponent implements OnInit {
     return true;
   }
 
-  randomize(imageParts: any[]): any[] {
-    let i = 0, img: any[] = [], ran = 0;
-    for (i = 0; i < imageParts.length; i++) {
-      ran = Math.floor(Math.random() * imageParts.length);
-      while (imageParts[ran] == null) {
-        ran = Math.floor(Math.random() * imageParts.length);
-      }
-      img.push(imageParts[ran]);
-      this.position.push(imageParts[ran].index);
-      imageParts[ran] = null;
-    }
-    this.printIndexes(this.indexes);
-    this.printIndexes(this.position);
-    return img;
-  }
+  // randomize(imageParts: any[]): any[] {
+  //   let i = 0, img: any[] = [], ran = 0;
+  //   for (i = 0; i < imageParts.length; i++) {
+  //     ran = Math.floor(Math.random() * imageParts.length);
+  //     while (imageParts[ran] == null) {
+  //       ran = Math.floor(Math.random() * imageParts.length);
+  //     }
+  //     img.push(imageParts[ran]);
+  //     this.position.push(imageParts[ran].index);
+  //     imageParts[ran] = null;
+  //   }
+  //   this.printIndexes(this.indexes);
+  //   this.printIndexes(this.position);
+  //   return img;
+  // }
 
   onDragStart(event: any, data: any): void {
     event.dataTransfer.setData('data', event.target.id);
@@ -182,7 +193,7 @@ export class PuzzleComponent implements OnInit {
     console.log(event)
     console.log(event.dataTransfer.getData('data'))
 
-    let origin = event.dataTransfer.getData('data');
+    let origin = event.index;
     let dest = event.target.id;
 
 
@@ -269,16 +280,16 @@ export class PuzzleComponent implements OnInit {
     console.log(ind);
   }
 
-  reRandomize(): void {
-    this.gameComplete = false;
-    this.Image = this.randomize(this.Image);
-  }
+  // reRandomize(): void {
+  //   this.gameComplete = false;
+  //   this.Image = this.randomize(this.Image);
+  // }
 
   startGame(): void {
     this.reset();
     this.initializeGame();
     this.breakImageParts();
-    this.reRandomize();
+    // this.reRandomize();
 
     if (this.timeVar) {
       this.timeVar.unsubscribe();
@@ -303,7 +314,7 @@ export class PuzzleComponent implements OnInit {
       this.indexes.push(this.index);
       this.Image.push(img);
     }
-    console.log(this.Image[0])
+    console.log(this.Image)
     this.boxSize = this.imageSize / this.gridsize;
   }
 
@@ -329,3 +340,75 @@ class ImageBox {
   index: number;
 
 }
+
+/*
+       gridType?: gridTypes;
+    fixedColWidth?: number;
+    fixedRowHeight?: number;
+    keepFixedHeightInMobile?: boolean;
+    keepFixedWidthInMobile?: boolean;
+    setGridSize?: boolean;
+    compactType?: compactTypes;
+    mobileBreakpoint?: number;
+    minCols?: number;
+    maxCols?: number;
+    minRows?: number;
+    maxRows?: number;
+    defaultItemCols?: number;
+    defaultItemRows?: number;
+    maxItemCols?: number;
+    maxItemRows?: number;
+    minItemCols?: number;
+    minItemRows?: number;
+    minItemArea?: number;
+    maxItemArea?: number;
+    margin?: number;
+    outerMargin?: boolean;
+    outerMarginTop?: number | null;
+    outerMarginRight?: number | null;
+    outerMarginBottom?: number | null;
+    outerMarginLeft?: number | null;
+    useTransformPositioning?: boolean;
+    scrollSensitivity?: number | null;
+    scrollSpeed?: number;
+    initCallback?: (gridster: GridsterComponentInterface) => void;
+    destroyCallback?: (gridster: GridsterComponentInterface) => void;
+    gridSizeChangedCallback?: (gridster: GridsterComponentInterface) => void;
+    itemChangeCallback?: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
+    itemResizeCallback?: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
+    itemInitCallback?: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
+    itemRemovedCallback?: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
+    itemValidateCallback?: (item: GridsterItem) => boolean;
+    draggable?: Draggable;
+    resizable?: Resizable;
+    swap?: boolean;
+    pushItems?: boolean;
+    disablePushOnDrag?: boolean;
+    disablePushOnResize?: boolean;
+    disableAutoPositionOnConflict?: boolean;
+    pushDirections?: PushDirections;
+    pushResizeItems?: boolean;
+    displayGrid?: displayGrids;
+    disableWindowResize?: boolean;
+    disableWarnings?: boolean;
+    scrollToNewItems?: boolean;
+    enableEmptyCellClick?: boolean;
+    enableEmptyCellContextMenu?: boolean;
+    enableEmptyCellDrop?: boolean;
+    enableEmptyCellDrag?: boolean;
+    emptyCellClickCallback?: (event: MouseEvent, item: GridsterItem) => void;
+    emptyCellContextMenuCallback?: (event: MouseEvent, item: GridsterItem) => void;
+    emptyCellDropCallback?: (event: MouseEvent, item: GridsterItem) => void;
+    emptyCellDragCallback?: (event: MouseEvent, item: GridsterItem) => void;
+    emptyCellDragMaxCols?: number;
+    emptyCellDragMaxRows?: number;
+    ignoreMarginInRow?: boolean;
+    api?: {
+        resize?: () => void;
+        optionsChanged?: () => void;
+        getNextPossiblePosition?: (newItem: GridsterItem) => boolean;
+        getFirstPossiblePosition?: (item: GridsterItem) => GridsterItem;
+        getLastPossiblePosition?: (item: GridsterItem) => GridsterItem;
+    };
+    [propName: string]: any;
+      */

@@ -59,6 +59,8 @@ export class Puzzle2Component implements OnInit {
     event.dataTransfer.setData('data', event.target.id);
   }
   onDrop(event: any, data: any): void {
+    console.log(event)
+    console.log(event.dataTransfer.getData('data'))
     let origin = event.dataTransfer.getData('data');
     let dest = event.target.id;
 
