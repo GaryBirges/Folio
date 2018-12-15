@@ -1,26 +1,33 @@
 <form [formGroup]="resizeForm" >
 	<ul class="list-inline">
 	  <li class="list-inline-item">
-		<input type="text" id="row" formcontrolName="row" placeholder="row" formControlName="row">
+		<input type="number" id="row" formcontrolName="row" placeholder="row" formControlName="row">
 	  </li>
 	  <!-- <li class="list-inline-item">
 		<input type="text" id="col" formcontrolName="col" placeholder="col" formControlName="col">
 	  </li> -->
 	  <li class="list-inline-item">
 		  <!-- <button class="btn btn-secondary" >Magic</button> -->
-		  <button (click)="onResizeSubmit()" class="btn btn-secondary" >start</button>
-		  <button (click)="saveGrid()" class="btn btn-secondary" >Save</button>
-		  <button (click)="randomGrid()" class="btn btn-secondary" >Random</button>
-	  </li>
+		  <button (click)="startGame()" class="btn btn-secondary" >start</button>
+		  <!-- <button (click)="saveGrid()" class="btn btn-secondary" >Save</button>
+		  <button (click)="randomizeGrid()" class="btn btn-secondary" >Random</button> -->
+		</li>
+		
 	</ul>
 	</form>
+	<span>Time Spent: {{ ticks }}        </span>
+	<span>  Steps : {{steps/2}}</span>
+	<div class="successMessage" *ngIf="gameComplete">
+		Game Complete. <br>
+		You completed the game in time = {{ticks}} & {{steps/2 }} steps.
+	</div>
 <gridster [options]="options">
 	<gridster-item [item]="item" *ngFor="let item of dashboard" [ngStyle]="{'background-image':'url(' + imageUrl + ') ','background-repeat':'no-repeat', 'background-position': '' + item.image.x_pos + ' '  + item.image.y_pos + '','background-size':''+ (gridsize * 100) +'% '+ (gridsize * 100) +'%'}">
 	  <!-- your content here -->
-	  <p [ngStyle]="{'color':'red'}">
+	  <!-- <p [ngStyle]="{'color':'red'}">
 		id: {{item.id}}
 		id: {{item.index}}
-	  </p>
+	  </p> -->
 	</gridster-item>
   </gridster>
 
@@ -29,7 +36,7 @@
 
 
 
-<div class="imagePuzzle">
+<!-- <div class="imagePuzzle"> -->
 <!-- 	<div class="unsolvedPuzzle">
 		<h1 class="sectionName">{{imageName}}</h1>
     <ul class="puzzle" 
@@ -117,4 +124,4 @@
 		</div>
 
 	</div> -->
-</div>
+<!-- </div> -->
