@@ -1,16 +1,16 @@
-<p>
+<p (keyup.enter)="test()">
   snake works!
 </p>
-<canvas id="canvas" width="700" height="500"></canvas>
+<canvas id="canvas" width="700" height="500" (keydown.ArrowDown)="test()"></canvas>
 
 
-<div (keydown.ArrowUp)="this.state = enqueue(state, NORTH)"
+<!-- <div (keydown.ArrowUp)="this.state = enqueue(state, NORTH)"
 (keydown.ArrowLeft)="this.state = enqueue(state, WEST)"
 (keydown.ArrowDown)="this.state = enqueue(state, SOUTH)"
 (keydown.ArrowRight)="this.state = enqueue(state, EAST)"
 >
 
-</div>
+</div> -->
 
 
 <!-- 
