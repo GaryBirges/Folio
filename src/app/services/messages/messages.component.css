@@ -45,3 +45,6 @@ h2 {
     margin-top: 0.75em;
     display: block;
   }
+  .float-right{
+    float:right;
+  }

@@ -25,6 +25,7 @@ import { PuzzleComponent } from './games/puzzle/puzzle.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { Puzzle2Component } from './games/puzzle2/puzzle2.component';
 import { GridsterModule } from 'angular-gridster2';
+import { SnakeComponent } from './games/snake/snake.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { GridsterModule } from 'angular-gridster2';
     MessagesComponent,
     PuzzleComponent,
     WelcomeComponent,
-    Puzzle2Component
+    Puzzle2Component,
+    SnakeComponent
   ],
   imports: [
     BrowserModule,

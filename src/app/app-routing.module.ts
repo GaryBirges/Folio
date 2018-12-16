@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { PuzzleComponent } from './games/puzzle/puzzle.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { Puzzle2Component } from './games/puzzle2/puzzle2.component';
+import { SnakeComponent } from './games/snake/snake.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
           {path: 'welcome', component: WelcomeComponent},
           {path : 'puzzle', component: PuzzleComponent},
           {path : 'puzzle2', component: Puzzle2Component},
+          {path : 'snake', component: SnakeComponent},
   //     { path: '', component: DashboardMainComponent},
   //     { path: 'legacy', component: IframeComponent},
   //     { path: 'api', component: ApiconnectComponent },

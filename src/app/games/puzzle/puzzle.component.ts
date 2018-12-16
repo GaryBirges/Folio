@@ -4,6 +4,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {  GridsterConfig, GridsterItem, CompactType, DisplayGrid, GridsterComponentInterface, GridsterItemComponentInterface,
   GridType } from 'angular-gridster2';
 import { FormGroup, FormControl } from '@angular/forms';
+import { MessageService } from 'src/app/services/messages/message.service';
 
 @Component({
   selector: 'app-puzzle',
@@ -12,14 +13,14 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class PuzzleComponent implements OnInit {
 
-  constructor() { }
+  constructor( private message: MessageService) { }
   options: GridsterConfig;
   dashboard: Array<GridsterItem>;
   resizeForm: FormGroup;
   startPos: Array<{y: number, x: number}>
   randomPos: Array<{y: number, x: number}>
 
-  imageUrl: string = '../assets/DSC_0627a.jpg';
+  imageUrl: string = './assets/DSC_0627a.jpg';
   imageSize: number = 500;
   gridsize: number = 10;
   boxSize: number = 100 / (this.gridsize - 1);
@@ -70,6 +71,7 @@ export class PuzzleComponent implements OnInit {
         this.startPos.push({y: i, x: j,})
         pieceNo++
       }
+      console.log(this.Image[2])
     }
   }
 
@@ -82,6 +84,7 @@ export class PuzzleComponent implements OnInit {
     }
     console.log("solved")
     this.gameComplete = true;
+    this.message.add(`Game Complete.		You completed the game in time = ${this.ticks} & ${this.steps/2 } steps.`)
     if (this.timeVar) {
       this.timeVar.unsubscribe();
     }

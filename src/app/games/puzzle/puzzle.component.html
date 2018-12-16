@@ -17,9 +17,12 @@
 	</form>
 	<span>Time Spent: {{ ticks }}        </span>
 	<span>  Steps : {{steps/2}}</span>
-	<div class="successMessage" *ngIf="gameComplete">
+	<!-- <div class="successMessage" *ngIf="gameComplete">
 		Game Complete. <br>
 		You completed the game in time = {{ticks}} & {{steps/2 }} steps.
+	</div> -->
+	<div>
+		
 	</div>
 <gridster [options]="options">
 	<gridster-item [item]="item" *ngFor="let item of dashboard" [ngStyle]="{'background-image':'url(' + imageUrl + ') ','background-repeat':'no-repeat', 'background-position': '' + item.image.x_pos + ' '  + item.image.y_pos + '','background-size':''+ (gridsize * 100) +'% '+ (gridsize * 100) +'%'}">
