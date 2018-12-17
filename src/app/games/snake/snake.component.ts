@@ -72,10 +72,22 @@ enqueue (state, move){
 } 
 
 // Point operations
-pointEq = p1 => p2 => p1.x == p2.x && p1.y == p2.y
+/**currying */
+// pointEq = p1 => p2 => p1.x == p2.x && p1.y == p2.y
+/** not currying */
+pointEq (p1){
+  return (p2) => {
+    return p1.x == p2.x && p1.y == p2.y
+  }
+} 
 
-willEat   = state => this.pointEq(this.nextHead(state))(state.apple)
-willCrash = state => state.snake.find(this.pointEq(this.nextHead(state)))
+willEat(state)  {
+ return this.pointEq(this.nextHead(state))(state.apple)
+
+}
+willCrash(state){
+  return state.snake.find(this.pointEq(this.nextHead(state)))
+}
 
 validMove = move => state =>
   state.moves[0].x + move.x != 0 || state.moves[0].y + move.y != 0
