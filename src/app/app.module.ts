@@ -29,6 +29,9 @@ import { Puzzle2Component } from './games/puzzle2/puzzle2.component';
 import { GridsterModule } from 'angular-gridster2';
 import { SnakeComponent } from './games/snake/snake.component';
 import { AskForNameComponent } from './services/highScore/ask-for-name/ask-for-name.component';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+import { AngularFirestoreModule, AngularFirestoreDocument  } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -43,6 +46,9 @@ import { AskForNameComponent } from './services/highScore/ask-for-name/ask-for-n
   ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFirestoreDocument, 
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,

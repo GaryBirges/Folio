@@ -203,9 +203,7 @@ export class PuzzleComponent implements OnInit {
     });
   }
   getScore(): any {
-    let score={time:this.ticks, steps:this.steps/2, difficulty: this.difficulty}
-
-    return score
+    return {time:this.ticks, steps:this.steps/2, difficulty: this.difficulty}
   }
 }
 
