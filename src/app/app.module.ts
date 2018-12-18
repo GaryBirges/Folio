@@ -17,6 +17,8 @@ import {MatSidenavModule,
         MatToolbarModule,
         MatListModule,
         MatMenuModule,
+        MatInputModule,
+        MatDialogModule,
       } 
         from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -26,6 +28,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { Puzzle2Component } from './games/puzzle2/puzzle2.component';
 import { GridsterModule } from 'angular-gridster2';
 import { SnakeComponent } from './games/snake/snake.component';
+import { AskForNameComponent } from './services/highScore/ask-for-name/ask-for-name.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,8 @@ import { SnakeComponent } from './games/snake/snake.component';
     PuzzleComponent,
     WelcomeComponent,
     Puzzle2Component,
-    SnakeComponent
+    SnakeComponent,
+    AskForNameComponent
   ],
   imports: [
     BrowserModule,
@@ -53,10 +57,13 @@ import { SnakeComponent } from './games/snake/snake.component';
     MatToolbarModule,
     MatListModule,
     MatMenuModule,
+    MatInputModule,
+    MatDialogModule,
     DragDropModule,
     GridsterModule
   ],
   providers: [MessageService],
+  entryComponents: [AskForNameComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -19,6 +19,9 @@ export class SnakeComponent implements OnInit {
     this.state = this.initialState()
     this.draw();  
     window.requestAnimationFrame(this.step(0))
+    console.log(this.x(1))
+    console.log(this.canvas.width )
+    console.log( this.state.cols)
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -53,6 +56,7 @@ draw() {
     this.ctx.fillStyle = 'rgb(255,0,0)'
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
   }
+  // console.log(this.state)
 }
 
 step = t1 => t2 => {
@@ -74,7 +78,6 @@ enqueue (state, move){
 // Point operations
 /**currying */
 // pointEq = p1 => p2 => p1.x == p2.x && p1.y == p2.y
-/** not currying */
 pointEq (p1){
   return (p2) => {
     return p1.x == p2.x && p1.y == p2.y
@@ -89,12 +92,18 @@ willCrash(state){
   return state.snake.find(this.pointEq(this.nextHead(state)))
 }
 
-validMove = move => state =>
-  state.moves[0].x + move.x != 0 || state.moves[0].y + move.y != 0
+validMove (move) {
+  return (state)=>{
+    return state.moves[0].x + move.x != 0 || state.moves[0].y + move.y != 0
+  }
+} 
 
 // Next values based on state
- nextMoves = state => state.moves.length > 1 ? dropFirst(state.moves) : state.moves
+ nextMoves (state) {
+   return state.moves.length > 1 ? dropFirst(state.moves) : state.moves
+ } 
  nextApple = state => this.willEat(state) ? this.rndPos(state) : state.apple
+ 
  nextHead  = state => state.snake.length == 0
   ? { x: 2, y: 2 }
   : {
@@ -112,6 +121,21 @@ validMove = move => state =>
     x: rnd(0)(table.cols - 1),
     y: rnd(0)(table.rows - 1)
   })
+
+  // rndPos = table =>{
+  //   let p={
+  //     x: rnd(0)(table.cols - 1),
+  //     y: rnd(0)(table.rows - 1)
+  //   }
+  //   // table.snake.forEach(pos => {
+  //   //   console.log(pos)
+  //   //   if(pos.x==p.x&&pos.y==p.y){
+  //   //     console.log(true)
+  //   //     this.rndPos(table)
+  //   //   }
+  //   // });
+  //   return p
+  // } 
     
   // Initial state
     initialState = () => ({

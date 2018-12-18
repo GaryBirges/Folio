@@ -3,8 +3,11 @@ import { Observable, timer  } from 'rxjs';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {  GridsterConfig, GridsterItem, CompactType, DisplayGrid, GridsterComponentInterface, GridsterItemComponentInterface,
   GridType } from 'angular-gridster2';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'src/app/services/messages/message.service';
+import { HighScoreService } from '../../services/highScore/high-score.service';
+import { MatDialog } from '@angular/material';
+import { AskForNameComponent } from '../../services/highScore/ask-for-name/ask-for-name.component';
 
 @Component({
   selector: 'app-puzzle',
@@ -13,7 +16,10 @@ import { MessageService } from 'src/app/services/messages/message.service';
 })
 export class PuzzleComponent implements OnInit {
 
-  constructor( private message: MessageService) { }
+  constructor(private message: MessageService,
+              private highScore: HighScoreService,
+              public dialog: MatDialog) { }
+
   options: GridsterConfig;
   dashboard: Array<GridsterItem>;
   resizeForm: FormGroup;
@@ -22,27 +28,26 @@ export class PuzzleComponent implements OnInit {
 
   imageUrl: string = './assets/DSC_0627a.jpg';
   imageSize: number = 500;
-  gridsize: number = 10;
+  gridsize: number;
   boxSize: number = 100 / (this.gridsize - 1);
   index: number = 0;
   totalBoxes: number = this.gridsize * this.gridsize;
   Image: any[] = [];
-  difficulty: number = 2;
+  difficulty: number ;
   steps: number = 0;
   ticks: string = '0:00';
   timer: any = timer(0, 1000);
   timeVar: any;
-  gameComplete: Boolean = false;
+
+  
 
   ngOnInit() {
     this.resizeForm = new FormGroup({
-      'row': new FormControl(),
+      'row': new FormControl(2, [Validators.min(2), Validators.max(10)]),
       // 'col': new FormControl()
     })
-    this.resizeForm.patchValue({row:2})
     this.setGridOptions();
-    this.dashboard = [];
-    // this.options.api.resize();
+    this.startGame()
   }
 
   private setGridOptions() {
@@ -71,7 +76,7 @@ export class PuzzleComponent implements OnInit {
         this.startPos.push({y: i, x: j,})
         pieceNo++
       }
-      console.log(this.Image[2])
+      // console.log(this.Image[2])
     }
   }
 
@@ -83,7 +88,16 @@ export class PuzzleComponent implements OnInit {
       }
     }
     console.log("solved")
-    this.gameComplete = true;
+    // this.gameComplete = true;
+
+    // console.log(
+    //   this.highScore.getUser
+    // )
+    if(this.highScore.getUser()==undefined){
+      console.log("done")
+      this.askForName()
+    }
+    this.highScore.getUser
     this.message.add(`Game Complete.		You completed the game in time = ${this.ticks} & ${this.steps/2 } steps.`)
     if (this.timeVar) {
       this.timeVar.unsubscribe();
@@ -126,6 +140,7 @@ export class PuzzleComponent implements OnInit {
     this.initializeGame();
     this.breakImageParts();
     this.buildGrid()
+    console.log(this.resizeForm)
     setTimeout(() => {   
       this.randomizeGrid();
       if (this.timeVar) {
@@ -150,7 +165,7 @@ export class PuzzleComponent implements OnInit {
     this.startPos=[]
     this.steps= 0;
     this.ticks='0:00';
-    this.gameComplete = false;
+    // this.gameComplete = false;
     this.difficulty=this.resizeForm.value.row
   }
 
@@ -172,196 +187,29 @@ export class PuzzleComponent implements OnInit {
     console.log(this.Image)
     this.boxSize = this.imageSize / this.gridsize;
   }
+
+  askForName(){
+    
+    let name =''
+    let dialogRef = this.dialog.open(AskForNameComponent, {
+      width: '250px',
+      data: {name: name}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.highScore.setUser(result)
+      this.highScore.addScoreToBoard('puzzle', this.getScore())
+      // this.animal = result;
+    });
+  }
+  getScore(): any {
+    let score={time:this.ticks, steps:this.steps/2, difficulty: this.difficulty}
+
+    return score
+  }
 }
 
 class ImageBox {
   x_pos: string;
   y_pos: string;
 }
-
-/*
-       gridType?: gridTypes;
-    fixedColWidth?: number;
-    fixedRowHeight?: number;
-    keepFixedHeightInMobile?: boolean;
-    keepFixedWidthInMobile?: boolean;
-    setGridSize?: boolean;
-    compactType?: compactTypes;
-    mobileBreakpoint?: number;
-    minCols?: number;
-    maxCols?: number;
-    minRows?: number;
-    maxRows?: number;
-    defaultItemCols?: number;
-    defaultItemRows?: number;
-    maxItemCols?: number;
-    maxItemRows?: number;
-    minItemCols?: number;
-    minItemRows?: number;
-    minItemArea?: number;
-    maxItemArea?: number;
-    margin?: number;
-    outerMargin?: boolean;
-    outerMarginTop?: number | null;
-    outerMarginRight?: number | null;
-    outerMarginBottom?: number | null;
-    outerMarginLeft?: number | null;
-    useTransformPositioning?: boolean;
-    scrollSensitivity?: number | null;
-    scrollSpeed?: number;
-    initCallback?: (gridster: GridsterComponentInterface) => void;
-    destroyCallback?: (gridster: GridsterComponentInterface) => void;
-    gridSizeChangedCallback?: (gridster: GridsterComponentInterface) => void;
-    itemChangeCallback?: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
-    itemResizeCallback?: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
-    itemInitCallback?: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
-    itemRemovedCallback?: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
-    itemValidateCallback?: (item: GridsterItem) => boolean;
-    draggable?: Draggable;
-    resizable?: Resizable;
-    swap?: boolean;
-    pushItems?: boolean;
-    disablePushOnDrag?: boolean;
-    disablePushOnResize?: boolean;
-    disableAutoPositionOnConflict?: boolean;
-    pushDirections?: PushDirections;
-    pushResizeItems?: boolean;
-    displayGrid?: displayGrids;
-    disableWindowResize?: boolean;
-    disableWarnings?: boolean;
-    scrollToNewItems?: boolean;
-    enableEmptyCellClick?: boolean;
-    enableEmptyCellContextMenu?: boolean;
-    enableEmptyCellDrop?: boolean;
-    enableEmptyCellDrag?: boolean;
-    emptyCellClickCallback?: (event: MouseEvent, item: GridsterItem) => void;
-    emptyCellContextMenuCallback?: (event: MouseEvent, item: GridsterItem) => void;
-    emptyCellDropCallback?: (event: MouseEvent, item: GridsterItem) => void;
-    emptyCellDragCallback?: (event: MouseEvent, item: GridsterItem) => void;
-    emptyCellDragMaxCols?: number;
-    emptyCellDragMaxRows?: number;
-    ignoreMarginInRow?: boolean;
-    api?: {
-        resize?: () => void;
-        optionsChanged?: () => void;
-        getNextPossiblePosition?: (newItem: GridsterItem) => boolean;
-        getFirstPossiblePosition?: (item: GridsterItem) => GridsterItem;
-        getLastPossiblePosition?: (item: GridsterItem) => GridsterItem;
-    };
-    [propName: string]: any;
-      */
-
-        // randomize(imageParts: any[]): any[] {
-  //   let i = 0, img: any[] = [], ran = 0;
-  //   for (i = 0; i < imageParts.length; i++) {
-  //     ran = Math.floor(Math.random() * imageParts.length);
-  //     while (imageParts[ran] == null) {
-  //       ran = Math.floor(Math.random() * imageParts.length);
-  //     }
-  //     img.push(imageParts[ran]);
-  //     this.position.push(imageParts[ran].index);
-  //     imageParts[ran] = null;
-  //   }
-  //   this.printIndexes(this.indexes);
-  //   this.printIndexes(this.position);
-  //   return img;
-  // }
-
-  // onDragStart(event: any, data: any): void {
-  //   event.dataTransfer.setData('data', event.target.id);
-  // }
-  // onDrop(event: any ): void {
-  //   console.log(event)
-  //   console.log(event.dataTransfer.getData('data'))
-
-  //   let origin = event.index;
-  //   let dest = event.target.id;
-
-
-  //   let originEl = document.getElementById(origin);
-  //   let destEl = document.getElementById(dest);
-
-  //   let origincss = originEl.style.cssText;
-  //   let destcss = event.target.style.cssText;
-
-
-  //   destEl.style.cssText = origincss;
-  //   originEl.style.cssText = destcss;
-
-  //   console.log(destEl.style.cssText)
-  //   console.log(originEl.style.cssText)
-  //   console.log(origincss)
-  //   console.log(destcss)
-
-  //   originEl.id = dest;
-  //   destEl.id = origin;
-  //   console.log(this.position)
-  //   console.log(this.Image)
-
-  //   for (let i = 0; i < this.position.length; i++) {
-  //     if (this.position[i].toString() === originEl.id) {
-  //       this.position[i] = Number(destEl.id);
-  //     } else if (this.position[i].toString() === destEl.id) {
-  //       this.position[i] = Number(originEl.id);
-  //     }
-
-  //   }
-
-  //   this.printIndexes(this.position);
-  //   this.steps++;
-  //   this.gameComplete = this.isSorted(this.position);
-  //   if (this.gameComplete) {
-
-  //     if (this.timeVar) {
-  //       this.timeVar.unsubscribe();
-  //     }
-  //   }
-
-   
-  // }
-  // drop(event: CdkDragDrop<string[]>) {
-  //   console.log(event)
-  //   let origin = event.previousIndex
-  //   let dest = event.currentIndex;
-
-
-  //   let originEl = document.getElementById(`${origin}`);
-  //   let destEl = document.getElementById(dest.toString());
-  //   console.log(origin)
-  //   console.log(originEl)
-  //   let origincss = originEl.style.cssText;
-  //   let destcss = destEl.style.cssText;
-
-
-  //   destEl.style.cssText = origincss;
-  //   originEl.style.cssText = destcss;
-
-  //   // console.log(destEl.style.cssText)
-  //   // console.log(originEl.style.cssText)
-  //   // console.log(origincss)
-  //   // console.log(destcss)
-
-  //   originEl.id = dest.toString();
-  //   destEl.id = origin.toString();
-  //   console.log(this.position)
-  //   // console.log(this.Image)
-  //   moveItemInArray(this.position, event.previousIndex, event.currentIndex);
-  // }
-
-  // allowDrop(event): void {
-  //   event.preventDefault();
-  //   event.target.style.opacity = 1;
-  // }
-
-  // printIndexes(sorts: number[]): void {
-  //   let i: number = 0, ind: string = '';
-  //   for (i = 0; i < sorts.length; i++) {
-  //     ind += sorts[i].toString() + ' , ';
-  //   }
-  //   console.log(ind);
-  // }
-
-  // reRandomize(): void {
-  //   this.gameComplete = false;
-  //   this.Image = this.randomize(this.Image);
-  // }

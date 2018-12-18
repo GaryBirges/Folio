@@ -1,130 +1,16 @@
-<form [formGroup]="resizeForm" >
-	<ul class="list-inline">
-	  <li class="list-inline-item">
-		<input type="number" id="row" formcontrolName="row" placeholder="row" formControlName="row">
-	  </li>
-	  <!-- <li class="list-inline-item">
-		<input type="text" id="col" formcontrolName="col" placeholder="col" formControlName="col">
-	  </li> -->
-	  <li class="list-inline-item">
-		  <!-- <button class="btn btn-secondary" >Magic</button> -->
-		  <button (click)="startGame()" class="btn btn-secondary" >start</button>
-		  <!-- <button (click)="saveGrid()" class="btn btn-secondary" >Save</button>
-		  <button (click)="randomizeGrid()" class="btn btn-secondary" >Random</button> -->
-		</li>
-		
-	</ul>
-	</form>
-	<span>Time Spent: {{ ticks }}        </span>
-	<span>  Steps : {{steps/2}}</span>
-	<!-- <div class="successMessage" *ngIf="gameComplete">
-		Game Complete. <br>
-		You completed the game in time = {{ticks}} & {{steps/2 }} steps.
-	</div> -->
-	<div>
-		
-	</div>
-<gridster [options]="options">
-	<gridster-item [item]="item" *ngFor="let item of dashboard" [ngStyle]="{'background-image':'url(' + imageUrl + ') ','background-repeat':'no-repeat', 'background-position': '' + item.image.x_pos + ' '  + item.image.y_pos + '','background-size':''+ (gridsize * 100) +'% '+ (gridsize * 100) +'%'}">
-	  <!-- your content here -->
-	  <!-- <p [ngStyle]="{'color':'red'}">
-		id: {{item.id}}
-		id: {{item.index}}
-	  </p> -->
-	</gridster-item>
-  </gridster>
 
-
-
-
-
-
-<!-- <div class="imagePuzzle"> -->
-<!-- 	<div class="unsolvedPuzzle">
-		<h1 class="sectionName">{{imageName}}</h1>
-    <ul class="puzzle" 
-        
-        cdkDropList
-        (cdkDropListDropped)="drop($event)"
-        > -->
-        <!-- cdkDropListOrientation="vertical" -->
-      <!-- <li *ngFor="let img of Image" 
-          class="box" 
-          cdkDrag
-          [id]="img.index"
-          [style.width.px]="boxSize" 
-          [style.height.px]="boxSize"
-          [ngStyle]="{'background-image':'url(' + imageUrl + ') ','background-repeat':'no-repeat', 'background-position': '' + img.x_pos + ' '  + img.y_pos + '','background-size':''+ (gridsize * 100) +'% '+ (gridsize * 100) +'%'}" 
-          > -->
-          <!-- " 
-          [draggable]="true"  -->
-          <!-- (dragstart)="onDragStart($event, dropData)"
-          (drop)="onDrop($event, dropData)" 
-          (dragover)="allowDrop($event)"  -->
-			<!-- </li>
-		</ul>
-		<div class="successMessage" *ngIf="gameComplete">
-			Game Complete. <br>
-			You completed the game in time = {{ticks}} & {{steps }} steps.
-		</div>
-
-  </div> -->
-  <!-- ***************************************** -->
-	<!-- <div class="unsolvedPuzzle">
-		<h1 class="sectionName">{{imageName}}</h1>
-		<ul class="puzzle" dropzone="true">
-      <li *ngFor="let img of Image" 
-        class="box" 
-        [draggable]="true" 
-        [id]="img.index" 
-        (dragstart)="onDragStart($event, dropData)"
-        (drop)="onDrop($event, dropData)" 
-        (dragover)="allowDrop($event)" 
-        [style.width.px]="boxSize" 
-        [style.height.px]="boxSize"
-				[ngStyle]="{'background-image':'url(' + imageUrl + ') ','background-repeat':'no-repeat', 'background-position': '' + img.x_pos + ' '  + img.y_pos + '','background-size':''+ (gridsize * 100) +'% '+ (gridsize * 100) +'%'}">
-
-			</li>
-		</ul>
-		<div class="successMessage" *ngIf="gameComplete">
-			Game Complete. <br>
-			You completed the game in time = {{ticks}} & {{steps }} steps.
-		</div>
-
-	</div> -->
-	<!-- <div class="scoreboard">
-		<h1 class="sectionName">Scoreboard</h1>
-		<h3 class="score-detail">
-			<span>Time Spent: {{ ticks }}        </span>
-			<span>  Steps : {{steps}}</span>
-		</h3>
-		<div class="finalImage" [ngStyle]="{'background-image':'url(' + imageUrl + ') '}"></div>
-		<div class="image-url">
-			<div class="input-group">
-				<span class="input-group-btn">
-                   <div class="btn btn-default" >Image Url!</div>
-                </span>
-				<input type="url" class="form-control" placeholder="Image Url..." [(ngModel)]="imageUrl">
-			</div>
-		</div>
-
-		<h3>Difficulty Level</h3>
-		<div class="difficulty-levels">
-			<div class="input-group">
-				<input type="radio" [(ngModel)]="difficulty" name="difficulty" value="2" checked (change)="startGame()">Low
-			</div>
-			<div class="input-group">
-				<input type="radio" [(ngModel)]="difficulty" name="difficulty" value="3" (change)="startGame()">Medium
-			</div>
-			<div class="input-group">
-				<input type="radio" [(ngModel)]="difficulty" name="difficulty" value="4" (change)="startGame()">High
-			</div>
-		</div>
-		<br>
-		<div class="score-detail">
-			<button type="button" class="btn btn-primary" (click)="startGame()"> Restart Game</button>
-			<button type="button" class="btn btn-primary" (click)="reRandomize()"> Randomize</button>
-		</div>
-
-	</div> -->
-<!-- </div> -->
+<form [formGroup]="resizeForm">
+	<mat-form-field appearance="outline" class="leftMargin">
+		<mat-label>Difficulty (2-10)</mat-label>
+		<input matInput  formControlName="row"  type="number" id="row" min=2 max=10>
+	</mat-form-field>
+	<button class="leftMargin" mat-raised-button type="button" (click)="startGame()">Start</button>
+	<span class="leftMargin">Time Spent: {{ ticks }}        </span>
+	<span class="leftMargin">  Steps : {{steps/2}}</span>
+</form>
+<div class="boardHolder">
+	<gridster [options]="options">
+		<gridster-item [item]="item" *ngFor="let item of dashboard" [ngStyle]="{'background-image':'url(' + imageUrl + ') ','background-repeat':'no-repeat', 'background-position': '' + item.image.x_pos + ' '  + item.image.y_pos + '','background-size':''+ (gridsize * 100) +'% '+ (gridsize * 100) +'%'}">
+		</gridster-item>
+	</gridster>
+</div>

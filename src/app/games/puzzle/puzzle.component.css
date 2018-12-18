@@ -1,4 +1,4 @@
-.imagePuzzle {
+/* .imagePuzzle {
     color: white;
     width: 1200px;
     height: 700px;
@@ -6,34 +6,34 @@
     display: flex;
     justify-content: center;
     background-color: lightslategrey;
-}
+} */
 
-.unsolvedPuzzle, .scoreboard {
+/* .unsolvedPuzzle, .scoreboard {
     width: 50%;
     box-sizing: border-box;
     padding: 0 5%;
-}
+} */
 
-.sectionName {
+/* .sectionName {
     background-color: white;
     color: black;
     text-align: center;
     width: 500px;
     height: 50px;
-}
+} */
 
-.score-detail, .difficulty-levels {
+/* .score-detail, .difficulty-levels {
     color: white;
     display: flex;
     justify-content: space-around;
-}
+}*/
 
 li {
     width: 100px;
     list-style-type: none;
-}
+} 
 
-.puzzle {
+/* .puzzle {
     width: 500px;
     height: 500px;
     display: flex;
@@ -42,36 +42,44 @@ li {
     flex-wrap: wrap;
     box-sizing: initial;
     border: 1px solid red;
-}
+} */
 
-.box {
+/* .box {
     display: inline-block;
     border: 0;
     padding: 0;
     margin: 0;
-}
+} */
 
-.finalImage {
+/* .finalImage {
     width: 250px;
     height: 250px;
     margin: auto;
     /*background-image: url("../../assets/images/taj.jpg");*/
-    background-size: 100% 100%;
-}
+    /* background-size: 100% 100%; */
+/* } */ 
 
-.unsolved, .solved {
+/* .unsolved, .solved {
     width: 50%;
-}
+} */
 
-.image-url {
+/* .image-url {
     margin-top: 5%;
-}
+} */
 
-.successMessage{
+/* .successMessage{
     margin: 5%;
     border: 1px solid green;
     border-radius: 10px;
     color: black;
     background-color: lightgreen;
     padding: 5%;
+} */
+
+.boardHolder{
+    height: calc(100% - 90px);
+}
+
+.leftMargin{
+    margin-left:25px;
 }
