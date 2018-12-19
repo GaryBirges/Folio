@@ -11,7 +11,8 @@ export const environment = {
     projectId: "highscore-aaa5e",
     storageBucket: "highscore-aaa5e.appspot.com",
     messagingSenderId: "340149765951"
-  }
+  },
+  version: 'DEV'
 };
 
 /*
