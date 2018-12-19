@@ -198,11 +198,12 @@ export class PuzzleComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       this.highScore.setUser(result)
-      this.highScore.addScoreToBoard('puzzle', this.getScore())
+      this.highScore.addScoreToBoard('Puzzle', this.getScore())
       // this.animal = result;
     });
   }
   getScore(): any {
+
     return {time:this.ticks, steps:this.steps/2, difficulty: this.difficulty}
   }
 }

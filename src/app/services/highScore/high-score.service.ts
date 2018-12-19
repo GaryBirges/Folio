@@ -16,6 +16,7 @@ export class HighScoreService {
   snakeScores
 
   snakeDoc: AngularFirestoreDocument<any>
+  puzzleDoc: AngularFirestoreDocument<any>
   score: Observable<any>
   
   constructor(db: AngularFirestore,
@@ -23,9 +24,10 @@ export class HighScoreService {
     // this.items = db.collection('items').valueChanges();
     // this.itemDoc = db.doc<Item>('items/1');
     // this.tasks = this.itemDoc.collection<Item>('tasks').valueChanges();
-    this.snakeDoc =afs.doc('Snake')
-    this.score = this.snakeDoc.valueChanges()
-   
+    // this.snakeDoc =afs.collection('Snake').doc('1')
+    // this.puzzleDoc= afs.collection('Puzzle').doc('1')
+    // this.score = this.snakeDoc.valueChanges()
+   //GET STUFF FROM DB
     this.puzzleCollection=db.collection('Puzzle')
     this.snakeCollection=db.collection('Snake')
     this.puzzleCollection.valueChanges().subscribe(res=>{
@@ -36,7 +38,6 @@ export class HighScoreService {
       this.snakeScores=res
       console.log(res)
     })
-    // console.log(a)
   }
 
   setUser(user){
@@ -47,11 +48,18 @@ export class HighScoreService {
   }
   addScoreToBoard(game, score){
     console.log(score)
-    // console.log(this.tasks)
+    score.name=this.currentUser
+    if(game=='Snake'){
+      this.snakeCollection.add(score)
+    }else if(game=='Puzzle'){
+      this.puzzleCollection.add(score)
+    }
   }
   // updateScores(item: Item) {
-  updateScores() {
-    let item= 
-    this.snakeDoc.update(item);
+
+  //dont know if its needed
+  updateScores(score) {
+    // let item= 
+    this.snakeDoc.update(score);
   }
 }

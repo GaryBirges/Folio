@@ -19,6 +19,10 @@ import {MatSidenavModule,
         MatMenuModule,
         MatInputModule,
         MatDialogModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatCardModule
       } 
         from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -32,6 +36,7 @@ import { AskForNameComponent } from './services/highScore/ask-for-name/ask-for-n
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule, AngularFirestoreDocument  } from '@angular/fire/firestore';
+import { ScoreBoardComponent } from './games/score-board/score-board.component';
 
 @NgModule({
   declarations: [
@@ -42,13 +47,14 @@ import { AngularFirestoreModule, AngularFirestoreDocument  } from '@angular/fire
     WelcomeComponent,
     Puzzle2Component,
     SnakeComponent,
-    AskForNameComponent
+    AskForNameComponent,
+    ScoreBoardComponent
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFirestoreDocument, 
+    // AngularFirestoreDocument, 
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
@@ -65,6 +71,10 @@ import { AngularFirestoreModule, AngularFirestoreDocument  } from '@angular/fire
     MatMenuModule,
     MatInputModule,
     MatDialogModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatCardModule,
     DragDropModule,
     GridsterModule
   ],
