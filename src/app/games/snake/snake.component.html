@@ -1,7 +1,11 @@
 <!-- <p>
   snake works!
 </p> -->
-<canvas id="canvas" width="700" height="500"></canvas>
+<canvas id="canvas" width="700" height="500"
+    (swipeleft)="this.state = enqueue(state, WEST)"
+    (swiperight)="this.state = enqueue(state, EAST)"
+    (swipeup)="this.state = enqueue(state, NORTH)"
+    (swipedown)="this.state = enqueue(state, SOUTH)"></canvas>
 
 
 <!-- <div (keydown.ArrowUp)="this.state = enqueue(state, NORTH)"
