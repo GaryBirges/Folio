@@ -46,10 +46,15 @@
   </mat-accordion>
  
 
-
-<div class="boardHolder">
+  
+  <!-- <div layout="row"  layout-wrap>
+		  <div layout="column" flex> -->
+  <mat-card class="boardHolder">
+<!-- <div class="boardHolder"> -->
 	<gridster [options]="options">
 		<gridster-item [item]="item" *ngFor="let item of dashboard" [ngStyle]="{'background-image':'url(' + imageUrl + ') ','background-repeat':'no-repeat', 'background-position': '' + item.image.x_pos + ' '  + item.image.y_pos + '','background-size':''+ (gridsize * 100) +'% '+ (gridsize * 100) +'%'}">
 		</gridster-item>
 	</gridster>
-</div>
+<!-- </div> -->
+</mat-card>
+

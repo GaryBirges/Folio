@@ -22,7 +22,7 @@
 </div> -->
 <div class="home-container" [class.home-is-mobile]="mobileQuery.matches" >
     <mat-toolbar color="primary" class="toolbar">
-      <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+      <button mat-icon-button (click)="snav.toggle(); active()"><mat-icon>menu</mat-icon></button>
       <h1 class="app-name">Responsive App</h1>
     </mat-toolbar>
   
@@ -39,6 +39,7 @@
           <a mat-list-item routerLink="/snake">snake</a>
           <a mat-list-item routerLink="/scoreboard">Score Board</a>
         </mat-nav-list>
+        <small>ver.{{this.version}}</small>
       </mat-sidenav>
   
       <mat-sidenav-content>

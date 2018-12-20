@@ -77,7 +77,7 @@ li {
 } */
 
 .boardHolder{
-    height: calc(100% - 90px);
+    height: calc(100% - 130px);
 }
 
 .leftMargin{

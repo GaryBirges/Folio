@@ -39,6 +39,7 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule, AngularFirestoreDocument  } from '@angular/fire/firestore';
 import { ScoreBoardComponent } from './games/score-board/score-board.component';
+import { IsActiveService } from './services/is-active.service';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,7 @@ import { ScoreBoardComponent } from './games/score-board/score-board.component';
     DragDropModule,
     GridsterModule
   ],
-  providers: [MessageService],
+  providers: [MessageService,IsActiveService],
   entryComponents: [AskForNameComponent],
   bootstrap: [AppComponent]
 })

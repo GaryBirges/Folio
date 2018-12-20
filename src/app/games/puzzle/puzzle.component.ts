@@ -8,6 +8,7 @@ import { MessageService } from 'src/app/services/messages/message.service';
 import { HighScoreService } from '../../services/highScore/high-score.service';
 import { MatDialog } from '@angular/material';
 import { AskForNameComponent } from '../../services/highScore/ask-for-name/ask-for-name.component';
+import { IsActiveService } from '../../services/is-active.service';
 
 @Component({
   selector: 'app-puzzle',
@@ -18,7 +19,8 @@ export class PuzzleComponent implements OnInit {
 
   constructor(private message: MessageService,
               private highScore: HighScoreService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              public ias: IsActiveService) { }
 
   options: GridsterConfig;
   dashboard: Array<GridsterItem>;
@@ -39,6 +41,7 @@ export class PuzzleComponent implements OnInit {
   ticks: string = '0:00';
   timer: any = timer(0, 1000);
   timeVar: any;
+  isActive;
 
   // panelOpenState = false;
 
@@ -49,6 +52,14 @@ export class PuzzleComponent implements OnInit {
     })
     this.setGridOptions();
     // this.startGame()
+    this.ias.isAtiveChange.subscribe(value=>{
+      if(this.options){
+        if(this.options.api!=undefined){
+          this.options.api.resize();
+        }
+      }
+      return this.isActive=value
+    })
   }
 
   private setGridOptions() {
