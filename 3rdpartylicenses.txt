@@ -396,6 +396,8 @@ MIT
 
 @angular/material/form-field
 
+@angular/material/card
+
 @angular/fire/firestore
 MIT
 
@@ -407,8 +409,6 @@ firebase/firestore
 @angular/material/sort
 
 @angular/material/table
-
-@angular/material/card
 
 @angular/material/tooltip
 
