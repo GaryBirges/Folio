@@ -1,13 +1,52 @@
 
-<form [formGroup]="resizeForm">
-	<mat-form-field appearance="outline" class="leftMargin">
-		<mat-label>Difficulty (2-10)</mat-label>
-		<input matInput  formControlName="row"  type="number" id="row" min=2 max=10>
-	</mat-form-field>
-	<button class="leftMargin" mat-raised-button type="button" (click)="startGame()">Start</button>
-	<span class="leftMargin">Time Spent: {{ ticks }}        </span>
-	<span class="leftMargin">  Steps : {{steps/2}}</span>
-</form>
+<mat-accordion>
+	<mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" >
+	  <mat-expansion-panel-header >
+		<mat-panel-title>
+		  Choose an image
+		</mat-panel-title>
+		<mat-panel-description>
+		  This image will be the base of your puzzle
+		</mat-panel-description>
+	  </mat-expansion-panel-header>
+	  <mat-grid-list cols="3" rowHeight="200px">
+		<mat-grid-tile
+			*ngFor="let imageUrl of imageUrls"
+			colspan="1"
+			rowspan="1"
+			[ngStyle]="{'background-image':'url(' + imageUrl + ') ', 'background-size': 'cover'}"
+			(click)="setImage(imageUrl)"
+			>
+			
+		</mat-grid-tile>
+	  </mat-grid-list>
+	</mat-expansion-panel>
+	<mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" 
+	>
+	<!-- (opened)="panelOpenState = true"
+	(closed)="panelOpenState = false" -->
+	  <mat-expansion-panel-header>
+		<mat-panel-title>
+		  Game Details
+		</mat-panel-title>
+		<mat-panel-description>
+		  <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
+		  <span class="leftMargin">Time Spent: {{ ticks }}        </span>
+		  <span class="leftMargin">  Steps : {{steps/2}}</span>
+		</mat-panel-description>
+	  </mat-expansion-panel-header>
+	  <form [formGroup]="resizeForm">
+		  <mat-form-field appearance="outline" class="leftMargin">
+			  <mat-label>Difficulty (2-10)</mat-label>
+			  <input matInput  formControlName="row"  type="number" id="row" min=2 max=10>
+		  </mat-form-field>
+		  <button class="leftMargin" mat-raised-button type="button" (click)="startGame()" >Start</button>
+	  </form>
+	</mat-expansion-panel>
+  </mat-accordion>
+ 
+
+
 <div class="boardHolder">
 	<gridster [options]="options">
 		<gridster-item [item]="item" *ngFor="let item of dashboard" [ngStyle]="{'background-image':'url(' + imageUrl + ') ','background-repeat':'no-repeat', 'background-position': '' + item.image.x_pos + ' '  + item.image.y_pos + '','background-size':''+ (gridsize * 100) +'% '+ (gridsize * 100) +'%'}">

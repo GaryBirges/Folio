@@ -29,6 +29,7 @@
     "angular2-fontawesome": "^5.2.1",
     "core-js": "^2.5.4",
     "firebase": "^5.7.0",
+    "moment": "^2.23.0",
     "ng-bootstrap": "^1.6.3",
     "ngx-contextmenu": "^5.1.1",
     "replace-in-file": "^3.4.2",

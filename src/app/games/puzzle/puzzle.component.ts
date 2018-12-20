@@ -27,6 +27,7 @@ export class PuzzleComponent implements OnInit {
   randomPos: Array<{y: number, x: number}>
 
   imageUrl: string = './assets/DSC_0627a.jpg';
+  imageUrls: string[] = ['./assets/DSC_0627a.jpg', './assets/building-cloud.jpeg', './assets/water-sunlight.jpg']
   imageSize: number = 500;
   gridsize: number;
   boxSize: number = 100 / (this.gridsize - 1);
@@ -39,7 +40,7 @@ export class PuzzleComponent implements OnInit {
   timer: any = timer(0, 1000);
   timeVar: any;
 
-  
+  // panelOpenState = false;
 
   ngOnInit() {
     this.resizeForm = new FormGroup({
@@ -47,7 +48,7 @@ export class PuzzleComponent implements OnInit {
       // 'col': new FormControl()
     })
     this.setGridOptions();
-    this.startGame()
+    // this.startGame()
   }
 
   private setGridOptions() {
@@ -140,6 +141,7 @@ export class PuzzleComponent implements OnInit {
     this.initializeGame();
     this.breakImageParts();
     this.buildGrid()
+    this.steps=0
     console.log(this.resizeForm)
     setTimeout(() => {   
       this.randomizeGrid();
@@ -163,7 +165,7 @@ export class PuzzleComponent implements OnInit {
     this.Image = [];
     this.dashboard = []
     this.startPos=[]
-    this.steps= 0;
+    this.step= 2;
     this.ticks='0:00';
     // this.gameComplete = false;
     this.difficulty=this.resizeForm.value.row
@@ -189,7 +191,6 @@ export class PuzzleComponent implements OnInit {
   }
 
   askForName(){
-    
     let name =''
     let dialogRef = this.dialog.open(AskForNameComponent, {
       width: '250px',
@@ -197,14 +198,33 @@ export class PuzzleComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      this.highScore.setUser(result)
-      this.highScore.addScoreToBoard('Puzzle', this.getScore())
+      if(result!==undefined){
+        this.highScore.setUser(result)
+        this.highScore.addScoreToBoard('Puzzle', this.getScore())
+      }
       // this.animal = result;
     });
   }
   getScore(): any {
 
     return {time:this.ticks, steps:this.steps/2, difficulty: this.difficulty}
+  }
+  setImage(imageUrl){
+    this.imageUrl=imageUrl
+    this.nextStep() 
+    // this.step=1
+    // this.startGame()
+  }
+
+  step = 0;
+  closeOnStart=false
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
   }
 }
 

@@ -19,9 +19,9 @@ export class SnakeComponent implements OnInit {
     this.state = this.initialState()
     this.draw();  
     window.requestAnimationFrame(this.step(0))
-    console.log(this.x(1))
-    console.log(this.canvas.width )
-    console.log( this.state.cols)
+    // console.log(this.x(1))
+    // console.log(this.canvas.width )
+    // console.log( this.state.cols)
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -145,14 +145,22 @@ validMove (move) {
     snake: [],
     apple: { x: 16, y: 2 },
   })
-  
+    //work on this one 44:20
+    // next= state=>({
+    //   rows:state.rows,
+    //   cols:state.rows,
+    //   moves: this.nextMoves(state),
+    //   snake: this.nextSnake(state),
+    //   apple: this.nextApple(state)
+    // })
+
     next = spec({
-    rows:  prop('rows'),
-    cols:  prop('cols'),
-    moves: this.nextMoves,
-    snake: this.nextSnake,
-    apple: this.nextApple
-  })
+      rows:  prop('rows'),
+      cols:  prop('cols'),
+      moves: this.nextMoves,
+      snake: this.nextSnake,
+      apple: this.nextApple
+      })
 
 }
 

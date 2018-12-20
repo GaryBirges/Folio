@@ -22,7 +22,9 @@ import {MatSidenavModule,
         MatTableModule,
         MatPaginatorModule,
         MatSortModule,
-        MatCardModule
+        MatCardModule,
+        MatGridListModule,
+        MatExpansionModule
       } 
         from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -53,7 +55,7 @@ import { ScoreBoardComponent } from './games/score-board/score-board.component';
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     // AngularFirestoreDocument, 
     FormsModule,
     ReactiveFormsModule,
@@ -75,6 +77,8 @@ import { ScoreBoardComponent } from './games/score-board/score-board.component';
     MatPaginatorModule,
     MatSortModule,
     MatCardModule,
+    MatExpansionModule,
+    MatGridListModule,
     DragDropModule,
     GridsterModule
   ],
