@@ -10,6 +10,7 @@ export class SnakeComponent implements OnInit {
   state
   canvas 
   ctx
+  score=0
  
   constructor() { }
 
@@ -19,9 +20,6 @@ export class SnakeComponent implements OnInit {
     this.state = this.initialState()
     this.draw();  
     window.requestAnimationFrame(this.step(0))
-    // console.log(this.x(1))
-    // console.log(this.canvas.width )
-    // console.log( this.state.cols)
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -97,10 +95,13 @@ pointEq (p1){
 } 
 
 willEat(state)  {
- return this.pointEq(this.nextHead(state))(state.apple)
+  // this.score++
+  // console.log(this.score)
+  return this.pointEq(this.nextHead(state))(state.apple)
 
 }
 willCrash(state){
+  // console.log(this.score)
   return state.snake.find(this.pointEq(this.nextHead(state)))
 }
 

@@ -13,7 +13,7 @@
 
 <!-- <table mat-table [dataSource]="this.puzzleScore" class="mat-elevation-z8"> -->
     <mat-card>
-<table mat-table [dataSource]="PuzzleData" matSort class="mat-elevation-z8">
+<table mat-table [dataSource]="puzzleData" #puzzleSort="matSort" matSort class="mat-elevation-z8">
     <ng-container matColumnDef="steps">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Steps </th>
       <td mat-cell *matCellDef="let element"> {{element.steps}} </td>
@@ -34,5 +34,21 @@
     <tr mat-header-row *matHeaderRowDef="puzzleDisplayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: puzzleDisplayedColumns;"></tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  <mat-paginator #puzzlePaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</mat-card>
+
+<mat-card>
+  <table mat-table [dataSource]="snakeData" #snakeSort="matSort" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef="score">
+      <th mat-header-cell *matHeaderCellDef >Score</th>
+      <td mat-cell *matCellDef="let element">{{element.score}}</td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <th mat-cell *matCellDef="let element">{{element.name}}</th>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="snakeDisplayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: snakeDisplayedColumns;"></tr>
+  </table>
+  <mat-paginator #snakePaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </mat-card>
