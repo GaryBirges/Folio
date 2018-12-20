@@ -387,8 +387,12 @@ MIT
 
 @angular/material/list
 
+@angular/material/grid-list
+
 angular-gridster2
 MIT
+
+@angular/material/expansion
 
 @angular/material/form-field
 
