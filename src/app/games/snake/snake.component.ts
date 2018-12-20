@@ -33,6 +33,18 @@ export class SnakeComponent implements OnInit {
       case 'd': case 'l': case 'ArrowRight': this.state = this.enqueue(this.state, EAST);  break
     }
   }
+  swipeLeft(){
+    this.state = this.enqueue(this.state, WEST);
+  }
+  swipeRight(){
+    this.state = this.enqueue(this.state, EAST);
+  }
+  swipeUp(){
+    this.state = this.enqueue(this.state, NORTH);
+  }
+  swipeDown(){
+    this.state = this.enqueue(this.state, SOUTH); 
+  }
  // Position helpers
  x = c => Math.round(c * this.canvas.width / this.state.cols)
  y = r => Math.round(r * this.canvas.height / this.state.rows)

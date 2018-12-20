@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   
   ngOnInit() {
-    console.log(environment)
   }
 
   ngOnDestroy(): void {
