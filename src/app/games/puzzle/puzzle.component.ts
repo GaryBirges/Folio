@@ -108,8 +108,10 @@ export class PuzzleComponent implements OnInit {
     if(this.highScore.getUser()==undefined){
       console.log("done")
       this.askForName()
+    }else{
+      this.highScore.addScoreToBoard('Puzzle', this.getScore())
     }
-    this.highScore.getUser
+    // this.highScore.getUser
     this.message.add(`Game Complete.		You completed the game in time = ${this.ticks} & ${this.steps/2 } steps.`)
     if (this.timeVar) {
       this.timeVar.unsubscribe();
@@ -217,7 +219,6 @@ export class PuzzleComponent implements OnInit {
     });
   }
   getScore(): any {
-
     return {time:this.ticks, steps:this.steps/2, difficulty: this.difficulty}
   }
   setImage(imageUrl){

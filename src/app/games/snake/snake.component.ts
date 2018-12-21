@@ -1,6 +1,8 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Observable } from 'rxjs';
-
+import { MatDialog } from '@angular/material';
+import { HighScoreService } from '../../services/highScore/high-score.service';
+import { AskForNameComponent } from '../../services/highScore/ask-for-name/ask-for-name.component';
 @Component({
   selector: 'app-snake',
   templateUrl: './snake.component.html',
@@ -11,8 +13,10 @@ export class SnakeComponent implements OnInit {
   canvas 
   ctx
   score=0
+  maxScore: number;
  
-  constructor() { }
+  constructor(public dialog: MatDialog,
+              private highScore: HighScoreService,) { }
 
   ngOnInit() {
     this.canvas = document.getElementById('canvas') as HTMLCanvasElement;
@@ -55,7 +59,7 @@ draw() {
 
   // draw snake
   this.ctx.fillStyle = 'rgb(0,200,50)'
-  this.state.snake.map(p => this.ctx.fillRect(this.x(p.x), this.y(p.y), this.x(1), this.y(1)))
+  this.state.snake.map(p => this.ctx.fillRect(this.x(p.x), this.y(p.y), this.x(1)-1, this.y(1)-1))
 
   // draw apples
   this.ctx.fillStyle = 'rgb(255,50,0)'
@@ -74,6 +78,16 @@ step = t1 => t2 => {
     this.state = this.next(this.state)
     this.draw()
     window.requestAnimationFrame(this.step(t2))
+    if(this.state.snake.length>0){
+      this.score=this.state.snake.length
+    }else{
+      if(this.highScore.getUser()==undefined){
+        this.askForName()
+      }else{
+        this.highScore.addScoreToBoard('Snake', this.getScore())
+      }
+    }
+    // console.log(this.score)
   } else {
     window.requestAnimationFrame(this.step(t1))
   }
@@ -123,32 +137,43 @@ validMove (move) {
     x: mod(state.cols)(state.snake[0].x + state.moves[0].x),
     y: mod(state.rows)(state.snake[0].y + state.moves[0].y)
   }
- nextSnake = state => this.willCrash(state)
-  ? []
-  : (this.willEat(state)
-    ? [this.nextHead(state)].concat(state.snake)
-    : [this.nextHead(state)].concat(dropLast(state.snake)))
+ nextSnake = state => {
+    if(this.willCrash(state)){
+      this.maxScore=this.score
+      console.log(this.maxScore)
+      return []
+    } else{
+      if(this.willEat(state)){
+        return [this.nextHead(state)].concat(state.snake)
+      }else{
+        return [this.nextHead(state)].concat(dropLast(state.snake))
+      }
+    } 
+ }
+//  nextSnake = state => this.willCrash(state)
+//   ? []
+//   : (this.willEat(state)
+//     ? [this.nextHead(state)].concat(state.snake)
+//     : [this.nextHead(state)].concat(dropLast(state.snake)))
 
 
-  rndPos = table => ({
-    x: rnd(0)(table.cols - 1),
-    y: rnd(0)(table.rows - 1)
-  })
-
-  // rndPos = table =>{
-  //   let p={
-  //     x: rnd(0)(table.cols - 1),
-  //     y: rnd(0)(table.rows - 1)
-  //   }
-  //   // table.snake.forEach(pos => {
-  //   //   console.log(pos)
-  //   //   if(pos.x==p.x&&pos.y==p.y){
-  //   //     console.log(true)
-  //   //     this.rndPos(table)
-  //   //   }
-  //   // });
-  //   return p
-  // } 
+  // rndPos = table => ({
+  //   x: rnd(0)(table.cols - 1),
+  //   y: rnd(0)(table.rows - 1)
+  // })
+  rndPos = table =>{
+    let p={
+      x: rnd(0)(table.cols - 1),
+      y: rnd(0)(table.rows - 1)
+    }
+    let pointInSnake=false
+    table.snake.forEach(pos => {
+      if(this.pointEq(p)(pos)){
+        pointInSnake=true
+      }
+    });
+    return pointInSnake ? this.rndPos(table) : p
+  } 
     
   // Initial state
     initialState = () => ({
@@ -175,6 +200,24 @@ validMove (move) {
       apple: this.nextApple
       })
 
+      askForName(){
+        let name =''
+        let dialogRef = this.dialog.open(AskForNameComponent, {
+          width: '250px',
+          data: {name: name}
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(result);
+          if(result!==undefined){
+            this.highScore.setUser(result)
+            this.highScore.addScoreToBoard('Snake', this.getScore())
+          }
+          // this.animal = result;
+        });
+      }
+      getScore(): any {
+        return {score:this.maxScore}
+      }
 }
 
 const adjust    = n => f => xs => mapi(x => i => i == n ? f(x) : x)(xs)
