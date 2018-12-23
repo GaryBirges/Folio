@@ -1,0 +1,6 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css"; 
+ /* your theme. stuff for ngx gallery */
+
+.mat-sidenav-container, .mat-sidenav-content, .mat-tab-body-content {
+    transform: none !important;
+}

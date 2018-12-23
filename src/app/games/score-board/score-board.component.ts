@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
-import { HighScoreService } from '../../services/highScore/high-score.service';
+import { HighScoreService } from '../services/highScore/high-score.service';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 
 @Component({

@@ -1,0 +1,38 @@
+<!-- <div class="row">
+  <div class="col-md-12">
+      <a [routerLink] = "['/gallery' ]">
+        <div [ngStyle]="{'background-image':'url('+ this.image?.url +')'}" class="img-container">
+        </div>
+      </a>
+  </div>
+</div> -->
+<ng-template [ngIf]="haveImages">
+  <div class="row" height="410px">
+    <div class="col-md-12">
+      <div class="img-comp-container">
+        <div class="img-comp-img">
+          <!-- <a [routerLink] = "['/gallery' ]"> -->
+          <!-- <div [ngStyle]="{'background-image':'url('+ this.image?.url +')'}" class="img-container">
+            </div> -->
+          <img src={{this.image?.url}} width="600" height="400">
+          <!-- </a> -->
+        </div>
+        <div class="img-comp-img img-comp-overlay">
+          <!-- <a [routerLink] = "['/gallery' ]"> -->
+          <!-- <div [ngStyle]="{'background-image':'url('+ this.image2?.url +')'}" class="img-container">
+            </div> -->
+          <img src={{this.image2?.url}} width="600" height="400">
+          <!-- </a> -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 caption-row">
+          <span id="caption">
+            {{image?.caption}}
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ng-template>

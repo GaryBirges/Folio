@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, OnInit, OnDestroy} from '@angular/core';
 
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MediaMatcher} from '@angular/cdk/layout';
-import { IsActiveService } from '../services/is-active.service';
+import { IsActiveService } from '../games/services/is-active.service';
 import { environment } from '../../environments/environment.prod';
 
 

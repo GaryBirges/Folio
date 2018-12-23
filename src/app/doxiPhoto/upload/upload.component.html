@@ -1,0 +1,31 @@
+<div class="container">
+  <h2 class="heading"> Upoad New Files</h2>
+  <div class="row">
+    <div class="col-sm-6">
+      <p>Original</p>
+      <input type="file" (change)="handleFilesOriginal($event)" single> 
+    </div>
+    <div  class="col-sm-6">
+      <p>Edited</p>
+      <input type="file" (change)="handleFilesEdited($event)" single> 
+    </div>
+  </div>
+  <div class="row">
+    <div class=col-sm-6>
+      <label>Caption</label>
+      <input type="text" [(ngModel)]="caption">
+    </div>
+    <div class=col-sm-6>
+      <label>Filter</label>
+      <input type="text" [(ngModel)]="filter">
+    </div>
+  </div>
+  <div *ngIf="upload">
+    <div class="progress">
+      <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': upload?.progress + '%' }"></div>
+    </div>
+    <!-- Progress: {{upload?.progress|async}}% Completed -->
+    Progress: {{upload?.progress}}% Completed
+  </div>
+  <button class="btn btn-primary" (click)="uploadFiles()">Upload Images</button>
+</div>
