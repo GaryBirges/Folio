@@ -1,6 +1,8 @@
 import { Component, OnInit, OnChanges, OnDestroy, Input } from '@angular/core';
 import { NgxGalleryOptions, NgxGalleryImage } from 'ngx-gallery';
 import { ImageService } from '../services/image.service';
+import { MatDialog } from '@angular/material';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-gallery',
@@ -16,7 +18,9 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() filterBy?: string ='all'
   imagesSubscription: any;
 
-  constructor(private imgservice: ImageService){}
+  constructor(private imgservice: ImageService,
+              public dialog: MatDialog,){}
+
   ngOnInit() {    
     this.SetNgGallery();
 
@@ -72,5 +76,23 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
         big: './assets/water-sunlight.jpg'
       },
     ];
+  }
+
+  openLogin(){
+    let dialogRef = this.dialog.open(LoginComponent, {
+      width: '450px',
+      data: {name: name}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      // if(result!==undefined){
+      //   this.highScore.setUser(result)
+      //   this.highScore.addScoreToBoard('Puzzle', this.getScore())
+      // }
+      // this.animal = result;
+    });
+  }
+  openUpload(){
+
   }
 }

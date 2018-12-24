@@ -11,10 +11,14 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
   errorMsg: string;
-  constructor(private auth: AuthenticationService, private router: Router) { }
+  data={email:'', pw:''}
+  constructor(private auth: AuthenticationService, 
+              private router: Router) { }
 
   signIn(){
-    this.auth.login({email: this.email, password: this.password})
+    // console.log(this.email)
+    // console.log(this.data)
+    this.auth.login({email: this.data.email, password: this.data.pw})
     .then(resolve=>{
       this.router.navigate(['upload'])
     }).catch(error=>this.errorMsg=error.message)

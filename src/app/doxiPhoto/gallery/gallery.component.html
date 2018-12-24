@@ -2,7 +2,15 @@
   gallery works!
 </p>
 <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+<div>
+  <button mat-button (click)="openLogin()">
+    Login
+  </button>
+  <button mat-button (click)=openUpload()>
+    upload
+  </button>
 
+</div>
 <h2>Recent Photos </h2>
 <button class="btn btn-lg btn-info" type=button [class.active]="filterBy=='all'" (click)="filterBy='all'">all</button>
 <button class="btn btn-lg btn-info" type=button [class.active]="filterBy=='nature'" (click)="filterBy='nature'">nature</button>
