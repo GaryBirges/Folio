@@ -4,11 +4,11 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {  GridsterConfig, GridsterItem, CompactType, DisplayGrid, GridsterComponentInterface, GridsterItemComponentInterface,
   GridType } from 'angular-gridster2';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MessageService } from 'src/app/services/messages/message.service';
-import { HighScoreService } from '../../services/highScore/high-score.service';
+import { MessageService } from '../services/messages/message.service';
+import { HighScoreService } from '../services/highScore/high-score.service';
 import { MatDialog } from '@angular/material';
-import { AskForNameComponent } from '../../services/highScore/ask-for-name/ask-for-name.component';
-import { IsActiveService } from '../../services/is-active.service';
+import { AskForNameComponent } from '../services/highScore/ask-for-name/ask-for-name.component';
+import { IsActiveService } from '../services/is-active.service';
 
 @Component({
   selector: 'app-puzzle',

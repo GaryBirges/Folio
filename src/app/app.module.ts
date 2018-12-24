@@ -2,11 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { MessageService } from './services/messages/message.service';
+import { MessageService } from './games/services/messages/message.service';
 import { Router, RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
-import { MessagesComponent } from './services/messages/messages.component';
+import { MessagesComponent } from './games/services/messages/messages.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatSidenavModule,
         MatIconModule,
@@ -34,12 +34,32 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { Puzzle2Component } from './games/puzzle2/puzzle2.component';
 import { GridsterModule } from 'angular-gridster2';
 import { SnakeComponent } from './games/snake/snake.component';
-import { AskForNameComponent } from './services/highScore/ask-for-name/ask-for-name.component';
+import { AskForNameComponent } from './games/services/highScore/ask-for-name/ask-for-name.component';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule, AngularFirestoreDocument  } from '@angular/fire/firestore';
 import { ScoreBoardComponent } from './games/score-board/score-board.component';
-import { IsActiveService } from './services/is-active.service';
+import { IsActiveService } from './games/services/is-active.service';
+import { GalleryComponent } from './doxiPhoto/gallery/gallery.component';
+import { NgxGalleryModule } from 'ngx-gallery';
+import { ImageDetailComponent } from './doxiPhoto/image/image-detail.component';
+import { LoginComponent } from './doxiPhoto/login/login.component';
+import { UploadComponent } from './doxiPhoto/upload/upload.component';
+import { ImageService } from './doxiPhoto/services/image.service';
+import { ImageFilterPipe } from './doxiPhoto/image/filter.pipe';
+import { AuthGuard } from './doxiPhoto/services/authGuard.service';
+import { UploadService } from './doxiPhoto/services/upload.service';
+import { AuthenticationService } from './doxiPhoto/services/authentication.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+// import { ImageDetailComponent } from './image/image-detail.component';
+// import { LoginComponent } from './login/login.component';
+// import { UploadComponent } from './upload/upload.component';
+// import { ImageService} from './services/image.service'
+// import { ImageFilterPipe } from './image/filter.pipe';
+// import { AuthGuard } from './services/authGuard.service';
+// import { AuthenticationService } from './services/authentication.service';
+// import { UploadService } from './services/upload.service';
 
 @NgModule({
   declarations: [
@@ -51,13 +71,18 @@ import { IsActiveService } from './services/is-active.service';
     Puzzle2Component,
     SnakeComponent,
     AskForNameComponent,
-    ScoreBoardComponent
+    ScoreBoardComponent,
+    GalleryComponent,
+    ImageDetailComponent,
+    LoginComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),
     // AngularFirestoreDocument, 
+    AngularFireDatabaseModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
@@ -81,9 +106,21 @@ import { IsActiveService } from './services/is-active.service';
     MatExpansionModule,
     MatGridListModule,
     DragDropModule,
-    GridsterModule
+    GridsterModule,
+    NgxGalleryModule,
+    
+    
   ],
-  providers: [MessageService,IsActiveService],
+  providers: [MessageService,
+    ImageFilterPipe,
+    IsActiveService,
+    ImageService,
+    AuthGuard,
+    AuthenticationService,
+    UploadService,
+    AngularFireAuth,
+    // AngularFireStorage,
+  ],
   entryComponents: [AskForNameComponent],
   bootstrap: [AppComponent]
 })

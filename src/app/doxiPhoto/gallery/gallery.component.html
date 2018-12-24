@@ -1,0 +1,21 @@
+<p>
+  gallery works!
+</p>
+<ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+
+<h2>Recent Photos </h2>
+<button class="btn btn-lg btn-info" type=button [class.active]="filterBy=='all'" (click)="filterBy='all'">all</button>
+<button class="btn btn-lg btn-info" type=button [class.active]="filterBy=='nature'" (click)="filterBy='nature'">nature</button>
+<button class="btn btn-lg btn-info" type=button [class.active]="filterBy=='viking'" (click)="filterBy='viking'">viking</button>
+<!-- <button class="btn btn-lg btn-info" type=button [class.active]="filterBy=='all'" (click)="filterBy='all'"></button> -->
+<div class="row">
+  <ul id="thumbnailsList">
+    <!-- <li *ngFor="let img of this.images? | imageFilter: filterBy"> -->
+    <!-- <li *ngFor="let img of this.images | imageFilter: filterBy "> | async*/ -->
+    <li *ngFor="let img of this.images"> <!--| async*/-->
+      <a [routerLink] = "['/image',img.key ]">
+        <img src="{{img.url}}" class="thumbnails" width="270" height="200">
+      </a>
+    </li>
+  </ul>
+</div>

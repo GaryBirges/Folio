@@ -7,6 +7,9 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { Puzzle2Component } from './games/puzzle2/puzzle2.component';
 import { SnakeComponent } from './games/snake/snake.component';
 import { ScoreBoardComponent } from './games/score-board/score-board.component';
+import { GalleryComponent } from './doxiPhoto/gallery/gallery.component';
+import { UploadComponent } from './doxiPhoto/upload/upload.component';
+import { LoginComponent } from './doxiPhoto/login/login.component';
 
 
 const routes: Routes = [
@@ -17,11 +20,15 @@ const routes: Routes = [
   //   canDeactivate:[CanDeactivateGuard],
   //   canActivateChild:[AuthGuard],
     children: [
-          {path: 'welcome', component: WelcomeComponent},
+          {path: '', component: WelcomeComponent},
           {path : 'puzzle', component: PuzzleComponent},
           {path : 'puzzle2', component: Puzzle2Component},
           {path : 'snake', component: SnakeComponent},
           {path : 'scoreboard', component: ScoreBoardComponent},
+          {path : 'gallery', component: GalleryComponent},
+          {path: "gallery", component: GalleryComponent},
+          {path: 'upload', component: UploadComponent,},// canActivate: [AuthGuard]},
+          {path: 'login', component: LoginComponent},
   //     { path: '', component: DashboardMainComponent},
   //     { path: 'legacy', component: IframeComponent},
   //     { path: 'api', component: ApiconnectComponent },
