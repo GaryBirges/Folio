@@ -4,6 +4,7 @@ import { ImageService } from '../services/image.service';
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../login/login.component';
 import { AuthenticationService } from '../services/authentication.service';
+import { UploadService } from '../services/upload.service';
 
 @Component({
   selector: 'app-gallery',
@@ -21,35 +22,29 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private imgservice: ImageService,
               public dialog: MatDialog,
-              public auth: AuthenticationService){}
+              public auth: AuthenticationService,
+              public upload: UploadService){}
 
   ngOnInit() {    
-    this.SetNgGallery();
-
-    this.imgservice.getImages()
-    this.imagesSubscription=this.imgservice.imagesSubj.subscribe(res=>{
-      if(res!=null){
-        console.log(res)
-        this.images=[]
-        for(let i=0; i<res.length; i++){
-          if(res[i].caption){
-            this.images.push(res[i])
-          }
-        }
-        // this.images=res
-      }
+    this.upload.getImages().subscribe(res=>{
+      this.images=res
+      this.images.forEach(image => {
+        this.galleryImages.push({small:image.url, medium:image.url, big:image.url})
+        
+      });
     })
+    this.SetNgGallery();
   }
 
   ngOnChanges(){
-    this.imgservice.getImages()
+    // this.images=this.upload.getImages()
     // this.visibleImages = this.imgservice.getImages()
     // this.imgservice.getImages().subscribe(res=>this.images=res)
     // this.images=
   }
 
   ngOnDestroy(){
-    this.imagesSubscription.unsubscribe()
+    // this.imagesSubscription.unsubscribe()
   }
 
 
@@ -60,24 +55,25 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       { "breakpoint": 500, "width": "300px", "height": "300px", "thumbnailsColumns": 3 },
       { "breakpoint": 300, "width": "100%", "height": "200px", "thumbnailsColumns": 2 }
     ];
-    this.galleryImages = [
-      //'./assets/DSC_0627a.jpg', './assets/building-cloud.jpeg', './assets/water-sunlight.jpg'
-      {
-        small: './assets/DSC_0627a.jpg',
-        medium: './assets/DSC_0627a.jpg',
-        big: './assets/DSC_0627a.jpg'
-      },
-      {
-        small: './assets/building-cloud.jpeg',
-        medium: './assets/building-cloud.jpeg',
-        big: './assets/building-cloud.jpeg'
-      },
-      {
-        small: './assets/water-sunlight.jpg',
-        medium: './assets/water-sunlight.jpg',
-        big: './assets/water-sunlight.jpg'
-      },
-    ];
+    this.galleryImages=[]
+    
+    // this.galleryImages = [
+    //   {
+    //     small: './assets/DSC_0627a.jpg',
+    //     medium: './assets/DSC_0627a.jpg',
+    //     big: './assets/DSC_0627a.jpg'
+    //   },
+    //   {
+    //     small: './assets/building-cloud.jpeg',
+    //     medium: './assets/building-cloud.jpeg',
+    //     big: './assets/building-cloud.jpeg'
+    //   },
+    //   {
+    //     small: './assets/water-sunlight.jpg',
+    //     medium: './assets/water-sunlight.jpg',
+    //     big: './assets/water-sunlight.jpg'
+    //   },
+    // ];
   }
 
   openLogin(){

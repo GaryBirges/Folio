@@ -20,6 +20,7 @@ export class UploadService {
   uploadPercent: Observable<number>;
   downloadURL: Observable<string>;
   photoCollection : AngularFirestoreCollection
+  images: firebase.firestore.DocumentData[];
 
   constructor(//private AngularFire: AngularFireModule, 
               // private db: AngularFireDatabase, 
@@ -27,6 +28,9 @@ export class UploadService {
               private storage: AngularFireStorage
               ) { 
                 this.photoCollection=db.collection('DoxiPhoto')
+                this.photoCollection.valueChanges().subscribe(res=>{
+                  this.images=res
+                })
     // this.uploadSubject.next(null)
     // this.uploadSubject.subscribe((upload)=>{
     //   if(upload!=null){
@@ -66,6 +70,9 @@ export class UploadService {
 
   saveFileData({name:name, pairof:pairOf, url:res}){
     this.photoCollection.add({name:name, pairof:pairOf, url:res})
+  }
+  getImages(){
+    return  this.photoCollection.valueChanges()
   }
 
 
