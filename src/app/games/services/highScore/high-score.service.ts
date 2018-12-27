@@ -20,7 +20,8 @@ export class HighScoreService {
   score: Observable<any>
   
   constructor(db: AngularFirestore,
-              afs: AngularFirestore) { 
+              // afs: AngularFirestore
+              ) { 
     // this.items = db.collection('items').valueChanges();
     // this.itemDoc = db.doc<Item>('items/1');
     // this.tasks = this.itemDoc.collection<Item>('tasks').valueChanges();

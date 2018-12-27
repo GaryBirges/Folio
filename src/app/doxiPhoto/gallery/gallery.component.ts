@@ -3,6 +3,7 @@ import { NgxGalleryOptions, NgxGalleryImage } from 'ngx-gallery';
 import { ImageService } from '../services/image.service';
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../login/login.component';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-gallery',
@@ -19,7 +20,8 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   imagesSubscription: any;
 
   constructor(private imgservice: ImageService,
-              public dialog: MatDialog,){}
+              public dialog: MatDialog,
+              public auth: AuthenticationService){}
 
   ngOnInit() {    
     this.SetNgGallery();

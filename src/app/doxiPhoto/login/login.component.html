@@ -37,11 +37,11 @@
           <!-- </div> -->
           <!-- <p>{{email.valid&&pw.valid}}</p> -->
           <!-- [disabled] = "!(email.valid&&pw.valid)" -->
+        </div>
+      </div>
+      <div mat-dialog-actions>
           <button  type="submit" mat-button (click) ="signIn()"> Sign In</button>
           <p *ngIf="errorMsg" class="text-danger">{{errorMsg}}</p>
-      </div>
-</div>
-<div mat-dialog-actions>
   <!-- <button mat-button (click)="onNoClick()">No Thanks</button>
   <button mat-button [mat-dialog-close]="data.name" cdkFocusInitial>Ok</button> -->
 </div>

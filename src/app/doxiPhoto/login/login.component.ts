@@ -20,8 +20,10 @@ export class LoginComponent implements OnInit {
     // console.log(this.data)
     this.auth.login({email: this.data.email, password: this.data.pw})
     .then(resolve=>{
+      console.log(resolve)
       this.router.navigate(['upload'])
     }).catch(error=>this.errorMsg=error.message)
+    // .then(a=>console.log(this.auth.isLoggedin()))
   }
   ngOnInit() {
   }

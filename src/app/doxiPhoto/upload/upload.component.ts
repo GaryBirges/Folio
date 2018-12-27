@@ -24,20 +24,21 @@ export class UploadComponent implements OnInit {
 
   uploadFiles(){
     // const filesToUpload = this.files
-    console.log(this.fileOriginal[0])
+    // console.log(this.fileOriginal[0])
     // this.fileOriginal[0].name=
     // console.log(filesToUpload)
     // for(let i=0; i<filesToUpload.length; i++){
       // console.log(filesToUpload[i])
-      console.log(this.caption)
+      // console.log(this.caption)
       this.upload = new Upload(this.fileOriginal[0])
-      this.upload.pairOf=(btoa(this.fileOriginal[0].name))
+      // this.upload.pairOf=(btoa(this.fileOriginal[0].name))
       this.upload.caption=this.caption
       this.upload.filter=this.filter
+      console.log(this.upload)
       this.uploadService.uploadFile(this.upload  )
-      this.upload2 = new Upload(this.fileEdited[0])
-      this.upload2.pairOf= (btoa(this.fileOriginal[0].name))
-      this.uploadService.uploadFile(this.upload2)
+      // this.upload2 = new Upload(this.fileEdited[0])
+      // this.upload2.pairOf= (btoa(this.fileOriginal[0].name))
+      // this.uploadService.uploadFile(this.upload2)
 
       // this.uploadService.
     // }

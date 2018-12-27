@@ -36,24 +36,24 @@ export class ImageDetailComponent implements OnInit, OnDestroy {
             this.images.push(res[i])
           }
         }
-        this.image= this.imgservice.getImageById(this.route.snapshot.params['id']).subscribe(res=>{
-          console.log(res)
-          this.image.name = res[0];
-          this.image.url = res[5];
-          this.image.caption=res[0]
-          this.image.filter=res[1]
-          this.image.pairOf=res[3]
-          this.image.name=res[2]
-          // this.image2=
-          for(let i=0; i<this.images.length; i++){
-            if(this.images[i].pairOf==this.image.pairOf){
-              this.image2=this.images[i]
-              console.log(this.image2)
-              this.haveImages=true;
-              this.initComparisons()
-            }
-          }
-          })
+        // this.image= this.imgservice.getImageById(this.route.snapshot.params['id']).subscribe(res=>{
+        //   console.log(res)
+        //   this.image.name = res[0];
+        //   this.image.url = res[5];
+        //   this.image.caption=res[0]
+        //   this.image.filter=res[1]
+        //   this.image.pairOf=res[3]
+        //   this.image.name=res[2]
+        //   // this.image2=
+        //   for(let i=0; i<this.images.length; i++){
+        //     if(this.images[i].pairOf==this.image.pairOf){
+        //       this.image2=this.images[i]
+        //       console.log(this.image2)
+        //       this.haveImages=true;
+        //       this.initComparisons()
+        //     }
+        //   }
+        //   })
         
       // }
       }

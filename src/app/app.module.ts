@@ -52,6 +52,7 @@ import { UploadService } from './doxiPhoto/services/upload.service';
 import { AuthenticationService } from './doxiPhoto/services/authentication.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireStorage } from '@angular/fire/storage';
 // import { ImageDetailComponent } from './image/image-detail.component';
 // import { LoginComponent } from './login/login.component';
 // import { UploadComponent } from './upload/upload.component';
@@ -119,7 +120,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
     AuthenticationService,
     UploadService,
     AngularFireAuth,
-    // AngularFireStorage,
+    AngularFireStorage,
   ],
   entryComponents: [AskForNameComponent],
   bootstrap: [AppComponent]
