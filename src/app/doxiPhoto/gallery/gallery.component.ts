@@ -19,6 +19,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   images//:Observable<GalleryImage[]>
   @Input() filterBy?: string ='all'
   imagesSubscription: any;
+  filters
 
   constructor(private imgservice: ImageService,
               public dialog: MatDialog,
@@ -28,10 +29,10 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {    
     this.upload.getImages().subscribe(res=>{
       this.images=res
-      this.images.forEach(image => {
-        this.galleryImages.push({small:image.url, medium:image.url, big:image.url})
-        
-      });
+      this.filter('all')
+    })
+    this.upload.getFilters().subscribe(res=>{
+      this.filters=res
     })
     this.SetNgGallery();
   }
@@ -51,7 +52,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
 
   private SetNgGallery() {
     this.galleryOptions = [
-      { "previewCloseOnClick": true, "previewCloseOnEsc": true },
+      { "previewCloseOnClick": true, "previewCloseOnEsc": true, "imageArrows": true },
       { "breakpoint": 500, "width": "300px", "height": "300px", "thumbnailsColumns": 3 },
       { "breakpoint": 300, "width": "100%", "height": "200px", "thumbnailsColumns": 2 }
     ];
@@ -92,5 +93,32 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   }
   openUpload(){
 
+  }
+
+  imageFilter(items:any[], criteria: string):any {
+    if(criteria==='all'){
+      console.log(items)
+        return items;
+    }else{
+      /*be brave and filter filters with filter in filters*/
+      //return items.filter(item=>{return item['filter'].filter(item=>{return item.filter===criteria;})})
+        return items.filter(item=>{return item.filter===criteria;})
+    }
+  }
+
+  filter(criteria:string){
+    console.log(criteria)
+    this.galleryImages=[]
+    this.imageFilter(this.images, criteria)
+    .forEach(image => {
+      this.galleryImages.push({small:image.url, medium:image.url, big:image.url})
+    });
+
+    // this.images.forEach(img => {
+    //   this.imageFilter(img.filter, criteria).forEach(image => {
+    //     this.galleryImages.push({small:image.url, medium:image.url, big:image.url})
+    //   });
+      
+    // });
   }
 }

@@ -13,6 +13,7 @@ import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/fire
   providedIn: 'root'
 })
 export class UploadService {
+
   private basePath = "/uploads"
   // private uploads: AngularFireList <GalleryImage[]>
   uploadSubject: BehaviorSubject<any>= new BehaviorSubject<any>(null)
@@ -20,7 +21,9 @@ export class UploadService {
   uploadPercent: Observable<number>;
   downloadURL: Observable<string>;
   photoCollection : AngularFirestoreCollection
-  images: firebase.firestore.DocumentData[];
+  photoFilters : AngularFirestoreCollection
+  // images: firebase.firestore.DocumentData[];
+  filters: firebase.firestore.DocumentData[];
 
   constructor(//private AngularFire: AngularFireModule, 
               // private db: AngularFireDatabase, 
@@ -28,9 +31,13 @@ export class UploadService {
               private storage: AngularFireStorage
               ) { 
                 this.photoCollection=db.collection('DoxiPhoto')
-                this.photoCollection.valueChanges().subscribe(res=>{
-                  this.images=res
-                })
+                // this.photoCollection.valueChanges().subscribe(res=>{
+                //   this.images=res
+                // })
+                this.photoFilters=db.collection('DoxiPhotoFilter')
+                // this.photoFilters.valueChanges().subscribe(res=>{
+                //   this.filters=res
+                // })
     // this.uploadSubject.next(null)
     // this.uploadSubject.subscribe((upload)=>{
     //   if(upload!=null){
@@ -55,24 +62,31 @@ export class UploadService {
       
         finalize(() => {
           this.downloadURL = fileRef.getDownloadURL() 
-          this.getUrl(file.name, pairOf,)
+          this.getUrl(file.name, event.caption, event.filter, pairOf,)
         })
      )
     .subscribe()
   }
 
-  getUrl(name ,pairOf?){
+  getUrl(name , caption, filter,pairOf?){
     this.downloadURL.subscribe(res=>{
       console.log(res)
-      this.saveFileData({name:name, pairof:pairOf, url:res})
+      this.saveFileData({name:name, pairof:pairOf, url:res, caption:caption, filter:filter})
     })
   }
 
-  saveFileData({name:name, pairof:pairOf, url:res}){
-    this.photoCollection.add({name:name, pairof:pairOf, url:res})
+  saveFileData({name:name, pairof:pairOf, url:res, caption:caption, filter:filter}){
+    this.photoCollection.add({name:name, pairof:pairOf, url:res, filter:filter})
   }
   getImages(){
     return  this.photoCollection.valueChanges()
+  }
+  getFilters(){
+    return this.photoFilters.valueChanges()
+  }
+
+  addFilter(filter: any): any {
+    this.photoFilters.add(filter)
   }
 
 

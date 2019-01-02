@@ -1,25 +1,55 @@
-<div class="container">
+<mat-card>
   <h2 class="heading"> Upoad New Files</h2>
-  <div class="row">
-    <div class="col-sm-6">
-      <p>Original</p>
-      <input type="file" (change)="handleFilesOriginal($event)" single> 
-    </div>
+    <!-- <p>Original</p> -->
+    <mat-grid-list cols="2" rowHeight="100px">
+        <mat-grid-tile>
+          <p>Original</p>
+          <button mat-raised-button color="primary" (click)="originalFile.click()">Upload</button>
+          <input hidden type="file" #originalFile (change)="handleFilesOriginal($event)" single>
+        </mat-grid-tile>
+        <mat-grid-tile >
+            <p>Edited</p>
+            <button mat-raised-button color="primary" (click)="editedFile.click()">Upload</button>
+            <input hidden type="file" #editedFile (change)="handleFilesEdited($event)" single>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <!-- <input type="file" (change)="handleFilesOriginal($event)" single>  -->
     <!-- <div  class="col-sm-6">
       <p>Edited</p>
       <input type="file" (change)="handleFilesEdited($event)" single> 
     </div> -->
-  </div>
-  <div class="row">
+    <mat-form-field>
+        <input matInput placeholder="Caption" [(ngModel)]="caption">
+      </mat-form-field>
+      <div>
+        <label>Already used filters</label>
+          <mat-chip-list>
+            <ng-template *ngFor="let filter of allFilters">
+              <mat-chip  (click)="addFromAll(filter)" *ngIf="filter.name!='all'">{{filter.name}}</mat-chip>
+            </ng-template>
+          </mat-chip-list>
+        <mat-form-field>
+          <mat-chip-list #chipList>
+            <mat-chip *ngFor="let filter of filters" [removable]="removable" (removed)="remove(filter)">
+              {{filter.name}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+          <input [matChipInputFor]="chipList" placeholder="Filter" [(ngModel)]="filter" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+          <!-- <input matInput placeholder="Filter" [(ngModel)]="filter"> -->
+        </mat-form-field>
+      </div>
+  <!-- <div class="row">
     <div class=col-sm-6>
       <label>Caption</label>
       <input type="text" [(ngModel)]="caption">
-    </div>
-    <div class=col-sm-6>
+    </div> -->
+    <!-- <div class=col-sm-6>
       <label>Filter</label>
       <input type="text" [(ngModel)]="filter">
     </div>
-  </div>
+  </div> -->
   <div *ngIf="upload">
     <div class="progress">
       <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': upload?.progress + '%' }"></div>
@@ -27,5 +57,6 @@
     <!-- Progress: {{upload?.progress|async}}% Completed -->
     Progress: {{upload?.progress}}% Completed
   </div>
-  <button class="btn btn-primary" (click)="uploadFiles()">Upload Images</button>
-</div>
+  <button mat-raised-button (click)="uploadFiles()">Upload Images</button>
+
+</mat-card>

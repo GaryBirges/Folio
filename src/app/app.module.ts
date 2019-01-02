@@ -24,7 +24,8 @@ import {MatSidenavModule,
         MatSortModule,
         MatCardModule,
         MatGridListModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatChipsModule
       } 
         from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -109,7 +110,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
     DragDropModule,
     GridsterModule,
     NgxGalleryModule,
-    
+    MatChipsModule
     
   ],
   providers: [MessageService,

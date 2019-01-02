@@ -9,7 +9,7 @@ export class Upload {
     createdOn: Date= new Date()
     name: string;
     caption: string
-    filter:string
+    filter:string[]
     pairOf:string
 
     constructor(file: File){

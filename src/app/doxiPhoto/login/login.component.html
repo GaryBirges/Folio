@@ -1,47 +1,16 @@
 
 <h1 mat-dialog-title>Log In</h1>
 <div mat-dialog-content>
-    <div class="container">
-        <form #loginForm="ngForm">
-        </form>  
-          <!-- <h2>LOGIN</h2> -->
-          <!-- <div class="formgroup"> -->
-            <!-- <label> Email</label> -->
-            <mat-form-field >
-              <input matInput #email placeholder="Email" [(ngModel)]="data.email">
-              <!-- <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint> -->
-            </mat-form-field>
-            <!-- <input class="form-control" 
-            #emailControl="ngModel" 
-            placeholder="Email"
-             [(ngModel)]="email" 
-             name="email"
-              maxlength="70" 
-              email 
-              required> -->
-          <!-- </div> -->
-          <!-- <div class="formgroup"> -->
-            <!-- <label> Password</label> -->
-            <mat-form-field >
-                <input type="password" matInput #pw placeholder="Password" [(ngModel)]="data.pw">
-                <!-- <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint> -->
-              </mat-form-field>
-            <!-- <input class="form-control" 
-            #passwordControl="ngModel" 
-            placeholder="Password"
-            [(ngModel)]="password" 
-            name="password" 
-            maxlength="70"  
-            type="password" 
-            required> -->
-          <!-- </div> -->
-          <!-- <p>{{email.valid&&pw.valid}}</p> -->
-          <!-- [disabled] = "!(email.valid&&pw.valid)" -->
-        </div>
-      </div>
-      <div mat-dialog-actions>
-          <button  type="submit" mat-button (click) ="signIn()"> Sign In</button>
-          <p *ngIf="errorMsg" class="text-danger">{{errorMsg}}</p>
-  <!-- <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.name" cdkFocusInitial>Ok</button> -->
+  <div class="container">
+    <mat-form-field>
+      <input matInput #email placeholder="Email" [(ngModel)]="data.email">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="password" matInput #pw placeholder="Password" [(ngModel)]="data.pw">
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button type="submit" mat-button (click)="signIn()"> Sign In</button>
+  <p *ngIf="errorMsg">{{errorMsg}}</p>
 </div>
