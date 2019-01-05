@@ -4,6 +4,7 @@ import {Upload } from '../models/upload.model';
 // import
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material';
+import { FormBuilder, FormArray } from '@angular/forms';
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
@@ -15,37 +16,46 @@ export class UploadComponent implements OnInit {
   fileEdited:FileList;
   upload: Upload;
   upload2: Upload;
-  allFilters 
-  caption
-  filters: any[];
-
-  constructor(private uploadService: UploadService) { }
+  allFilters
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  uploadForm
+  thumbnailUrl: any='';
+  thumbnailReady=false
+
+  constructor(private uploadService: UploadService,
+              private fb: FormBuilder) { }
+
   ngOnInit() {
-    // this.files
+    this.CreateUploadForm()
     this.getFilters()
-    this.filters=[]
+  }
+  CreateUploadForm(): any {
+   this.uploadForm= this.fb.group({
+     original:    '',
+     edited:      '',
+     caption:     '',
+     filters:     this.fb.control([])
+   })
   }
 
   uploadFiles(){
-    // const filesToUpload = this.files
-    // console.log(this.fileOriginal[0])
-    // this.fileOriginal[0].name=
-    // console.log(filesToUpload)
-    // for(let i=0; i<filesToUpload.length; i++){
-      // console.log(filesToUpload[i])
-      // console.log(this.caption)
       this.upload = new Upload(this.fileOriginal[0])
       // this.upload.pairOf=(btoa(this.fileOriginal[0].name))
-      this.upload.caption=this.caption
-      this.upload.filter=this.filters
+      this.upload.caption=this.uploadForm.value.caption
+      this.upload.filter=this.uploadForm.value.filters
       console.log(this.upload)
-      this.uploadService.uploadFile(this.upload  )
-      this.filters.forEach(f => {
-        if(this.allFilters.indexOf(f)==-1){
-          this.addFilter(f)
+      this.uploadService.uploadFile(this.upload)
+      this.uploadForm.value.filters.forEach(f => {
+        let existingFilter = false;
+        for (let i = 0; i < this.allFilters.length; i++) {
+          if (this.allFilters[i].name == f.trim()) {
+            existingFilter = true;
+          }
+        }
+        if (!existingFilter) {
+          this.addFilter({name:f})
         }
       });
       // this.upload2 = new Upload(this.fileEdited[0])
@@ -59,6 +69,20 @@ export class UploadComponent implements OnInit {
   handleFilesOriginal(event){
     console.log(event.target.files)
     this.fileOriginal=event.target.files;
+    let reader = new FileReader();
+    if(event.target.files[0]){
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.thumbnailUrl = event.target['result'];
+        // setTimeout(() => {
+          
+          this.thumbnailReady=true
+          // console.log( this.thumbnailUrl)
+        // }, 1);
+      }
+      // document.getElementById('blah').src=e.target.result)
+      // console.log(reader)
+    }
   }
   handleFilesEdited(event){
     this.fileEdited=event.target.files;
@@ -69,41 +93,44 @@ export class UploadComponent implements OnInit {
     const input = event.input;
     const value = event.value;
 
-    // Add our fruit
     if ((value || '').trim()) {
-      console.log({name: value.trim()})
-      let fil={name: value.trim()}
-      if(this.filters.indexOf(fil)==-1){
-        this.filters.push({name: value.trim()})
-      }
-      // this.filters.push({name: value.trim()});
-      // this.addFilter({name: value.trim()})
+      this.AddIfNotExisting(value);
     }
 
-    // Reset the input value
     if (input) {
       input.value = '';
     }
   }
-  addFromAll(filter){
-    if(this.filters.indexOf(filter)==-1){
-      console.log(filter)
-      this.filters.push(filter)
+  private AddIfNotExisting(value: string) {
+    let existingFilter = false;
+    const allFilters = this.uploadForm.get('filters').value ;
+    for (let i = 0; i < allFilters.length; i++) {
+      if (allFilters[i] == value.trim()) {
+        existingFilter = true;
+      }
+    }
+    if (!existingFilter) {
+      allFilters.push((value.trim() ));
     }
   }
 
+  addFromAll(filter){
+    this.AddIfNotExisting(filter.name)
+  }
+
   remove(filter): void {
-    const index = this.filters.indexOf(filter);
+    const allFilters = this.uploadForm.get('filters').value ;
+    const index = allFilters.indexOf(filter);
 
     if (index >= 0) {
-      this.filters.splice(index, 1);
+      allFilters.splice(index, 1);
     }
   }
 
   getFilters(){
     this.uploadService.getFilters().subscribe(res=>{
-      console.log(res)
-      this.allFilters=res
+      this.allFilters=[]
+      res.forEach(f=>{if(f.name!=='all'){this.allFilters.push(f)}})
     })
   }
   addFilter(filter){

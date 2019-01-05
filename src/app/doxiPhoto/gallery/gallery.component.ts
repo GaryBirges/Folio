@@ -15,10 +15,10 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
 
-  visibleImages: any[]=[]
+  // visibleImages: any[]=[]
   images//:Observable<GalleryImage[]>
-  @Input() filterBy?: string ='all'
-  imagesSubscription: any;
+  // @Input() filterBy?: string ='all'
+  // imagesSubscription: any;
   filters
 
   constructor(private imgservice: ImageService,
@@ -28,7 +28,15 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {    
     this.upload.getImages().subscribe(res=>{
-      this.images=res
+      console.log(res)
+      this.images=[]
+      res.forEach(x=>{if(x.filter!==undefined){
+        if(x.filer!=='viking'){
+          this.images.push(x)
+        }
+      }})
+      // this.images=res
+      console.log(this.images)
       this.filter('all')
     })
     this.upload.getFilters().subscribe(res=>{
@@ -97,28 +105,30 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
 
   imageFilter(items:any[], criteria: string):any {
     if(criteria==='all'){
-      console.log(items)
+      // console.log(items)
         return items;
     }else{
       /*be brave and filter filters with filter in filters*/
       //return items.filter(item=>{return item['filter'].filter(item=>{return item.filter===criteria;})})
-        return items.filter(item=>{return item.filter===criteria;})
+        return items.filter(item=>{return item===criteria;})
     }
   }
 
   filter(criteria:string){
-    console.log(criteria)
+    // console.log(criteria)
     this.galleryImages=[]
-    this.imageFilter(this.images, criteria)
-    .forEach(image => {
-      this.galleryImages.push({small:image.url, medium:image.url, big:image.url})
-    });
-
-    // this.images.forEach(img => {
-    //   this.imageFilter(img.filter, criteria).forEach(image => {
-    //     this.galleryImages.push({small:image.url, medium:image.url, big:image.url})
-    //   });
-      
+    // this.imageFilter(this.images, criteria)
+    // .forEach(image => {
+    //   this.galleryImages.push({small:image.url, medium:image.url, big:image.url})
     // });
+
+    this.images.forEach(img => {
+      this.imageFilter(img.filter, criteria).forEach(image => {
+        // console.log(image)
+        this.galleryImages.push({small:img.url, medium:img.url, big:img.url})
+        // console.log("added")
+      });
+      
+    });
   }
 }
