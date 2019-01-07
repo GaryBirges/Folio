@@ -60,6 +60,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
 
   private SetNgGallery() {
     this.galleryOptions = [
+      {"imageArrows" :true,},
       { "previewCloseOnClick": true, "previewCloseOnEsc": true, "imageArrows": true },
       { "breakpoint": 500, "width": "300px", "height": "300px", "thumbnailsColumns": 3 },
       { "breakpoint": 300, "width": "100%", "height": "200px", "thumbnailsColumns": 2 }

@@ -54,6 +54,7 @@ import { AuthenticationService } from './doxiPhoto/services/authentication.servi
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 // import { ImageDetailComponent } from './image/image-detail.component';
 // import { LoginComponent } from './login/login.component';
 // import { UploadComponent } from './upload/upload.component';
@@ -110,7 +111,8 @@ import { AngularFireStorage } from '@angular/fire/storage';
     DragDropModule,
     GridsterModule,
     NgxGalleryModule,
-    MatChipsModule
+    MatChipsModule,
+    FontAwesomeModule,
     
   ],
   providers: [MessageService,
