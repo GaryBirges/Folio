@@ -14,7 +14,12 @@
       </mat-grid-tile>
       <mat-grid-tile>
         <p>Edited</p>
-        <button mat-raised-button color="primary" (click)="editedFile.click()">Upload</button>
+        <ng-template [ngIf]="this.thumbnailEditedReady">
+          <img [src]="thumbnailEditedUrl" height="100px" (click)="editedFile.click()">
+        </ng-template>
+        <ng-template [ngIf]="!this.thumbnailEditedReady">
+          <button mat-raised-button color="primary" (click)="editedFile.click()">Upload</button>
+        </ng-template>
         <input  formControlName="edited" hidden type="file" #editedFile (change)="handleFilesEdited($event)" single>
       </mat-grid-tile>
     </mat-grid-list>

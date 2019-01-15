@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../login/login.component';
 import { AuthenticationService } from '../services/authentication.service';
 import { UploadService } from '../services/upload.service';
+import { CompareImageComponent } from '../compare-image/compare-image.component';
 
 @Component({
   selector: 'app-gallery',
@@ -30,11 +31,12 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     this.upload.getImages().subscribe(res=>{
       console.log(res)
       this.images=[]
-      res.forEach(x=>{if(x.filter!==undefined){
-        if(x.filer!=='viking'){
-          this.images.push(x)
-        }
-      }})
+      res.forEach(x=>{
+          if(x.pairOf==undefined){
+            console.log(x.pairOf)
+            this.images.push(x)
+          }
+      })
       // this.images=res
       console.log(this.images)
       this.filter('all')
@@ -50,7 +52,9 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     // this.visibleImages = this.imgservice.getImages()
     // this.imgservice.getImages().subscribe(res=>this.images=res)
     // this.images=
+
   }
+  // this.ias.isActive
 
   ngOnDestroy(){
     // this.imagesSubscription.unsubscribe()
@@ -61,9 +65,9 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   private SetNgGallery() {
     this.galleryOptions = [
       {"imageArrows" :true,},
-      { "previewCloseOnClick": true, "previewCloseOnEsc": true, "imageArrows": true },
-      { "breakpoint": 500, "width": "300px", "height": "300px", "thumbnailsColumns": 3 },
-      { "breakpoint": 300, "width": "100%", "height": "200px", "thumbnailsColumns": 2 }
+      { "previewCloseOnClick": true, "previewCloseOnEsc": true, "imageArrows": true, previewCustom: this.openPreview.bind(this) },
+      { "breakpoint": 500, "width": "300px", "height": "300px", "thumbnailsColumns": 3,previewCustom: this.openPreview.bind(this) },
+      { "breakpoint": 300, "width": "100%", "height": "200px", "thumbnailsColumns": 2,previewCustom: this.openPreview.bind(this) }
     ];
     this.galleryImages=[]
     
@@ -84,6 +88,19 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     //     big: './assets/water-sunlight.jpg'
     //   },
     // ];
+  }
+
+  openPreview(index){
+    console.log("open")
+    console.log(index)
+    let dialogRef = this.dialog.open(CompareImageComponent, {
+      width: '450px',
+      data: {index: index}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+    // this.openLogin()
   }
 
   openLogin(){
@@ -133,3 +150,4 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 }
+

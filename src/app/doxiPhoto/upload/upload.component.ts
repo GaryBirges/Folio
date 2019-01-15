@@ -22,14 +22,19 @@ export class UploadComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   uploadForm
   thumbnailUrl: any='';
+  thumbnailEditedUrl: any='';
   thumbnailReady=false
-
+  thumbnailEditedReady=false
+  
   constructor(private uploadService: UploadService,
               private fb: FormBuilder) { }
 
   ngOnInit() {
     this.CreateUploadForm()
     this.getFilters()
+    this.uploadService.uploadPercent.subscribe(res=>{
+      console.log(res)
+    })
   }
   CreateUploadForm(): any {
    this.uploadForm= this.fb.group({
@@ -58,12 +63,14 @@ export class UploadComponent implements OnInit {
           this.addFilter({name:f})
         }
       });
-      // this.upload2 = new Upload(this.fileEdited[0])
-      // this.upload2.pairOf= (btoa(this.fileOriginal[0].name))
-      // this.uploadService.uploadFile(this.upload2)
 
-      // this.uploadService.
-    // }
+      if(this.fileEdited[0]!==null){
+        this.upload2 = new Upload(this.fileEdited[0])
+        this.upload2.pairOf= (btoa(this.fileOriginal[0].name))
+        this.upload2.filter=this.uploadForm.value.filters
+        this.upload2.caption=this.uploadForm.value.caption
+        this.uploadService.uploadFile(this.upload2)
+      }
   }
 
   handleFilesOriginal(event){
@@ -74,18 +81,20 @@ export class UploadComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = (event) => { // called once readAsDataURL is completed
         this.thumbnailUrl = event.target['result'];
-        // setTimeout(() => {
-          
-          this.thumbnailReady=true
-          // console.log( this.thumbnailUrl)
-        // }, 1);
+        this.thumbnailReady=true
       }
-      // document.getElementById('blah').src=e.target.result)
-      // console.log(reader)
     }
   }
   handleFilesEdited(event){
     this.fileEdited=event.target.files;
+    let reader = new FileReader();
+    if(event.target.files[0]){
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.thumbnailEditedUrl = event.target['result'];
+        this.thumbnailEditedReady=true
+      }
+    }
   }
 
   add(event: MatChipInputEvent): void {

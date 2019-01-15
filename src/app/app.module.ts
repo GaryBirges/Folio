@@ -55,6 +55,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CompareImageComponent } from './doxiPhoto/compare-image/compare-image.component';
 // import { ImageDetailComponent } from './image/image-detail.component';
 // import { LoginComponent } from './login/login.component';
 // import { UploadComponent } from './upload/upload.component';
@@ -78,7 +79,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     GalleryComponent,
     ImageDetailComponent,
     LoginComponent,
-    UploadComponent
+    UploadComponent,
+    CompareImageComponent
   ],
   imports: [
     BrowserModule,
@@ -125,7 +127,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AngularFireAuth,
     AngularFireStorage,
   ],
-  entryComponents: [AskForNameComponent],
+  entryComponents: [AskForNameComponent, CompareImageComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
