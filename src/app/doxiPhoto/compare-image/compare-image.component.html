@@ -9,6 +9,16 @@
       <input type="password" matInput #pw placeholder="Password" [(ngModel)]="data.pw">
     </mat-form-field>
   </div> -->
+  <!-- <img [src]="this.data.image.url"> -->
+
+  <div class="img-comp-container">
+    <div class="img-comp-img">
+      <img [src]="this.data.image.url" width="300" height="200">
+    </div>
+    <div class="img-comp-img img-comp-overlay">
+      <img [src]="this.data.toCompare.url" width="300" height="200">
+    </div>
+  </div>
 </div>
 <div mat-dialog-actions>
   <!-- <button type="submit" mat-button (click)="signIn()"> Sign In</button>
