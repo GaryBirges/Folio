@@ -54,8 +54,9 @@ import { AuthenticationService } from './doxiPhoto/services/authentication.servi
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CompareImageComponent } from './doxiPhoto/compare-image/compare-image.component';
+import { PongComponent } from './games/pong/pong.component';
 // import { ImageDetailComponent } from './image/image-detail.component';
 // import { LoginComponent } from './login/login.component';
 // import { UploadComponent } from './upload/upload.component';
@@ -80,7 +81,8 @@ import { CompareImageComponent } from './doxiPhoto/compare-image/compare-image.c
     ImageDetailComponent,
     LoginComponent,
     UploadComponent,
-    CompareImageComponent
+    CompareImageComponent,
+    PongComponent
   ],
   imports: [
     BrowserModule,
@@ -114,7 +116,7 @@ import { CompareImageComponent } from './doxiPhoto/compare-image/compare-image.c
     GridsterModule,
     NgxGalleryModule,
     MatChipsModule,
-    FontAwesomeModule,
+    // FontAwesomeModule,
     
   ],
   providers: [MessageService,

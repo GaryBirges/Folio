@@ -10,6 +10,7 @@ import { ScoreBoardComponent } from './games/score-board/score-board.component';
 import { GalleryComponent } from './doxiPhoto/gallery/gallery.component';
 import { UploadComponent } from './doxiPhoto/upload/upload.component';
 import { LoginComponent } from './doxiPhoto/login/login.component';
+import { PongComponent } from './games/pong/pong.component';
 
 
 const routes: Routes = [
@@ -24,6 +25,7 @@ const routes: Routes = [
           {path : 'puzzle', component: PuzzleComponent},
           {path : 'puzzle2', component: Puzzle2Component},
           {path : 'snake', component: SnakeComponent},
+          {path : 'pong', component: PongComponent},
           {path : 'scoreboard', component: ScoreBoardComponent},
           {path : 'gallery', component: GalleryComponent},
           // {path: "gallery", component: GalleryComponent},
