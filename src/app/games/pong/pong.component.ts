@@ -45,13 +45,7 @@ export class PongComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.lastTime=0
-    console.log(this.lastTime)
     this.game= new Game(WIDTH, HEIGHT)
-    // InputHandler
-    // new InputHandler()
-    // console.log(a)
-    // a.handleKeyboardEvent()
   }
   ngAfterViewInit(): void {
     this.ctx = (<HTMLCanvasElement>this.gameField.nativeElement).getContext('2d');

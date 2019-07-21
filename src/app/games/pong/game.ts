@@ -1,10 +1,14 @@
 import {Paddle} from './paddle'
 import {Ball} from './ball'
+import {Brick} from './brick'
+
+import {buildLevel, Level1} from './levels'
 
 export class Game {
 
     ball
     paddle
+    bricks
     gameWidth
     gameHeight
     gameElements
@@ -19,9 +23,12 @@ export class Game {
         this.paddle= new Paddle(this)
         this.ball= new Ball(this)
 
+       this.bricks = buildLevel(this, Level1) 
+
         this.gameElements = [
             this.ball,
-            this.paddle
+            this.paddle,
+            ...this.bricks
         ]
     }
 
@@ -29,6 +36,8 @@ export class Game {
         this.gameElements.forEach(element => {
             element.update(deltaTime)
         });
+
+        this.gameElements = this.gameElements.filter(elem=>!elem.remove)
     }
     
     draw(ctx){
