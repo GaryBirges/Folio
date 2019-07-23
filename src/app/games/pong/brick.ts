@@ -10,7 +10,7 @@ export class Brick {
     constructor(game, position){
         this.game=game
         this.image= new Image()
-        this.image.src="../../../assets/lava.jpg"
+        this.image.src="./assets/lava.jpg"
         this.position = position
         this.width = 80;
         this.height = 25;

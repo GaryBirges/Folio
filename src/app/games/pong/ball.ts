@@ -11,8 +11,8 @@ export class Ball{
     constructor(game){
         this.game=game
         this.image= new Image()
-        this.image.src="../../../assets/Basketball_Ball_Icon.png"
-        this.speed= {x: 1, y:-1}
+        this.image.src="./assets/BallIcon.png"
+        this.speed= {x: 4, y:-2}
         this.position = { x: 10, y:500}
         this.size = 16
     }

@@ -49,7 +49,10 @@ export class PongComponent implements OnInit {
   }
   ngAfterViewInit(): void {
     this.ctx = (<HTMLCanvasElement>this.gameField.nativeElement).getContext('2d');
-    this.game.start()
+    setTimeout(() => {
+      
+      this.game.start()
+    }, 2000);
     // this.game.paddle.draw(this.ctx)
     requestAnimationFrame(this.gameLoop.bind(this))
   }

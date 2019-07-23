@@ -82,7 +82,8 @@ import { PongComponent } from './games/pong/pong.component';
     LoginComponent,
     UploadComponent,
     CompareImageComponent,
-    PongComponent
+    PongComponent,
+    ImageFilterPipe
   ],
   imports: [
     BrowserModule,
