@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Game } from './game';
-
+import {randomLevelGenerator} from './levels'
 
 const WIDTH = 800
 const HEIGHT = 600
@@ -17,7 +17,7 @@ export class PongComponent implements OnInit {
   // ball
   game
   
-  @HostListener('document:keydown', ['$event'])//might need to be moved to userinputs
+  @HostListener('document:keydown', ['$event'])
   keyDown(event: KeyboardEvent) { 
     switch(event.keyCode) {
       case 37: 
@@ -26,9 +26,15 @@ export class PongComponent implements OnInit {
       case 39: 
           this.game.paddle.moveRight()
           break;
+      case 27:
+          this.game.togglePause()
+          break;
+      case 32:
+          this.game.start()
+          break;
     }
   }
-  @HostListener('document:keyup', ['$event'])//might need to be moved to userinputs
+  @HostListener('document:keyup', ['$event'])
   keyUp(event: KeyboardEvent) { 
     switch(event.keyCode) {
       case 37: 
@@ -46,13 +52,10 @@ export class PongComponent implements OnInit {
 
   ngOnInit() {
     this.game= new Game(WIDTH, HEIGHT)
+    // randomLevelGenerator()
   }
   ngAfterViewInit(): void {
     this.ctx = (<HTMLCanvasElement>this.gameField.nativeElement).getContext('2d');
-    setTimeout(() => {
-      
-      this.game.start()
-    }, 2000);
     // this.game.paddle.draw(this.ctx)
     requestAnimationFrame(this.gameLoop.bind(this))
   }
@@ -68,4 +71,5 @@ export class PongComponent implements OnInit {
     
     requestAnimationFrame(this.gameLoop.bind(this))
   }
+  
 }

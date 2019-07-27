@@ -12,9 +12,13 @@ export class Ball{
         this.game=game
         this.image= new Image()
         this.image.src="./assets/BallIcon.png"
-        this.speed= {x: 4, y:-2}
-        this.position = { x: 10, y:500}
         this.size = 16
+        this.reset()
+    }
+
+    reset(){
+        this.speed= {x: 4, y:-2}
+        this.position = { x: this.game.gameWidth/2, y:this.game.gameHeight*3/4}  
     }
 
     draw(ctx){
@@ -28,8 +32,12 @@ export class Ball{
         if(this.position.x + this.size > this.game.gameWidth || this.position.x < 0){
             this.speed.x = -this.speed.x
         }
-        if(this.position.y + this.size > this.game.gameHeight || this.position.y < 0){
+        if( this.position.y < 0){
             this.speed.y = -this.speed.y
+        }
+        if(this.position.y + this.size > this.game.gameHeight ){
+            this.game.lives--;
+            this.reset()
         }
         if(detectCollosion(this, this.game.paddle)){
             this.speed.y = -this.speed.y
