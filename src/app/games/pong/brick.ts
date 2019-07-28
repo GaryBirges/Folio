@@ -3,15 +3,24 @@ import {detectCollosion} from './collosionDetection'
 export class Brick {
     game: any;
     image: HTMLImageElement;
+    // imageOak: HTMLImageElement;
     position: { x: number; y: number; };
     width: number;
     height: number;
     remove:boolean;
-    constructor(game, position){
+    blockType:number
+    constructor(game, position, blockType){
         this.game=game
         this.image= new Image()
-        this.image.src="./assets/lava.jpg"
+        this.blockType=blockType
+        if(this.blockType==1){
+            this.image.src="./assets/lava.jpg"
+        }else if(this.blockType==2){
+            this.image.src="./assets/oak.jpg"
+        }
+        // this.imageOak= new Image()
         this.position = position
+        
         this.width = 80;
         this.height = 25;
 
@@ -22,6 +31,8 @@ export class Brick {
         if(detectCollosion(this.game.ball, this)){
             this.game.ball.speed.y = -this.game.ball.speed.y
             this.remove=true;
+            // console.log(this.blockType)
+            this.game.score+=this.blockType
         }
 
 

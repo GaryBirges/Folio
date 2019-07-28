@@ -2,14 +2,15 @@ import {Brick} from './brick'
 
 export function buildLevel(game, level){
     let bricks=[]
+    console.log(level)
     level.forEach((row, rowIndex)=>{
         row.forEach((brick, brickIndex) => {
-            if( brick === 1){
+            if( brick === 1|| brick === 2){
                 let position = {
                     x: 80 * brickIndex,
-                    y: 50 + 24 * rowIndex
+                    y: 70 + 24 * rowIndex
                 }
-                bricks.push(new Brick(game, position))
+                bricks.push(new Brick(game, position, brick))
             }
         });
     }) 
@@ -36,13 +37,22 @@ export const Level3 = [
 ]
 
 export function randomLevelGenerator(){
-    let left = []
-    for(let i=0;i<5; i++){
-        left.push(getRandomInt(3))
+    let level:Array<Array<number>>=[]
+    for(let i=0;i<getRandomInt(0,3)+1; i++){
+        level.push(randomRow())
     }
-    console.log(left)
+    return level 
+}
+function randomRow(){
+    let row:Array<number>=[]
+    for(let i=0;i<5; i++){
+        let num= getRandomInt(0,3)
+        row.push(num)
+        row.unshift(num)
+    }
+    return row 
 }
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
+function getRandomInt(min,max) {
+    return Math.floor(Math.random() * (max - min) + min);
   }

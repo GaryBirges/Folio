@@ -1,5 +1,6 @@
 #gameField{
     border:1px solid black;
+    background-color:#DCDCDC;
 }
 #ball{
     display:none;

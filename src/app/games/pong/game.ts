@@ -2,7 +2,7 @@ import {Paddle} from './paddle'
 import {Ball} from './ball'
 import {Brick} from './brick'
 
-import {buildLevel, Level1, Level2, Level3} from './levels'
+import {buildLevel, Level1, Level2, Level3, randomLevelGenerator} from './levels'
 
 const GAMESTATES={
     PAUSED:     0,
@@ -25,6 +25,7 @@ export class Game {
     lives:number
     levels=[]
     currentLevel:number
+    score:number
 
     constructor(gameWidth, gameHeight){
         this.gameWidth=gameWidth
@@ -34,15 +35,15 @@ export class Game {
         this.ball= new Ball(this)
         this.bricks=[]
         this.lives=3
-        this.levels = [Level1, Level2, Level3]
-        this.currentLevel = 0
+        this.score=0
+        // this.levels = [Level1, Level2, Level3]
+        // this.currentLevel = 0
     }
 
     start(){
         if(this.gameState !==GAMESTATES.MENU && this.gameState!== GAMESTATES.NEWLEVEL) return
-        console.log(this.levels)
-        console.log(this.currentLevel)
-        this.bricks = buildLevel(this, this.levels[this.currentLevel]) 
+        // this.bricks = buildLevel(this, this.levels[this.currentLevel]) 
+        this.bricks = buildLevel(this, randomLevelGenerator()) 
         this.ball.reset()
         this.gameElements = [this.ball, this.paddle]
 
@@ -55,18 +56,18 @@ export class Game {
         if(this.gameState == GAMESTATES.PAUSED || this.gameState == GAMESTATES.MENU || this.gameState == GAMESTATES.GAMEOVER) return
 
         if(this.bricks.length=== 0){
-            this.currentLevel++; 
+            // this.currentLevel++; 
             this.gameState=GAMESTATES.NEWLEVEL
             this.start()
         }
 
-        if(this.gameState== GAMESTATES.GAMEOVER){
-            setTimeout(() => {
-                this.currentLevel=0; 
-                this.gameState=GAMESTATES.MENU
-                this.start()
-            }, 1000);
-        }
+        // if(this.gameState== GAMESTATES.GAMEOVER){
+        //     setTimeout(() => {
+        //         this.currentLevel=0; 
+        //         this.gameState=GAMESTATES.MENU
+        //         this.start()
+        //     }, 1000);
+        // }
 
         [...this.gameElements, ...this.bricks].forEach(element => {
             element.update(deltaTime)
@@ -79,6 +80,7 @@ export class Game {
         [...this.gameElements, ...this.bricks].forEach(element => {
             element.draw(ctx)
         });
+        
         if(this.gameState==GAMESTATES.PAUSED){
             ctx.rect(0,0, this.gameWidth, this.gameHeight)
             ctx.fillStyle = "rgba(0,0,0,0.5)"

@@ -1,3 +1,7 @@
 <!-- <img id="ball" src="../../../assets/Basketball_Ball_Icon.png"> -->
 <canvas #gameField id="gameField" width="800" height="600"></canvas>
-<p *ngIf=" this.game.gameState==1">Press ESC to pause <span>{{this.game.lives}} lives left</span></p>
+<div *ngIf=" this.game.gameState==1||this.game.gameState==0">
+  <p>Press ESC to pause</p> 
+  <p>{{this.game.lives}} lives left</p>
+  <p>Score: {{this.game.score}}</p>
+</div> 

@@ -51,13 +51,11 @@ export class PongComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.game= new Game(WIDTH, HEIGHT)
-    // randomLevelGenerator()
+    this.startGame()
   }
   ngAfterViewInit(): void {
     this.ctx = (<HTMLCanvasElement>this.gameField.nativeElement).getContext('2d');
-    // this.game.paddle.draw(this.ctx)
-    requestAnimationFrame(this.gameLoop.bind(this))
+    
   }
   
   
@@ -68,7 +66,18 @@ export class PongComponent implements OnInit {
     this.ctx.clearRect(0,0,WIDTH, HEIGHT)
     this.game.update(deltaTime)
     this.game.draw(this.ctx)
-    
+    if(this.game.gameState!=3){
+      requestAnimationFrame(this.gameLoop.bind(this))
+    }else{
+      console.log(this.game.score)
+      setTimeout(() => {
+        this.startGame() 
+      }, 3000);
+    }
+  }
+
+  startGame(){
+    this.game= new Game(WIDTH, HEIGHT)
     requestAnimationFrame(this.gameLoop.bind(this))
   }
   
