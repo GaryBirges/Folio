@@ -26,8 +26,9 @@ export class Game {
     levels=[]
     currentLevel:number
     score:number
+    highScore
 
-    constructor(gameWidth, gameHeight){
+    constructor(gameWidth, gameHeight, highScore){
         this.gameWidth=gameWidth
         this.gameHeight=gameHeight
         this.gameState= GAMESTATES.MENU
@@ -36,6 +37,7 @@ export class Game {
         this.bricks=[]
         this.lives=3
         this.score=0
+        this.highScore=highScore
         // this.levels = [Level1, Level2, Level3]
         // this.currentLevel = 0
     }
@@ -105,6 +107,14 @@ export class Game {
             ctx.fillStyle = 'white';
             ctx.textAlign = "center";
             ctx.fillText("GAME OVER", this.gameWidth/2, this.gameHeight/2)
+            console.log(this.score)
+            if(this.highScore.getUser()==undefined){
+                console.log("done")
+                // this.askForName()
+              }else{
+                  console.log("noname")
+                // this.highScore.addScoreToBoard('Puzzle', this.getScore())
+              }
         }
     }
 

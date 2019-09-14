@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Game } from './game';
 import {randomLevelGenerator} from './levels'
+import { HighScoreService } from '../services/highScore/high-score.service';
 
 const WIDTH = 800
 const HEIGHT = 600
@@ -48,7 +49,7 @@ export class PongComponent implements OnInit {
     }
   }
 
-  constructor() { }
+  constructor(private highScore: HighScoreService,) { }
 
   ngOnInit() {
     this.startGame()
@@ -70,14 +71,14 @@ export class PongComponent implements OnInit {
       requestAnimationFrame(this.gameLoop.bind(this))
     }else{
       // console.log(this.game.score)
-      setTimeout(() => {
+      // setTimeout(() => {
         this.startGame() 
-      }, 3000);
+      // }, 3000);
     }
   }
 
   startGame(){
-    this.game= new Game(WIDTH, HEIGHT)
+    this.game= new Game(WIDTH, HEIGHT, this.highScore)
     requestAnimationFrame(this.gameLoop.bind(this))
   }
   
