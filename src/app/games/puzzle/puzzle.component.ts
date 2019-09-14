@@ -100,18 +100,7 @@ export class PuzzleComponent implements OnInit {
       }
     }
     console.log("solved")
-    // this.gameComplete = true;
-
-    // console.log(
-    //   this.highScore.getUser
-    // )
-    if(this.highScore.getUser()==undefined){
-      console.log("done")
-      this.askForName()
-    }else{
-      this.highScore.addScoreToBoard('Puzzle', this.getScore())
-    }
-    // this.highScore.getUser
+    this.highScore.addScore('Puzzle', this.getScore())
     this.message.add(`Game Complete.		You completed the game in time = ${this.ticks} & ${this.steps/2 } steps.`)
     if (this.timeVar) {
       this.timeVar.unsubscribe();
@@ -203,21 +192,6 @@ export class PuzzleComponent implements OnInit {
     this.boxSize = this.imageSize / this.gridsize;
   }
 
-  askForName(){
-    let name =''
-    let dialogRef = this.dialog.open(AskForNameComponent, {
-      width: '250px',
-      data: {name: name}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      if(result!==undefined){
-        this.highScore.setUser(result)
-        this.highScore.addScoreToBoard('Puzzle', this.getScore())
-      }
-      // this.animal = result;
-    });
-  }
   getScore(): any {
     return {time:this.ticks, steps:this.steps/2, difficulty: this.difficulty}
   }

@@ -22,6 +22,12 @@ export class ScoreBoardComponent implements OnInit {
   snakeDisplayedColumns: string[] = ['score', 'name'];
   @ViewChild('snakePaginator') paginatorSnake: MatPaginator;
   @ViewChild('snakeSort') sortSnake: MatSort;
+
+  pongScore
+  pongData: any;
+  pongDisplayedColumns: string[] = ['score', 'name'];
+  @ViewChild('pongPaginator') paginatorPong: MatPaginator;
+  @ViewChild('pongSort') sortPong: MatSort;
   
   ngOnInit() {
     this.highScore.snakeCollection.valueChanges().subscribe(res=>{
@@ -36,6 +42,12 @@ export class ScoreBoardComponent implements OnInit {
       this.puzzleData = new MatTableDataSource<any>(this.puzzleScore);
       this.puzzleData.paginator = this.paginatorPuzzle;
       this.puzzleData.sort = this.sortPuzzle;
+    })
+    this.highScore.pongCollection.valueChanges().subscribe(res=>{
+      this.pongScore=res
+      this.pongData = new MatTableDataSource<any>(this.pongScore);
+      this.pongData.paginator = this.paginatorPong;
+      this.pongData.sort = this.sortPong;
     })
   }
 

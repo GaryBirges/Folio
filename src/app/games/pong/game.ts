@@ -108,13 +108,7 @@ export class Game {
             ctx.textAlign = "center";
             ctx.fillText("GAME OVER", this.gameWidth/2, this.gameHeight/2)
             console.log(this.score)
-            if(this.highScore.getUser()==undefined){
-                console.log("done")
-                // this.askForName()
-              }else{
-                  console.log("noname")
-                // this.highScore.addScoreToBoard('Puzzle', this.getScore())
-              }
+            this.highScore.addScore('Pong', {score:this.score})
         }
     }
 

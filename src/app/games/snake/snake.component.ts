@@ -81,13 +81,8 @@ step = t1 => t2 => {
     if(this.state.snake.length>0){
       this.score=this.state.snake.length
     }else{
-      if(this.highScore.getUser()==undefined){
-        this.askForName()
-      }else{
-        this.highScore.addScoreToBoard('Snake', this.getScore())
-      }
+      this.highScore.addScore('Snake', this.getScore())
     }
-    // console.log(this.score)
   } else {
     window.requestAnimationFrame(this.step(t1))
   }
@@ -198,26 +193,11 @@ validMove (move) {
       moves: this.nextMoves,
       snake: this.nextSnake,
       apple: this.nextApple
-      })
+    })
 
-      askForName(){
-        let name =''
-        let dialogRef = this.dialog.open(AskForNameComponent, {
-          width: '250px',
-          data: {name: name}
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(result);
-          if(result!==undefined){
-            this.highScore.setUser(result)
-            this.highScore.addScoreToBoard('Snake', this.getScore())
-          }
-          // this.animal = result;
-        });
-      }
-      getScore(): any {
-        return {score:this.maxScore}
-      }
+    getScore(): any {
+      return {score:this.maxScore}
+    }
 }
 
 const adjust    = n => f => xs => mapi(x => i => i == n ? f(x) : x)(xs)
