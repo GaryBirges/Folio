@@ -69,7 +69,7 @@ export class PongComponent implements OnInit {
     if(this.game.gameState!=3){
       requestAnimationFrame(this.gameLoop.bind(this))
     }else{
-      console.log(this.game.score)
+      // console.log(this.game.score)
       setTimeout(() => {
         this.startGame() 
       }, 3000);
