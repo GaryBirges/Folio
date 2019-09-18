@@ -23,10 +23,13 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   filters
   pairs
 
+  timer
   constructor(private imgservice: ImageService,
               public dialog: MatDialog,
               public auth: AuthenticationService,
-              public upload: UploadService){}
+              public upload: UploadService){
+                this.timer=Date.now()
+              }
 
   ngOnInit() {    
     this.upload.getImages().subscribe(res=>{
@@ -40,6 +43,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
             this.pairs.push(x)
           }
       })
+      console.log(Date.now()-this.timer)
       // this.images=res
       console.log(this.images)
       this.filter('all')
@@ -71,7 +75,8 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
 
   private SetNgGallery() {
     this.galleryOptions = [
-      {"imageArrows" :true,},
+      // {"image":false},
+      // {"imageArrows" :true,},
       { "previewCloseOnClick": true, "previewCloseOnEsc": true, "imageArrows": true, previewCustom: this.openPreview.bind(this) },
       { "breakpoint": 500, "width": "300px", "height": "300px", "thumbnailsColumns": 3,previewCustom: this.openPreview.bind(this) },
       { "breakpoint": 300, "width": "100%", "height": "200px", "thumbnailsColumns": 2,previewCustom: this.openPreview.bind(this) }
@@ -159,9 +164,12 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
         // console.log(image)
         this.galleryImages.push({small:img.url, medium:img.url, big:img.url})
         // console.log("added")
+        // change image property to false
       });
       
     });
+    console.log(this.galleryImages)
+    console.log(this.galleryOptions)
   }
 
 

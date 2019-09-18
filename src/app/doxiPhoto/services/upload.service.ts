@@ -18,7 +18,7 @@ export class UploadService {
   // private uploads: AngularFireList <GalleryImage[]>
   uploadSubject: BehaviorSubject<any>= new BehaviorSubject<any>(null)
 
-  uploadPercent: Observable<number>;
+  uploadPercent: Observable<number>= new Observable();
   downloadURL: Observable<string>;
   photoCollection : AngularFirestoreCollection
   photoFilters : AngularFirestoreCollection
@@ -44,12 +44,14 @@ export class UploadService {
     //     this.saveFileData(upload)
     //   }
     // })
+    // this.uploadPercent=
   }
 
   uploadFile(event) {
     console.log(event)
+    // const file = event.file;
     const file = event.file;
-    const filePath = `${this.basePath}/${file.name}`;// it will overwrite the same name stuff
+    const filePath = `${this.basePath}/${event.name}`;// it will overwrite the same name stuff
     console.log(filePath)
     const fileRef = this.storage.ref(filePath);
     const pairOf= ''
@@ -62,7 +64,7 @@ export class UploadService {
       
         finalize(() => {
           this.downloadURL = fileRef.getDownloadURL() 
-          this.getUrl(file.name, event.caption, event.filter, pairOf,)
+          this.getUrl(event.name, event.caption, event.filter, pairOf,)
         })
      )
     .subscribe()
