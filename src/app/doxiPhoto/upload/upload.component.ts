@@ -61,6 +61,10 @@ export class UploadComponent implements OnInit {
       }
       // blob.file=
       this.uploadService.uploadFile(blob)
+
+      // this.uploadService.uploadGroup(blob)
+      
+
       this.uploadForm.value.filters.forEach(f => {
         let existingFilter = false;
         for (let i = 0; i < this.allFilters.length; i++) {

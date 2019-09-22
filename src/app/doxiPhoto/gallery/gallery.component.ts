@@ -78,8 +78,8 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       // {"image":false},
       // {"imageArrows" :true,},
       { "previewCloseOnClick": true, "previewCloseOnEsc": true, "imageArrows": true, previewCustom: this.openPreview.bind(this) },
-      { "breakpoint": 500, "width": "300px", "height": "300px", "thumbnailsColumns": 3,previewCustom: this.openPreview.bind(this) },
-      { "breakpoint": 300, "width": "100%", "height": "200px", "thumbnailsColumns": 2,previewCustom: this.openPreview.bind(this) }
+      {  "width": "600px", "height": "600px", "thumbnailsColumns": 3,previewCustom: this.openPreview.bind(this) },
+      { "breakpoint": 800, "width": "100%", "height": "200px", "thumbnailsColumns": 2,previewCustom: this.openPreview.bind(this) }
     ];
     this.galleryImages=[]
     
