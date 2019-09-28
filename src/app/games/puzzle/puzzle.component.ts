@@ -64,6 +64,11 @@ export class PuzzleComponent implements OnInit {
 
   private setGridOptions() {
     this.options = {
+      gridType:'fit',
+      // setGridSize:true,
+      mobileBreakpoint:100,
+      disableScrollHorizontal:true,
+      disableScrollVertical:true,
       itemChangeCallback: this.itemChange,
       Resizable: false,
       Draggable: true,
@@ -78,6 +83,11 @@ export class PuzzleComponent implements OnInit {
 
     this.options.defaultItemCols=this.difficulty;
     this.options.defaultItemRows=this.difficulty;
+    this.options.minCols=this.difficulty;
+    this.options.maxCols=this.difficulty;
+    this.options.minRows=this.difficulty;
+    this.options.maxRows=this.difficulty;
+
     
     let numberOfRows=this.difficulty
     let numberOfCols=this.difficulty
