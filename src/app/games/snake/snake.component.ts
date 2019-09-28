@@ -181,7 +181,7 @@ validMove (move) {
   // Initial state
     initialState = () => ({
     cols:  20,
-    rows:  14,
+    rows:  15,
     moves: [EAST],
     snake: [],
     apple: { x: 16, y: 2 },
