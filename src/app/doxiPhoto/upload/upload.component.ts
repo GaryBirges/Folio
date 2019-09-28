@@ -19,7 +19,7 @@ export class UploadComponent implements OnInit {
   allFilters
   removable = true;
   addOnBlur = true;
-  // readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   uploadForm
   thumbnailUrl: any='';
   thumbnailEditedUrl: any='';
