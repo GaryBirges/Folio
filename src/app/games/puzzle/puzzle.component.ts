@@ -66,6 +66,11 @@ export class PuzzleComponent implements OnInit {
     this.options = {
       gridType:'fit',
       // setGridSize:true,
+      draggable: {ignoreContent:true},
+      // ignoreContentClass?: string;
+    // ignoreContent?: boolean;
+    // dragHandleClass?: string;
+    // dropOverItems?: boolean;
       mobileBreakpoint:100,
       disableScrollHorizontal:true,
       disableScrollVertical:true,
@@ -87,7 +92,7 @@ export class PuzzleComponent implements OnInit {
     this.options.maxCols=this.difficulty;
     this.options.minRows=this.difficulty;
     this.options.maxRows=this.difficulty;
-
+    
     
     let numberOfRows=this.difficulty
     let numberOfCols=this.difficulty
@@ -112,6 +117,9 @@ export class PuzzleComponent implements OnInit {
     console.log("solved")
     this.highScore.addScore('Puzzle', this.getScore())
     this.message.add(`Game Complete.		You completed the game in time = ${this.ticks} & ${this.steps/2 } steps.`)
+    this.options.draggable.ignoreContent=true
+    this.options.api.optionsChanged()
+    console.log(this.options)
     if (this.timeVar) {
       this.timeVar.unsubscribe();
     }
@@ -157,6 +165,8 @@ export class PuzzleComponent implements OnInit {
     console.log(this.resizeForm)
     setTimeout(() => {   
       this.randomizeGrid();
+      this.options.draggable.ignoreContent=false
+      this.options.api.optionsChanged()
       if (this.timeVar) {
         this.timeVar.unsubscribe();
       }
