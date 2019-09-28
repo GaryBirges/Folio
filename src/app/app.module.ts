@@ -65,6 +65,14 @@ import { PongComponent } from './games/pong/pong.component';
 // import { AuthGuard } from './services/authGuard.service';
 // import { AuthenticationService } from './services/authentication.service';
 // import { UploadService } from './services/upload.service';
+import * as Hammer from 'hammerjs';
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+
+export class MyHammerConfig extends HammerGestureConfig {
+  overrides = <any> {
+    swipe: { direction: Hammer.DIRECTION_ALL },
+  };
+}
 
 @NgModule({
   declarations: [
@@ -129,6 +137,10 @@ import { PongComponent } from './games/pong/pong.component';
     UploadService,
     AngularFireAuth,
     AngularFireStorage,
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig,
+    },
   ],
   entryComponents: [AskForNameComponent, CompareImageComponent],
   bootstrap: [AppComponent]

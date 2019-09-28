@@ -14,11 +14,13 @@ export class SnakeComponent implements OnInit {
   ctx
   score=0
   maxScore: number;
+  
  
   constructor(public dialog: MatDialog,
               private highScore: HighScoreService,) { }
 
   ngOnInit() {
+    
     this.canvas = document.getElementById('canvas') as HTMLCanvasElement;
     this.ctx = this.canvas.getContext('2d')
     this.state = this.initialState()
@@ -36,16 +38,22 @@ export class SnakeComponent implements OnInit {
     }
   }
   swipeLeft(){
+    console.log("swipeleft")
     this.state = this.enqueue(this.state, WEST);
   }
   swipeRight(){
+    console.log("swipeRight")
     this.state = this.enqueue(this.state, EAST);
   }
   swipeUp(){
+    console.log("swipeUp")
     this.state = this.enqueue(this.state, NORTH);
   }
   swipeDown(){
+    console.log("swipeDown")
+    console.log(this.state)
     this.state = this.enqueue(this.state, SOUTH); 
+    console.log(this.state)
   }
  // Position helpers
  x = c => Math.round(c * this.canvas.width / this.state.cols)
