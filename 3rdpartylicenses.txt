@@ -350,6 +350,10 @@ ngx-gallery@5.9.1
 MIT
 MIT
 
+sudoku@0.0.2
+GPLv3
+GPLv3
+
 @firebase/app@0.3.5
 Apache-2.0
 Apache-2.0
