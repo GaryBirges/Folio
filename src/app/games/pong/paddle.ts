@@ -7,8 +7,8 @@ export class Paddle {
     gameWidth
     gameHeight
     constructor(game){
-        this.width=150
-        this.height=20
+        this.width=game.gameWidth/5
+        this.height=game.gameHeight/30
 
         this.maxSpeed = 7
         this.speed = 0

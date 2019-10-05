@@ -11,6 +11,7 @@ import { GalleryComponent } from './doxiPhoto/gallery/gallery.component';
 import { UploadComponent } from './doxiPhoto/upload/upload.component';
 import { LoginComponent } from './doxiPhoto/login/login.component';
 import { PongComponent } from './games/pong/pong.component';
+import { SudokuGameComponent } from './games/sudoku-game/sudoku-game.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,7 @@ const routes: Routes = [
           {path : 'puzzle2', component: Puzzle2Component},
           {path : 'snake', component: SnakeComponent},
           {path : 'pong', component: PongComponent},
+          {path : 'sudoku', component: SudokuGameComponent},
           {path : 'scoreboard', component: ScoreBoardComponent},
           {path : 'gallery', component: GalleryComponent},
           // {path: "gallery", component: GalleryComponent},

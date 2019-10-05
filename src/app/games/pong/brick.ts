@@ -21,8 +21,8 @@ export class Brick {
         // this.imageOak= new Image()
         this.position = position
         
-        this.width = 80;
-        this.height = 25;
+        this.width = this.game.gameWidth/10;
+        this.height = this.game.gameHeight/24;
 
         this.remove=false;
     }

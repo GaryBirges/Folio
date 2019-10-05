@@ -1,0 +1,20 @@
+<h1> Sudoku </h1>
+
+<div class="board" *ngFor="let row of this.sudoku.rows">
+  <div class="row" *ngFor=" let field of row.cols">
+    <input class="field" 
+    value={{field.value}} 
+    [readonly]=field.readonly
+    (change)="change(field, $event)"
+    (keypress)="validateKeyPress($event)"
+    type='text'
+    maxlength="1"
+    maxlength=1
+    >
+  </div>
+</div>
+<button (click)="solveSudoku()">Solve</button>
+
+<p *ngIf="this.sudoku.solveTime">you Solved the sudoku</p>
+<p ><span *ngIf="this.sudoku.solveTime">Solved in:</span> {{this.timer}}</p> 
+<!-- <div>{{this.state.sudoku}}</div> -->

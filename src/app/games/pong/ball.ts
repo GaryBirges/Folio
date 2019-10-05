@@ -12,7 +12,7 @@ export class Ball{
         this.game=game
         this.image= new Image()
         this.image.src="./assets/BallIcon.png"
-        this.size = 16
+        this.size = this.game.gameWidth/50
         this.reset()
     }
 

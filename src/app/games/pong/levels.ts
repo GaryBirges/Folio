@@ -7,14 +7,14 @@ export function buildLevel(game, level){
         row.forEach((brick, brickIndex) => {
             if( brick === 1|| brick === 2){
                 let position = {
-                    x: 80 * brickIndex,
-                    y: 70 + 24 * rowIndex
+                    x: game.gameWidth/10 * brickIndex,  //brickWidth*index
+                    y: 70 + ((game.gameHeight/24) * rowIndex)  //brickHeight*row +70 on top
                 }
                 bricks.push(new Brick(game, position, brick))
-            }
+            } 
         });
-    }) 
-
+    })  
+    console.log(bricks)
     return bricks
 }
 export const Level1 = [
