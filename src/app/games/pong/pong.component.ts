@@ -17,8 +17,8 @@ export class PongComponent implements OnInit {
   lastTime=0
   // ball
   game
-  width
-  height
+  // width
+  // height
   
   @HostListener('document:keydown', ['$event'])
   keyDown(event: KeyboardEvent) { 
@@ -57,8 +57,8 @@ export class PongComponent implements OnInit {
     this.startGame()
   }
   ngAfterViewInit(): void {
-    this.width=this.gameField.nativeElement.clientWidth
-    this.height=this.gameField.nativeElement.clientHeight
+    // this.width=this.gameField.nativeElement.clientWidth
+    // this.height=this.gameField.nativeElement.clientHeight
     console.log(this.gameField)
     this.ctx = (<HTMLCanvasElement>this.gameField.nativeElement).getContext('2d');
     
