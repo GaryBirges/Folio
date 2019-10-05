@@ -13,6 +13,7 @@
 
 <!-- <table mat-table [dataSource]="this.puzzleScore" class="mat-elevation-z8"> -->
     <mat-card>
+    <mat-card-title>Puzzle</mat-card-title>
 <table mat-table [dataSource]="puzzleData" #puzzleSort="matSort" matSort class="mat-elevation-z8">
     <ng-container matColumnDef="steps">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Steps </th>
@@ -38,6 +39,7 @@
 </mat-card>
 
 <mat-card>
+    <mat-card-title>Snake</mat-card-title>
   <table mat-table [dataSource]="snakeData" #snakeSort="matSort" matSort class="mat-elevation-z8">
     <ng-container matColumnDef="score">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Score</th>
@@ -54,6 +56,7 @@
   </mat-card>
   
 <mat-card>
+    <mat-card-title>Pong</mat-card-title>
   <table mat-table [dataSource]="pongData" #pongSort="matSort" matSort class="mat-elevation-z8">
     <ng-container matColumnDef="score">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Score</th>

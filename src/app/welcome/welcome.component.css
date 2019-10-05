@@ -1,0 +1,17 @@
+.links{
+    position: absolute;
+    right:20px;
+    top:20px;
+}
+.links a img{
+    height:50px;
+    margin-left:20px;
+}
+.links ul{
+    list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.links ul li{
+    float: left;
+}

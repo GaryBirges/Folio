@@ -23,7 +23,7 @@
 <div class="home-container" [class.home-is-mobile]="mobileQuery.matches" >
     <mat-toolbar color="primary" class="toolbar">
       <button mat-icon-button (click)="snav.toggle(); active()"><mat-icon>menu</mat-icon></button>
-      <h1 class="app-name">Responsive App</h1>
+      <h1 class="app-name">Projects</h1>
     </mat-toolbar>
   
     <mat-sidenav-container class="example-sidenav-container"
@@ -33,17 +33,20 @@
                     [fixedInViewport]="mobileQuery.matches" 
                     fixedTopGap="56">
         <mat-nav-list>
-          <!-- <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a> -->
-          <a mat-list-item routerLink="/puzzle">puzzle</a>
+          <a mat-list-item routerLink="/">Home</a>
+          <hr>
+          <a mat-list-item routerLink="/puzzle">Puzzle</a>
           <!-- <a mat-list-item routerLink="/puzzle2">puzzle2</a> -->
-          <a mat-list-item routerLink="/snake">snake</a>
-          <a mat-list-item routerLink="/pong">pong</a>
-          <a mat-list-item routerLink="/sudoku">sudoku</a>
+          <a mat-list-item routerLink="/snake">Snake</a>
+          <a mat-list-item routerLink="/pong">Pong</a>
+          <a mat-list-item routerLink="/sudoku">Sudoku</a>
+          <hr>
           <a mat-list-item routerLink="/scoreboard">Score Board</a>
+          <hr>
           <a mat-list-item routerLink="/gallery">Gallery</a>
           <a mat-list-item routerLink="/upload">Upload</a>
         </mat-nav-list>
-        <small>ver.{{this.version}}</small>
+        <small class="version">ver.{{this.version}}</small>
       </mat-sidenav>
   
       <mat-sidenav-content>
