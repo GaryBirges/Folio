@@ -1,20 +1,34 @@
 <h1> Sudoku </h1>
-
-<div class="board" *ngFor="let row of this.sudoku.rows">
-  <div class="row" *ngFor=" let field of row.cols">
-    <input class="field" 
-    value={{field.value}} 
-    [readonly]=field.readonly
-    (change)="change(field, $event)"
-    (keypress)="validateKeyPress($event)"
-    type='text'
-    maxlength="1"
-    maxlength=1
-    >
+<div class="board">
+  <div class="row" *ngFor="let row of this.sudoku.rows">
+    <div class="col" *ngFor=" let field of row.cols">
+      <div class="fieldHolder">
+        <input  class="field" 
+                value={{field.value}} 
+                [readonly]=field.readonly
+                (change)="change(field, $event)"
+                (keypress)="validateKeyPress($event)"
+                type='text'
+                maxlength=1
+                [ngClass]="{'fieldInError':field.invalid}"
+        >
+      </div>
+    </div>
   </div>
 </div>
-<button (click)="solveSudoku()">Solve</button>
-
-<p *ngIf="this.sudoku.solveTime">you Solved the sudoku</p>
-<p ><span *ngIf="this.sudoku.solveTime">Solved in:</span> {{this.timer}}</p> 
-<!-- <div>{{this.state.sudoku}}</div> -->
+<div class="infoTab">
+  <div>
+    <button mat-raised-button (click)="solveSudoku()">Solve</button>
+    <button  mat-raised-button (click)="validateSudoku()">validate</button>
+  </div>
+  <div>
+    <p>
+      <span *ngIf="this.sudoku.solveTime">You Solved the sudoku! Solved in:</span>
+      <span *ngIf="!this.sudoku.solveTime">Time Elapsed:</span> 
+      {{this.timer}}
+    </p> 
+  </div>
+  <div *ngIf="this.counter!=0">
+    <p> Currently you have {{this.counter}} errors! </p>
+  </div>
+</div>

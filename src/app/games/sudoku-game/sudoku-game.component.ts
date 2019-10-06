@@ -11,6 +11,7 @@ export class SudokuGameComponent implements OnInit {
   generator
   timer
   interval
+  counter: number=0;
   constructor(){
   }
   
@@ -44,7 +45,8 @@ export class SudokuGameComponent implements OnInit {
           row: i,
           col: j,
           value: value,
-          readonly: value!==null
+          readonly: value!==null,
+          invalid:false
         }
         row.cols.push(col)
       }
@@ -65,10 +67,26 @@ export class SudokuGameComponent implements OnInit {
     return true
   }
 
+  validateSudoku(){
+    this.counter=0
+    const candidate = this.sudoku.rows.map((row=>row.cols.map((col) => col))).flat()
+
+    for(let i=0; i<candidate.length; i++){
+      if(candidate[i].value!==null &&candidate[i].value!==this.sudoku.solution[i]){
+        // console.log(candidate[i])
+        this.counter++
+        candidate[i].invalid=true
+      }else{
+        candidate[i].invalid=false
+      }
+    }
+  }
+
   solveSudoku(){
     this.sudoku.rows.forEach(row => 
       row.cols.forEach(col=>{
           col.value = this.sudoku.solution[col.row*9+col.col]
+          col.invalid=false
       })
     );
   }

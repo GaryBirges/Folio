@@ -10,13 +10,38 @@
     color:black;
 }
 
-.board{
+.row{
     display:flex;
-    /* width:3rem; */
+}
+.row:first-child .fieldHolder{
+    border-top: 2px solid black; 
+}
+.row .col:first-child .fieldHolder{
+    border-left:2px solid black;
+}
+.row:nth-child(3n) .fieldHolder{
+    border-bottom: 2px solid black; 
+}
+.col:nth-child(3n) .fieldHolder{
+    border-right:2px solid black;
 }
 
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
   margin: 0; 
+}
+
+.fieldInError{
+    color:red
+}
+
+.board, h1{
+    margin-left:2rem;
+}
+
+.infoTab{
+    text-align: center;
+    width: 33.7rem;
+    margin-top:1.5rem;
 }
