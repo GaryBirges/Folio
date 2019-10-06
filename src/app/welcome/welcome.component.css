@@ -15,3 +15,24 @@
 .links ul li{
     float: left;
 }
+.cv span{
+    display:block;
+    text-align: center;
+}
+.cv span:first-of-type{
+    margin-top: 6px;
+}
+.cv a{
+    text-decoration: none;
+    vertical-align: middle;
+    color:black;
+}
+.cv{
+    /* text-decoration: none; */
+    margin-left:20px;
+    border : 1px solid black;
+    border-radius: 5px;
+    width:50px;
+    height:50px;
+    /* vertical-align: middle; */
+}
