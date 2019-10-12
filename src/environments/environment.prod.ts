@@ -8,5 +8,5 @@ export const environment = {
     storageBucket: "highscore-aaa5e.appspot.com",
     messagingSenderId: "340149765951"
   },
-  version: '0.0.20'
+  version: '0.0.21'
 };

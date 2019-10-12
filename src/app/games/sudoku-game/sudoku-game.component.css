@@ -1,9 +1,25 @@
-.field{
-    width:2.8rem;
-    height:2.8rem;
-    font-size:2rem;
+@media all and (orientation:portrait) {
+    .field{
+    width:8vw;
+    height:8vw;
+    font-size:6vw;
     text-align: center;
     color:grey;
+    }
+}
+@media all and (orientation:landscape) {
+    .field{
+        width:6vh;
+        height:6vh;
+        font-size:5vh;
+        text-align: center;
+        color:grey;
+    }
+    
+}
+
+.infoTab{
+    margin-top:1.5rem; 
 }
 .field[readonly]{
     font-weight: 600;
@@ -36,12 +52,7 @@ input[type=number]::-webkit-outer-spin-button {
     color:red
 }
 
-.board, h1{
+/* .board, h1{
     margin-left:2rem;
-}
+} */
 
-.infoTab{
-    text-align: center;
-    width: 33.7rem;
-    margin-top:1.5rem;
-}
