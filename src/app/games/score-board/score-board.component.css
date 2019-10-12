@@ -1,4 +1,8 @@
 table {
     width: 100%;
   }
-  
+
+  .cardHolder{
+    /*height added to solve mat-toolbar height issue*/
+    height:100px;
+  }
