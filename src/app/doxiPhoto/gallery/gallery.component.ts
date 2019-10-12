@@ -26,7 +26,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   timer
   constructor(private imgservice: ImageService,
               public dialog: MatDialog,
-              public auth: AuthenticationService,
+              // private auth: AuthenticationService,
               public upload: UploadService){
                 this.timer=Date.now()
               }
