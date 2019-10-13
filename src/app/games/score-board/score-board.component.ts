@@ -14,20 +14,20 @@ export class ScoreBoardComponent implements OnInit {
   puzzleScore
   puzzleData
   puzzleDisplayedColumns: string[] = ['steps', 'time', 'name', 'difficulty'];
-  @ViewChild('puzzlePaginator') paginatorPuzzle: MatPaginator;
-  @ViewChild('puzzleSort') sortPuzzle: MatSort;
+  @ViewChild('puzzlePaginator', { static: true }) paginatorPuzzle: MatPaginator;
+  @ViewChild('puzzleSort', { static: true }) sortPuzzle: MatSort;
   
   snakeScore
   snakeData: any;
   snakeDisplayedColumns: string[] = ['score', 'name'];
-  @ViewChild('snakePaginator') paginatorSnake: MatPaginator;
-  @ViewChild('snakeSort') sortSnake: MatSort;
+  @ViewChild('snakePaginator', { static: true }) paginatorSnake: MatPaginator;
+  @ViewChild('snakeSort', { static: true }) sortSnake: MatSort;
 
   pongScore
   pongData: any;
   pongDisplayedColumns: string[] = ['score', 'name'];
-  @ViewChild('pongPaginator') paginatorPong: MatPaginator;
-  @ViewChild('pongSort') sortPong: MatSort;
+  @ViewChild('pongPaginator', { static: true }) paginatorPong: MatPaginator;
+  @ViewChild('pongSort', { static: true }) sortPong: MatSort;
   
   ngOnInit() {
     this.highScore.snakeCollection.valueChanges().subscribe(res=>{

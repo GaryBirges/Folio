@@ -11,7 +11,7 @@ const HEIGHT = 600
   styleUrls: ['./pong.component.css']
 })
 export class PongComponent implements OnInit {
-  @ViewChild('gameField') gameField: ElementRef
+  @ViewChild('gameField', { static: true }) gameField: ElementRef
   ctx: CanvasRenderingContext2D;
   // paddle
   lastTime=0
