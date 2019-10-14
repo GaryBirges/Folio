@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { HighScoreService } from '../services/highScore/high-score.service';
 import { AskForNameComponent } from '../services/highScore/ask-for-name/ask-for-name.component';
 @Component({

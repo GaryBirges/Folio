@@ -3,7 +3,7 @@ import { UploadService } from '../services/upload.service';
 import {Upload } from '../models/upload.model';
 // import
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { FormBuilder, FormArray } from '@angular/forms';
 @Component({
   selector: 'app-upload',

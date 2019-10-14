@@ -8,26 +8,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { MessagesComponent } from './games/services/messages/messages.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatSidenavModule,
-        MatIconModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatButtonModule,
-        MatButtonToggleModule,
-        MatToolbarModule,
-        MatListModule,
-        MatMenuModule,
-        MatInputModule,
-        MatDialogModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatCardModule,
-        MatGridListModule,
-        MatExpansionModule,
-        MatChipsModule
-      } 
-        from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { PuzzleComponent } from './games/puzzle/puzzle.component';
@@ -68,6 +66,7 @@ import { PongComponent } from './games/pong/pong.component';
 import * as Hammer from 'hammerjs';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { SudokuGameComponent } from './games/sudoku-game/sudoku-game.component';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any> {
@@ -128,6 +127,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     NgxGalleryModule,
     MatChipsModule,
     // FontAwesomeModule,
+    AngularFireAuthModule
     
   ],
   providers: [MessageService,

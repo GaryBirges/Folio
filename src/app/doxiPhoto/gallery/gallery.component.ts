@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, OnDestroy, Input } from '@angular/core';
 import { NgxGalleryOptions, NgxGalleryImage } from 'ngx-gallery';
 import { ImageService } from '../services/image.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
 import { AuthenticationService } from '../services/authentication.service';
 import { UploadService } from '../services/upload.service';

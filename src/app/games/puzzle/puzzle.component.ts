@@ -6,7 +6,7 @@ import {  GridsterConfig, GridsterItem, CompactType, DisplayGrid, GridsterCompon
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService } from '../services/messages/message.service';
 import { HighScoreService } from '../services/highScore/high-score.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { AskForNameComponent } from '../services/highScore/ask-for-name/ask-for-name.component';
 import { IsActiveService } from '../services/is-active.service';
 
