@@ -25,6 +25,7 @@ export class UploadComponent implements OnInit {
   thumbnailEditedUrl: any='';
   thumbnailReady=false
   thumbnailEditedReady=false
+  progress
   
   constructor(private uploadService: UploadService,
               private fb: FormBuilder) { }
@@ -32,9 +33,9 @@ export class UploadComponent implements OnInit {
   ngOnInit() {
     this.CreateUploadForm()
     this.getFilters()
-    this.uploadService.uploadPercent.subscribe(res=>{
-      console.log(res)
-    })
+    // this.uploadService.uploadPercent.subscribe(res=>{
+    //   console.log(res)
+    // })
   }
   CreateUploadForm(): any {
    this.uploadForm= this.fb.group({
@@ -46,25 +47,26 @@ export class UploadComponent implements OnInit {
   }
 
   uploadFiles(){
-    let a= resizeImage({maxSize:1920,file:this.fileOriginal[0]}).then(resizedImage=>{
-      console.log(resizedImage)
-      console.log(this.fileOriginal[0])
-      // this.upload = new Upload(this.fileOriginal[0])
-      // this.upload.pairOf=(btoa(this.fileOriginal[0].name))
-      // this.upload.caption=this.uploadForm.value.caption
-      // this.upload.filter=this.uploadForm.value.filters
-      console.log(this.upload)
-      let blob={file:resizedImage, 
-        caption:this.uploadForm.value.caption, 
-        name:'attractive', 
-        filter:this.uploadForm.value.filters
-      }
-      // blob.file=
-      this.uploadService.uploadFile(blob)
-
+      resizeImage({maxSize:1920,file:this.fileOriginal[0]}).then(resizedOriginal=>{
+        // console.log(this.fileOriginal[0])
+        resizeImage({maxSize:1920,file:this.fileEdited[0]}).then(resizedEdited=>{
+          let blobOrig={file:resizedOriginal, 
+                    caption:this.uploadForm.value.caption, 
+                    name:this.fileOriginal[0].name, 
+                    filter:this.uploadForm.value.filters
+                  }
+          let blobEdited={file:resizedEdited, 
+            caption:this.uploadForm.value.caption, 
+            name:this.fileEdited[0].name, 
+            filter:this.uploadForm.value.filters,
+            pairOf:this.fileOriginal[0].name
+          }
+          this.progress=this.uploadService.uploadPercent
+          this.uploadService.uploadFile([blobOrig,blobEdited])
+          // this.uploadService.uploadFile(blob)
+        })
       // this.uploadService.uploadGroup(blob)
       
-
       this.uploadForm.value.filters.forEach(f => {
         let existingFilter = false;
         for (let i = 0; i < this.allFilters.length; i++) {
@@ -77,7 +79,10 @@ export class UploadComponent implements OnInit {
         }
       });
     })
-
+      // this.upload = new Upload(this.fileOriginal[0])
+      // this.upload.pairOf=(btoa(this.fileOriginal[0].name))
+      // this.upload.caption=this.uploadForm.value.caption
+      // this.upload.filter=this.uploadForm.value.filters
       // if(this.fileEdited[0]!==null){
       //   this.upload2 = new Upload(this.fileEdited[0])
       //   this.upload2.pairOf= (btoa(this.fileOriginal[0].name))

@@ -46,12 +46,11 @@
                 (matChipInputTokenEnd)="add($event)">
       </mat-form-field>
     </div>
-    <div *ngIf="upload">
+    <div *ngIf="this.uploadService?.uploadPercent|async; let uploadPercent " >
       <div class="progress">
-        <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': upload?.progress + '%' }"></div>
+        <mat-progress-bar mode="determinate"  [value]="uploadPercent"></mat-progress-bar>
       </div>
-      <!-- Progress: {{upload?.progress|async}}% Completed -->
-      Progress: {{upload?.progress}}% Completed
+      Progress: {{uploadPercent| number:'1.0-2'}}% Completed
     </div>
     <button mat-raised-button (click)="uploadFiles()" >Upload
       Images</button>

@@ -26,6 +26,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { PuzzleComponent } from './games/puzzle/puzzle.component';
@@ -126,6 +127,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     GridsterModule,
     NgxGalleryModule,
     MatChipsModule,
+    MatProgressBarModule,
     // FontAwesomeModule,
     AngularFireAuthModule
     

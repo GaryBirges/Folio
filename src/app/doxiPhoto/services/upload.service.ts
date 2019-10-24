@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Upload } from '../models/upload.model';
 import { GalleryImage } from '../models/galleryImage.model';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, merge, combineLatest, forkJoin, of } from 'rxjs';
 import { AngularFireDatabase, AngularFireList  } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { finalize } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
 
 import * as firebase from 'firebase';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
@@ -18,7 +18,7 @@ export class UploadService {
   // private uploads: AngularFireList <GalleryImage[]>
   uploadSubject: BehaviorSubject<any>= new BehaviorSubject<any>(null)
 
-  uploadPercent: Observable<number>= new Observable();
+  uploadPercent: Observable<number>
   downloadURL: Observable<string>;
   photoCollection : AngularFirestoreCollection
   photoFilters : AngularFirestoreCollection
@@ -31,43 +31,32 @@ export class UploadService {
               private storage: AngularFireStorage
               ) { 
                 this.photoCollection=db.collection('DoxiPhoto')
-                // this.photoCollection.valueChanges().subscribe(res=>{
-                //   this.images=res
-                // })
                 this.photoFilters=db.collection('DoxiPhotoFilter')
-                // this.photoFilters.valueChanges().subscribe(res=>{
-                //   this.filters=res
-                // })
-    // this.uploadSubject.next(null)
-    // this.uploadSubject.subscribe((upload)=>{
-    //   if(upload!=null){
-    //     this.saveFileData(upload)
-    //   }
-    // })
-    // this.uploadPercent=
   }
 
-  uploadFile(event) {
-    console.log(event)
-    // const file = event.file;
-    const file = event.file;
-    const filePath = `${this.basePath}/${event.name}`;// it will overwrite the same name stuff
-    console.log(filePath)
-    const fileRef = this.storage.ref(filePath);
-    const pairOf= ''
-    const task = this.storage.upload(filePath, file, {customMetadata:{caption: `${event.caption}`, filter:`${event.filter}`}});
-
-    // observe percentage changes
-    this.uploadPercent = task.percentageChanges();
-    // get notified when the download URL is available
-    task.snapshotChanges().pipe(
-      
+  uploadFile(blobs) {
+    console.log(blobs)
+    const allPercentage: Observable<number>[] = [];
+    blobs.map((event)=>{
+      // this.uploadPercent= new Observable()
+      const file = event.file;
+      const filePath = `${this.basePath}/${event.name}`;// it will overwrite the same name stuff
+      console.log(filePath)
+      const fileRef = this.storage.ref(filePath);
+      const pairOf= event.pairOf?event.pairOf: ''
+      const task = this.storage.upload(filePath, file, {customMetadata:{caption: `${event.caption}`, filter:`${event.filter}`}});
+  
+        this.uploadPercent = task.percentageChanges();
+      task.snapshotChanges().pipe(
+        tap((e)=>{console.log(e); task.percentageChanges().subscribe(e=>console.log(e))}),
         finalize(() => {
           this.downloadURL = fileRef.getDownloadURL() 
           this.getUrl(event.name, event.caption, event.filter, pairOf,)
         })
-     )
-    .subscribe()
+       )
+      .subscribe()
+
+    })
   }
 
   getUrl(name , caption, filter,pairOf?){
