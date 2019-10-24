@@ -27,7 +27,7 @@ export class UploadComponent implements OnInit {
   thumbnailEditedReady=false
   progress
   
-  constructor(private uploadService: UploadService,
+  constructor(public uploadService: UploadService,
               private fb: FormBuilder) { }
 
   ngOnInit() {
