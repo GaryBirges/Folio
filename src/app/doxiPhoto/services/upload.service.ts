@@ -18,12 +18,13 @@ export class UploadService {
   // private uploads: AngularFireList <GalleryImage[]>
   uploadSubject: BehaviorSubject<any>= new BehaviorSubject<any>(null)
 
-  uploadPercent: Observable<number>
-  downloadURL: Observable<string>;
+  uploadPercent: number=0
+  // downloadURL: Observable<string>;
   photoCollection : AngularFirestoreCollection
   photoFilters : AngularFirestoreCollection
   // images: firebase.firestore.DocumentData[];
   filters: firebase.firestore.DocumentData[];
+
 
   constructor(//private AngularFire: AngularFireModule, 
               // private db: AngularFireDatabase, 
@@ -35,39 +36,40 @@ export class UploadService {
   }
 
   uploadFile(blobs) {
-    console.log(blobs)
+    this.uploadPercent=0
     const allPercentage: Observable<number>[] = [];
     blobs.map((event)=>{
-      // this.uploadPercent= new Observable()
       const file = event.file;
       const filePath = `${this.basePath}/${event.name}`;// it will overwrite the same name stuff
-      console.log(filePath)
       const fileRef = this.storage.ref(filePath);
       const pairOf= event.pairOf?event.pairOf: ''
       const task = this.storage.upload(filePath, file, {customMetadata:{caption: `${event.caption}`, filter:`${event.filter}`}});
-  
-        this.uploadPercent = task.percentageChanges();
+      const _percentage$ = task.percentageChanges();
+      allPercentage.push(_percentage$);
       task.snapshotChanges().pipe(
-        tap((e)=>{console.log(e); task.percentageChanges().subscribe(e=>console.log(e))}),
         finalize(() => {
-          this.downloadURL = fileRef.getDownloadURL() 
-          this.getUrl(event.name, event.caption, event.filter, pairOf,)
+          const downloadURL = fileRef.getDownloadURL() 
+          this.getUrl(downloadURL, event.name, event.caption, event.filter, pairOf,)
         })
        )
       .subscribe()
-
+    })
+    combineLatest(...allPercentage).subscribe(res=>{
+      this.uploadPercent=res.reduce((a, b)=>a+b)/2;
+      if(this.uploadPercent==100){
+        this.uploadSubject.next("upload done")
+      }
     })
   }
 
-  getUrl(name , caption, filter,pairOf?){
-    this.downloadURL.subscribe(res=>{
-      console.log(res)
+  getUrl(downloadURL, name, caption, filter,pairOf?){
+    downloadURL.subscribe(res=>{
       this.saveFileData({name:name, pairof:pairOf, url:res, caption:caption, filter:filter})
     })
   }
 
   saveFileData({name:name, pairof:pairOf, url:res, caption:caption, filter:filter}){
-    this.photoCollection.add({name:name, pairof:pairOf, url:res, filter:filter})
+    this.photoCollection.add({name:name, pairof:pairOf, url:res, filter:filter,caption:caption})
   }
   getImages(){
     return  this.photoCollection.valueChanges()

@@ -10,7 +10,7 @@
         <ng-template [ngIf]="!this.thumbnailReady">
           <button mat-raised-button color="primary" (click)="originalFile.click()">Upload</button>
         </ng-template>
-        <input  formControlName="original" hidden type="file" #originalFile (change)="handleFilesOriginal($event)" single>
+        <input formControlName="original" hidden type="file" #originalFile (change)="handleFilesOriginal($event)" single>
       </mat-grid-tile>
       <mat-grid-tile>
         <p>Edited</p>
@@ -46,13 +46,25 @@
                 (matChipInputTokenEnd)="add($event)">
       </mat-form-field>
     </div>
-    <div *ngIf="this.uploadService?.uploadPercent|async; let uploadPercent " >
+    <div *ngIf="uploadInProgress" >
+      <div class="progress">
+        <mat-progress-bar mode="determinate"  [value]="this.uploadService?.uploadPercent"></mat-progress-bar>
+      </div>
+      Progress: {{this.uploadService?.uploadPercent| number:'1.0-2'}}% Completed
+    </div>
+    <!-- <div *ngIf="this.progress|async; let uploadPercent " >
       <div class="progress">
         <mat-progress-bar mode="determinate"  [value]="uploadPercent"></mat-progress-bar>
       </div>
       Progress: {{uploadPercent| number:'1.0-2'}}% Completed
     </div>
-    <button mat-raised-button (click)="uploadFiles()" >Upload
+    <div *ngIf="this.progress; let uploadPercent " >
+      <div class="progress">
+        <mat-progress-bar mode="determinate"  [value]="uploadPercent"></mat-progress-bar>
+      </div>
+      Progress: {{uploadPercent| number:'1.0-2'}}% Completed
+    </div> -->
+    <button mat-raised-button [disabled]='!uploadForm.valid' (click)="uploadFiles()" >Upload
       Images</button>
       <!-- disabled="!(this.fileOriginal&&this.caption.length&&this.filters.length)" -->
   </form>

@@ -14,7 +14,8 @@ import { CompareImageComponent } from '../compare-image/compare-image.component'
 })
 export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   galleryOptions: NgxGalleryOptions[];
-  galleryImages: NgxGalleryImage[];
+  // galleryImages: NgxGalleryImage[];
+  galleryImages= [];
 
   // visibleImages: any[]=[]
   images//:Observable<GalleryImage[]>
@@ -34,15 +35,20 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {    
     this.upload.getImages().subscribe(res=>{
       console.log(res)
+      // console.table(res)
       this.images=[]
+      this.pairs=[]
       res.forEach(x=>{
-          if(x.pairOf==undefined){
-            console.log(x.pairOf)
+          // if(){
+          if(x.pairof==''){
+            console.log(x.pairof)
             this.images.push(x)
           }else{
             this.pairs.push(x)
           }
       })
+      console.log(this.images)
+      console.log(this.pairs)
       console.log(Date.now()-this.timer)
       // this.images=res
       console.log(this.images)
@@ -52,10 +58,10 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       this.filters=res
     })
     this.SetNgGallery();
-    setTimeout(() => {
+    // setTimeout(() => {
       
-      this.initComparisons()
-    }, 1000);
+    //   this.initComparisons()
+    // }, 1000);
   }
 
   ngOnChanges(){
@@ -103,18 +109,18 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   openPreview(index){
-    // console.log("open")
-    // console.log(index)
-    // console.log(this.images[index])
     let imageName= btoa(this.images[index].name)
-    // console.log(imageName)
-    // console.log(this.pairs)
-    // this.pairs.forEach(img => {
-      
-    // });
+    const pair=this.pairs.filter(image => {
+      if( image.pairof==this.galleryImages[index].img.name){
+        // console.log(image.pairof)
+        return image
+      }
+    }
+      );
+    // console.log(pair)
     let dialogRef = this.dialog.open(CompareImageComponent, {
       width: '450px',
-      data: {image: this.images[index], toCompare:this.images[index+1]}
+      data: {image: this.galleryImages[index].img, toCompare:pair[0]} //only one pair should be returned...
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
@@ -160,16 +166,12 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     // });
 
     this.images.forEach(img => {
+      if( this.imageFilter(img.filter, criteria)!=null) //remove this line if db is reset
       this.imageFilter(img.filter, criteria).forEach(image => {
-        // console.log(image)
-        this.galleryImages.push({small:img.url, medium:img.url, big:img.url})
-        // console.log("added")
-        // change image property to false
+        this.galleryImages.push({small:img.url, medium:img.url, big:img.url, img:img})
       });
       
     });
-    console.log(this.galleryImages)
-    console.log(this.galleryOptions)
   }
 
 

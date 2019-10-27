@@ -4,7 +4,8 @@ import {Upload } from '../models/upload.model';
 // import
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { FormBuilder, FormArray } from '@angular/forms';
+import { FormBuilder, FormArray, Validators } from '@angular/forms';
+import { MessageService } from 'src/app/games/services/messages/message.service';
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
@@ -25,28 +26,37 @@ export class UploadComponent implements OnInit {
   thumbnailEditedUrl: any='';
   thumbnailReady=false
   thumbnailEditedReady=false
-  progress
+  uploadInProgress=false
   
   constructor(public uploadService: UploadService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private message:MessageService) { }
 
   ngOnInit() {
     this.CreateUploadForm()
     this.getFilters()
-    // this.uploadService.uploadPercent.subscribe(res=>{
-    //   console.log(res)
-    // })
+    this.uploadService.uploadSubject.subscribe(res=>{
+      if(res=="upload done"){
+        // this.uploadForm.reset()
+        this.CreateUploadForm()
+        this. thumbnailReady=false
+        this.thumbnailEditedReady=false
+        this.message.add("upload complete")
+        this.uploadInProgress=false
+      }
+    })
   }
   CreateUploadForm(): any {
    this.uploadForm= this.fb.group({
-     original:    '',
-     edited:      '',
-     caption:     '',
-     filters:     this.fb.control([])
+     original:     ['',Validators.required],
+     edited:       ['',Validators.required],
+     caption:      ['',Validators.required],
+     filters:      this.fb.control([])
    })
   }
 
   uploadFiles(){
+    this.uploadInProgress=true
       resizeImage({maxSize:1920,file:this.fileOriginal[0]}).then(resizedOriginal=>{
         // console.log(this.fileOriginal[0])
         resizeImage({maxSize:1920,file:this.fileEdited[0]}).then(resizedEdited=>{
@@ -61,11 +71,8 @@ export class UploadComponent implements OnInit {
             filter:this.uploadForm.value.filters,
             pairOf:this.fileOriginal[0].name
           }
-          this.progress=this.uploadService.uploadPercent
           this.uploadService.uploadFile([blobOrig,blobEdited])
-          // this.uploadService.uploadFile(blob)
         })
-      // this.uploadService.uploadGroup(blob)
       
       this.uploadForm.value.filters.forEach(f => {
         let existingFilter = false;
@@ -78,6 +85,7 @@ export class UploadComponent implements OnInit {
           this.addFilter({name:f})
         }
       });
+    
     })
       // this.upload = new Upload(this.fileOriginal[0])
       // this.upload.pairOf=(btoa(this.fileOriginal[0].name))
