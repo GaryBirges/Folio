@@ -58,6 +58,9 @@ export class UploadService {
       this.uploadPercent=res.reduce((a, b)=>a+b)/2;
       if(this.uploadPercent==100){
         this.uploadSubject.next("upload done")
+        setTimeout(() => {
+          this.uploadPercent=0
+        }, 2000);
       }
     })
   }

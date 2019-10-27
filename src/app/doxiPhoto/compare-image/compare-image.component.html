@@ -13,9 +13,9 @@
   <form [formGroup]="rangeForm">
     <div class="image-slider">
       <div id="top-image" [style.width]="this.width">
-        <img [src]="this.data.image.url" width="300" height="200" alt="After" />
+        <img [src]="this.data.image.url" width="600" height="450" alt="After" />
       </div>
-      <img [src]="this.data.toCompare.url" width="300" height="200" alt="Before" />
+      <img [src]="this.data.toCompare.url" width="600" height="450" alt="Before" />
       
       <input formControlName="slider" id="range-input" type="range" />
     </div>

@@ -109,7 +109,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   openPreview(index){
-    let imageName= btoa(this.images[index].name)
+    // let imageName= btoa(this.images[index].name)
     const pair=this.pairs.filter(image => {
       if( image.pairof==this.galleryImages[index].img.name){
         // console.log(image.pairof)
@@ -119,7 +119,9 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       );
     // console.log(pair)
     let dialogRef = this.dialog.open(CompareImageComponent, {
-      width: '450px',
+      // width: '450px',
+      // maxWidth:'80%',
+      // maxHeight:'100%',
       data: {image: this.galleryImages[index].img, toCompare:pair[0]} //only one pair should be returned...
     });
     dialogRef.afterClosed().subscribe(result => {
