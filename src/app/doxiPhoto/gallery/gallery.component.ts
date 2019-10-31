@@ -22,6 +22,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   pairs
 
   timer
+  criteria: string;
   constructor(private imgservice: ImageService,
               public dialog: MatDialog,
               // private auth: AuthenticationService,
@@ -33,11 +34,12 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.upload.getImages().subscribe(res=>{
       this.images=[]
       this.pairs=[]
+      console.log(res)
       res.forEach(x=>{
           if(x.pairof==''){
-            this.images.push(x)
-          }else{
             this.pairs.push(x)
+          }else{
+            this.images.push(x)
           }
       })
       this.filter('all')
@@ -65,14 +67,15 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   openPreview(index){
     const pair=this.pairs.filter(image => {
-      if( image.pairof==this.galleryImages[index].img.name){
+      if( image.name==this.galleryImages[index].img.pairof){
         return image
       }
     });
+    console.log(pair)
     let dialogRef = this.dialog.open(CompareImageComponent, {
       // width: '450px',
-      // maxWidth:'80%',
-      // maxHeight:'100%',
+      maxWidth:'80%',
+      maxHeight:'90%',
       data: {image: this.galleryImages[index].img, toCompare:pair[0]} //only one pair should be returned...
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -100,6 +103,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   }
 
   filter(criteria:string){
+    this.criteria=criteria
     this.galleryImages=[]
 
     this.images.forEach(img => {
