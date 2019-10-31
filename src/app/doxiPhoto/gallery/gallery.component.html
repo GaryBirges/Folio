@@ -1,25 +1,20 @@
-<h2>Recent Photos </h2>
-<ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
-<div>
-  
-  <div>
-    <button  *ngFor="let f of this.filters" type="button" (click)="filter(f.name)">{{f.name}}</button>   
-  </div>
-  
-  <button mat-button (click)="openLogin()">
-    Login
-  </button>
-</div>
+<mat-card class="galleryCard">
+  <mat-card-title>
+    Recent Photos 
+  </mat-card-title>
+  <mat-card-content>
+    <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+    <div class="filterButtonRow">
+      <button mat-flat-button color="primary"  *ngFor="let f of this.filters" type="button" (click)="filter(f.name)">{{f.name}}</button>
+    </div>
+  </mat-card-content>
 
-<!-- <button class="btn btn-lg btn-info" type=button [class.active]="filterBy=='all'" (click)="filterBy='all'">all</button>
-<button class="btn btn-lg btn-info" type=button [class.active]="filterBy=='nature'" (click)="filterBy='nature'">nature</button>
-<button class="btn btn-lg btn-info" type=button [class.active]="filterBy=='viking'" (click)="filterBy='viking'">viking</button>
-<div class="row">
-  <ul id="thumbnailsList">
-    <li *ngFor="let img of this.images"> 
-      <a [routerLink] = "['/image',img.key ]">
-        <img src="{{img.url}}" class="thumbnails" width="270" height="200">
-      </a>
-    </li>
-  </ul>
-</div> -->
+  <mat-card-actions align="end">
+    <div>
+      <button mat-raised-button
+      matTooltip="Just a really special person can log in"
+      color="accent"
+      (click)="openLogin()">Login</button>
+    </div>
+  </mat-card-actions>
+</mat-card>
