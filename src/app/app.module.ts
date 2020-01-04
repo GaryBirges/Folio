@@ -69,6 +69,7 @@ import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-br
 import { SudokuGameComponent } from './games/sudoku-game/sudoku-game.component';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { TetrisComponent } from './games/tetris/tetris.component';
 
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any> {
@@ -94,7 +95,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     CompareImageComponent,
     PongComponent,
     ImageFilterPipe,
-    SudokuGameComponent
+    SudokuGameComponent,
+    TetrisComponent
   ],
   imports: [
     BrowserModule,
