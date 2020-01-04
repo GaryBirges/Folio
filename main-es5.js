@@ -4028,7 +4028,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                             if (value > 0) {
                                 _this.ctx.fillStyle = _constants__WEBPACK_IMPORTED_MODULE_2__["COLORS"][value];
                                 _this.ctx.fillRect(x, y, 1, 1);
-                                _this.add3D(x, y, value);
+                                // this.add3D(x, y, value);
                             }
                         });
                     });

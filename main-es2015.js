@@ -4192,7 +4192,7 @@ let TetrisComponent = class TetrisComponent {
                 if (value > 0) {
                     this.ctx.fillStyle = _constants__WEBPACK_IMPORTED_MODULE_2__["COLORS"][value];
                     this.ctx.fillRect(x, y, 1, 1);
-                    this.add3D(x, y, value);
+                    // this.add3D(x, y, value);
                 }
             });
         });
