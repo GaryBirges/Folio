@@ -191,7 +191,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<mat-card class=\"tetrisCard\">\n    <mat-card-title>\n        Sudoku \n    </mat-card-title>\n<div class=\"grid\">\n    <canvas #board class=\"game-board\"\n            (swipeleft) =\"swipeLeft()\"\n            (swiperight)=\"swipeRight()\"\n            (swipeup)   =\"swipeUp()\"\n            (swipedown) =\"swipeDown()\"></canvas>\n    <div class=\"right-column\">\n        <div>\n            <h1>TETRIS</h1>\n            <p>Score: {{ points }}</p>\n            <p>Lines: {{ lines }}</p>\n            <p>Level: {{ level }}</p>\n            <p>High Score:</p>\n            <p>{{ highScore }}</p>\n            <p>Next Block:</p>\n            <canvas #next class=\"next\"></canvas>\n        </div>\n        <div class=\"button-container\">\n            <button *ngIf=\"!gameStarted\" (click)=\"play()\" class=\"play-button button\">\n                Play\n            </button>\n            <button *ngIf=\"gameStarted\" (click)=\"gameOver()\" class=\"reset-button button\">\n                Reset\n            </button>\n            <button (click)=\"pause()\" class=\"pause-button button\" [class.button-disabled]=\"!gameStarted\">\n                Pause\n            </button>\n        </div>\n    </div>\n</div>\n</mat-card>");
+/* harmony default export */ __webpack_exports__["default"] = ("<mat-card class=\"tetrisCard\">\n    <mat-card-title>\n        TETRIS \n    </mat-card-title>\n<div class=\"grid\">\n    <canvas #board class=\"game-board\"\n            (swipeleft) =\"swipeLeft()\"\n            (swiperight)=\"swipeRight()\"\n            (swipeup)   =\"swipeUp()\"\n            (swipedown) =\"swipeDown()\"></canvas>\n    <div class=\"right-column\">\n        <div>\n            <p>Score: {{ points }}</p>\n            <p>Lines: {{ lines }}</p>\n            <p>Level: {{ level }}</p>\n            <p>High Score:</p>\n            <p>{{ highScore }}</p>\n            <p>Next Block:</p>\n            <canvas #next class=\"next\"></canvas>\n        </div>\n        <div class=\"button-container\">\n            <button *ngIf=\"!gameStarted\" (click)=\"play()\" class=\"play-button button\">\n                Play\n            </button>\n            <button *ngIf=\"gameStarted\" (click)=\"gameOver()\" class=\"reset-button button\">\n                Reset\n            </button>\n            <button (click)=\"pause()\" class=\"pause-button button\" [class.button-disabled]=\"!gameStarted\">\n                Pause\n            </button>\n        </div>\n    </div>\n</div>\n</mat-card>");
 
 /***/ }),
 
@@ -3679,7 +3679,7 @@ SudokuGameComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*!*******************************************!*\
   !*** ./src/app/games/tetris/constants.ts ***!
   \*******************************************/
-/*! exports provided: COLS, ROWS, BLOCK_SIZE, LINES_PER_LEVEL, COLORS, SHAPES, KEY, POINTS, LEVEL */
+/*! exports provided: COLS, ROWS, BLOCK_SIZE, BLOCK_SIZE_MOBILE, LINES_PER_LEVEL, COLORS, SHAPES, KEY, POINTS, LEVEL */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3687,6 +3687,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "COLS", function() { return COLS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ROWS", function() { return ROWS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BLOCK_SIZE", function() { return BLOCK_SIZE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BLOCK_SIZE_MOBILE", function() { return BLOCK_SIZE_MOBILE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LINES_PER_LEVEL", function() { return LINES_PER_LEVEL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "COLORS", function() { return COLORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SHAPES", function() { return SHAPES; });
@@ -3698,6 +3699,7 @@ __webpack_require__.r(__webpack_exports__);
 const COLS = 10;
 const ROWS = 20;
 const BLOCK_SIZE = 30;
+const BLOCK_SIZE_MOBILE = 25;
 const LINES_PER_LEVEL = 10;
 const COLORS = [
     'none',
@@ -3930,7 +3932,7 @@ class Piece {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".grid {\r\n    display: grid;\r\n    grid-template-columns: 320px 200px;\r\n  }\r\n  \r\n  .right-column {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-between;\r\n  }\r\n  \r\n  .game-board {\r\n    border: solid 2px;\r\n  }\r\n  \r\n  /* .play-button {\r\n    background-color: #4caf50;\r\n    font-size: 16px;\r\n    padding: 15px 30px;\r\n    cursor: pointer;\r\n  } */\r\n  \r\n  .tetrisCard{\r\n    max-width: 450px;\r\n    margin-top: 5px;\r\n    margin-left: 5px;\r\n  }\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZ2FtZXMvdGV0cmlzL3RldHJpcy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0lBQ0ksYUFBYTtJQUNiLGtDQUFrQztFQUNwQzs7RUFFQTtJQUNFLGFBQWE7SUFDYixzQkFBc0I7SUFDdEIsOEJBQThCO0VBQ2hDOztFQUVBO0lBQ0UsaUJBQWlCO0VBQ25COztFQUVBOzs7OztLQUtHOztFQUVIO0lBQ0UsZ0JBQWdCO0lBQ2hCLGVBQWU7SUFDZixnQkFBZ0I7RUFDbEIiLCJmaWxlIjoic3JjL2FwcC9nYW1lcy90ZXRyaXMvdGV0cmlzLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuZ3JpZCB7XHJcbiAgICBkaXNwbGF5OiBncmlkO1xyXG4gICAgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiAzMjBweCAyMDBweDtcclxuICB9XHJcbiAgXHJcbiAgLnJpZ2h0LWNvbHVtbiB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxuICAgIGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2VlbjtcclxuICB9XHJcbiAgXHJcbiAgLmdhbWUtYm9hcmQge1xyXG4gICAgYm9yZGVyOiBzb2xpZCAycHg7XHJcbiAgfVxyXG4gIFxyXG4gIC8qIC5wbGF5LWJ1dHRvbiB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjNGNhZjUwO1xyXG4gICAgZm9udC1zaXplOiAxNnB4O1xyXG4gICAgcGFkZGluZzogMTVweCAzMHB4O1xyXG4gICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gIH0gKi9cclxuXHJcbiAgLnRldHJpc0NhcmR7XHJcbiAgICBtYXgtd2lkdGg6IDQ1MHB4O1xyXG4gICAgbWFyZ2luLXRvcDogNXB4O1xyXG4gICAgbWFyZ2luLWxlZnQ6IDVweDtcclxuICB9Il19 */");
+/* harmony default export */ __webpack_exports__["default"] = (".grid {\r\n    display: grid;\r\n    grid-template-columns: 320px 200px;\r\n  }\r\n  \r\n  .right-column {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-between;\r\n  }\r\n  \r\n  .game-board {\r\n    border: solid 2px;\r\n  }\r\n  \r\n  .tetrisCard{\r\n    max-width: 450px;\r\n    margin-top: 5px;\r\n    margin-left: 5px;\r\n  }\r\n  \r\n  @media only screen and (max-width: 600px) {\r\n    .grid {\r\n      grid-template-columns: 260px 200px;\r\n    }\r\n    h1{\r\n      font-size: 15px;\r\n    }\r\n  }\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZ2FtZXMvdGV0cmlzL3RldHJpcy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0lBQ0ksYUFBYTtJQUNiLGtDQUFrQztFQUNwQzs7RUFFQTtJQUNFLGFBQWE7SUFDYixzQkFBc0I7SUFDdEIsOEJBQThCO0VBQ2hDOztFQUVBO0lBQ0UsaUJBQWlCO0VBQ25COztFQUVBO0lBQ0UsZ0JBQWdCO0lBQ2hCLGVBQWU7SUFDZixnQkFBZ0I7RUFDbEI7O0VBQ0E7SUFDRTtNQUNFLGtDQUFrQztJQUNwQztJQUNBO01BQ0UsZUFBZTtJQUNqQjtFQUNGIiwiZmlsZSI6InNyYy9hcHAvZ2FtZXMvdGV0cmlzL3RldHJpcy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmdyaWQge1xyXG4gICAgZGlzcGxheTogZ3JpZDtcclxuICAgIGdyaWQtdGVtcGxhdGUtY29sdW1uczogMzIwcHggMjAwcHg7XHJcbiAgfVxyXG4gIFxyXG4gIC5yaWdodC1jb2x1bW4ge1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XHJcbiAgfVxyXG4gIFxyXG4gIC5nYW1lLWJvYXJkIHtcclxuICAgIGJvcmRlcjogc29saWQgMnB4O1xyXG4gIH1cclxuXHJcbiAgLnRldHJpc0NhcmR7XHJcbiAgICBtYXgtd2lkdGg6IDQ1MHB4O1xyXG4gICAgbWFyZ2luLXRvcDogNXB4O1xyXG4gICAgbWFyZ2luLWxlZnQ6IDVweDtcclxuICB9XHJcbiAgQG1lZGlhIG9ubHkgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiA2MDBweCkge1xyXG4gICAgLmdyaWQge1xyXG4gICAgICBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IDI2MHB4IDIwMHB4O1xyXG4gICAgfVxyXG4gICAgaDF7XHJcbiAgICAgIGZvbnQtc2l6ZTogMTVweDtcclxuICAgIH1cclxuICB9XHJcbiJdfQ== */");
 
 /***/ }),
 
@@ -4002,30 +4004,37 @@ let TetrisComponent = class TetrisComponent {
         this.piece.move(p);
     }
     swipeDown() {
-        let p = this.moves[_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].DOWN](this.piece);
+        let p = this.moves[_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].SPACE](this.piece);
         this.piece.move(p);
     }
     ngOnInit() {
-        this.initBoard();
-        this.initNext();
+        console.log(window.screen.width);
+        if (window.screen.width < 600) {
+            this.initBoard(_constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE_MOBILE"]);
+            this.initNext(_constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE_MOBILE"]);
+        }
+        else {
+            this.initBoard(_constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"]);
+            this.initNext(_constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"]);
+        }
         this.resetGame();
         this.highScore = 0;
     }
-    initBoard() {
+    initBoard(blockSize) {
         this.ctx = this.canvas.nativeElement.getContext('2d');
         // Calculate size of canvas from constants.
-        this.ctx.canvas.width = _constants__WEBPACK_IMPORTED_MODULE_2__["COLS"] * _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"];
-        this.ctx.canvas.height = _constants__WEBPACK_IMPORTED_MODULE_2__["ROWS"] * _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"];
+        this.ctx.canvas.width = _constants__WEBPACK_IMPORTED_MODULE_2__["COLS"] * blockSize;
+        this.ctx.canvas.height = _constants__WEBPACK_IMPORTED_MODULE_2__["ROWS"] * blockSize;
         // Scale so we don't need to give size on every draw. scale up from 1px to 1 block
-        this.ctx.scale(_constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"], _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"]);
+        this.ctx.scale(blockSize, blockSize);
     }
-    initNext() {
+    initNext(blockSize) {
         this.ctxNext = this.canvasNext.nativeElement.getContext('2d');
         // Calculate size of canvas from constants.
         //+2 for the ---- border
-        this.ctxNext.canvas.width = 4 * _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"] + 2;
-        this.ctxNext.canvas.height = 4 * _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"];
-        this.ctxNext.scale(_constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"], _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"]);
+        this.ctxNext.canvas.width = 4 * blockSize + 2;
+        this.ctxNext.canvas.height = 4 * blockSize;
+        this.ctxNext.scale(blockSize, blockSize);
     }
     play() {
         this.gameStarted = true;
