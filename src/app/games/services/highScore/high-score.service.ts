@@ -61,7 +61,7 @@ export class HighScoreService {
     })
     this.sudokuCollection.valueChanges().subscribe(res=>{
       this.sudokuScores=res
-      console.log(res)
+      // console.log(res)
     })
   }
 
@@ -98,7 +98,7 @@ export class HighScoreService {
     let name =''
     let dialogRef = this.dialog.open(AskForNameComponent, {
       width: '250px',
-      data: {name: name}
+      data: {name: name, score}
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);

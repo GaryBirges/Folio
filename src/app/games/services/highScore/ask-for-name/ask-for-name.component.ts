@@ -14,8 +14,9 @@ export class AskForNameComponent {
     onNoClick(): void {
       this.dialogRef.close();
     }
-
+    objectKeys = Object.keys;
 }
 interface DialogData {
   name: string;
+  score:Object;
 }

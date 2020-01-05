@@ -1,6 +1,7 @@
 <h1 mat-dialog-title>Hi</h1>
 <div mat-dialog-content>
   <p>If you tell me your name I can put it to the scoreBoard</p>
+  <p class="scoreHolder" *ngFor="let key of objectKeys(data.score)">{{key + ' : '}}<span class="floatRight">{{data.score[key]}}</span> </p>
   <mat-form-field>
     <input matInput [(ngModel)]="data.name">
   </mat-form-field>

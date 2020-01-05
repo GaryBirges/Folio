@@ -93,7 +93,7 @@ export class SudokuGameComponent implements OnInit {
       row.cols.forEach(col=>{
           col.value = this.sudoku.solution[col.row*9+col.col]
           col.invalid=false
-          // col.readonly=true  //sudoku cant be edited after solve click
+          col.readonly=true  //sudoku cant be edited after solve click
       })
     );
     clearInterval(this.interval)

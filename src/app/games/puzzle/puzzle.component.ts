@@ -116,7 +116,7 @@ export class PuzzleComponent implements OnInit {
     }
     console.log("solved")
     this.highScore.addScore('Puzzle', this.getScore())
-    this.message.add(`Game Complete.		You completed the game in time = ${this.ticks} & ${this.steps/2 } steps.`)
+    // this.message.add(`Game Complete.		You completed the game in time = ${this.ticks} & ${this.steps/2 } steps.`)
     this.options.draggable.ignoreContent=true
     this.options.api.optionsChanged()
     console.log(this.options)
