@@ -36,6 +36,12 @@ export class ScoreBoardComponent implements OnInit {
   tetrisDisplayedColumns: string[] = ['score', 'name', 'level', 'lines'];
   @ViewChild('pongPaginator', { static: true }) paginatorTetris: MatPaginator;
   @ViewChild('pongSort', { static: true }) sortTetris: MatSort;
+
+  sudokuScore
+  sudokuData: any;
+  sudokuDisplayedColumns: string[] = ['time', 'name'];
+  @ViewChild('sudokuPaginator', { static: true }) paginatorSudoku: MatPaginator;
+  @ViewChild('sudokuSort', { static: true }) sortSudoku: MatSort;
   
   ngOnInit() {
     this.highScore.snakeCollection.valueChanges().subscribe(res=>{
@@ -61,6 +67,12 @@ export class ScoreBoardComponent implements OnInit {
       this.tetrisData = new MatTableDataSource<any>(this.tetrisScore);
       this.tetrisData.paginator = this.paginatorTetris;
       this.tetrisData.sort = this.sortTetris;
+    })
+    this.highScore.sudokuCollection.valueChanges().subscribe(res=>{
+      this.sudokuScore=res
+      this.sudokuData = new MatTableDataSource<any>(this.sudokuScore);
+      this.sudokuData.paginator = this.paginatorSudoku;
+      this.sudokuData.sort = this.sortSudoku;
     })
   }
 

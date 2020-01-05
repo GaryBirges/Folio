@@ -60,6 +60,23 @@
 </mat-card>
 
 <mat-card>
+  <mat-card-title>Sudoku</mat-card-title>
+<table mat-table [dataSource]="sudokuData" #sudokuSort="matSort" matSort class="mat-elevation-z8">
+  <ng-container matColumnDef="time">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Time</th>
+    <td mat-cell *matCellDef="let element">{{element.time}}</td>
+  </ng-container>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+    <td mat-cell *matCellDef="let element">{{element.name}}</td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="sudokuDisplayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns:sudokuDisplayedColumns;"></tr>
+</table>
+<mat-paginator #sudokuPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</mat-card>
+
+<mat-card>
   <mat-card-title>Tetris</mat-card-title>
 <table mat-table [dataSource]="tetrisData" #tetrisSort="matSort" matSort class="mat-elevation-z8">
   <ng-container matColumnDef="score">

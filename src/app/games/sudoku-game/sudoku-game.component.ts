@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as generator from 'sudoku'
+import { HighScoreService } from '../services/highScore/high-score.service';
 @Component({
   selector: 'app-sudoku-game',
   templateUrl: './sudoku-game.component.html',
@@ -12,7 +13,7 @@ export class SudokuGameComponent implements OnInit {
   timer
   interval
   counter: number=0;
-  constructor(){
+  constructor(private highScore: HighScoreService){
   }
   
   ngOnInit(){
@@ -92,7 +93,7 @@ export class SudokuGameComponent implements OnInit {
       row.cols.forEach(col=>{
           col.value = this.sudoku.solution[col.row*9+col.col]
           col.invalid=false
-          col.readonly=true  //sudoku cant be edited after solve click
+          // col.readonly=true  //sudoku cant be edited after solve click
       })
     );
     clearInterval(this.interval)
@@ -111,6 +112,7 @@ export class SudokuGameComponent implements OnInit {
     if(!this.sudoku.solveTime){
       const solved= this.checkSolution(this.sudoku)
       if(solved){
+        this.highScore.addScore('Sudoku', {time:this.timer})
         clearInterval(this.interval)
         this.sudoku.solveTime = new Date()
       }
