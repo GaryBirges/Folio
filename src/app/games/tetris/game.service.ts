@@ -8,7 +8,7 @@ import { COLS, ROWS, POINTS } from './constants';
 export class GameService {
 
   constructor() { }
-
+  //check every point of the piece if its in a valid place
   valid(p: IPiece, board: number[][]): boolean {
     return p.shape.every((row, dy) => {
       return row.every((value, dx) => {
@@ -41,16 +41,20 @@ export class GameService {
   }
 
   rotate(piece: IPiece): IPiece {
+    //create a (not shallow) copy / clone
     let p: IPiece = JSON.parse(JSON.stringify(piece));
+    // Transpose matrix
     for (let y = 0; y < p.shape.length; ++y) {
       for (let x = 0; x < y; ++x) {
         [p.shape[x][y], p.shape[y][x]] = [p.shape[y][x], p.shape[x][y]];
       }
     }
+    // Reverse the order of the columns.
     p.shape.forEach(row => row.reverse());
     return p;
   }
 
+  //points calculated as level multiplied by lines score
   getLinesClearedPoints(lines: number, level: number): number {
     const lineClearPoints =
       lines === 1

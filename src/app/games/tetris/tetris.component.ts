@@ -1,6 +1,6 @@
 
 import { Component, ViewChild, ElementRef, OnInit, HostListener } from '@angular/core';
-import { COLS, BLOCK_SIZE, ROWS, KEY, POINTS, COLORS, LEVEL, LINES_PER_LEVEL, COLORSDARKER, COLORSLIGHTER } from './constants';
+import { COLS, BLOCK_SIZE, ROWS, KEY, POINTS, COLORS, LEVEL, LINES_PER_LEVEL } from './constants';
 import { Piece, IPiece } from './piece.component';
 import { GameService } from './game.service';
 
@@ -10,10 +10,8 @@ import { GameService } from './game.service';
   styleUrls: ['./tetris.component.css']
 })
 export class TetrisComponent implements OnInit {
-  @ViewChild('board', { static: true })
-  canvas: ElementRef<HTMLCanvasElement>;
-  @ViewChild('next', { static: true })
-  canvasNext: ElementRef<HTMLCanvasElement>;
+  @ViewChild('board', { static: true }) canvas: ElementRef<HTMLCanvasElement>;
+  @ViewChild('next', { static: true }) canvasNext: ElementRef<HTMLCanvasElement>;
   ctx: CanvasRenderingContext2D;
   ctxNext: CanvasRenderingContext2D;
   board: number[][];
@@ -28,6 +26,7 @@ export class TetrisComponent implements OnInit {
   lines: number;
   level: number;
   moves = {
+    //... = shallow copy
     [KEY.LEFT]: (p: IPiece): IPiece => ({ ...p, x: p.x - 1 }),
     [KEY.RIGHT]: (p: IPiece): IPiece => ({ ...p, x: p.x + 1 }),
     [KEY.DOWN]: (p: IPiece): IPiece => ({ ...p, y: p.y + 1 }),
@@ -35,12 +34,10 @@ export class TetrisComponent implements OnInit {
     [KEY.UP]: (p: IPiece): IPiece => this.service.rotate(p)
   };
 
-  @HostListener('window:keydown', ['$event'])
-  keyEvent(event: KeyboardEvent) {
+  @HostListener('window:keydown', ['$event']) keyEvent(event: KeyboardEvent) {
     if (event.keyCode === KEY.ESC) {
       this.gameOver();
     } else if (this.moves[event.keyCode]) {
-      event.preventDefault();
       // Get new state
       let p = this.moves[event.keyCode](this.piece);
       if (event.keyCode === KEY.SPACE) {
@@ -75,7 +72,7 @@ export class TetrisComponent implements OnInit {
     this.ctx.canvas.width = COLS * BLOCK_SIZE;
     this.ctx.canvas.height = ROWS * BLOCK_SIZE;
 
-    // Scale so we don't need to give size on every draw.
+    // Scale so we don't need to give size on every draw. scale up from 1px to 1 block
     this.ctx.scale(BLOCK_SIZE, BLOCK_SIZE);
   }
 
@@ -83,9 +80,8 @@ export class TetrisComponent implements OnInit {
     this.ctxNext = this.canvasNext.nativeElement.getContext('2d');
 
     // Calculate size of canvas from constants.
-    // The + 2 is to allow for space to add the drop shadow to
-    // the "next piece"
-    this.ctxNext.canvas.width = 4 * BLOCK_SIZE + 2;
+    //+2 for the ---- border
+    this.ctxNext.canvas.width = 4 * BLOCK_SIZE +2;
     this.ctxNext.canvas.height = 4 * BLOCK_SIZE;
 
     this.ctxNext.scale(BLOCK_SIZE, BLOCK_SIZE);
@@ -114,11 +110,12 @@ export class TetrisComponent implements OnInit {
     this.board = this.getEmptyBoard();
     this.time = { start: 0, elapsed: 0, level: LEVEL[this.level] };
     this.paused = false;
-    this.addOutlines();
+    this.addGrid();
   }
 
   animate(now = 0) {
     this.time.elapsed = now - this.time.start;
+    //check for the time in current level
     if (this.time.elapsed > this.time.level) {
       this.time.start = now;
       if (!this.drop()) {
@@ -143,8 +140,8 @@ export class TetrisComponent implements OnInit {
     } else {
       this.freeze();
       this.clearLines();
+      //when a piece cant move down and its position is 0 its Game over
       if (this.piece.y === 0) {
-        // Game over
         return false;
       }
       this.piece = this.next;
@@ -156,6 +153,7 @@ export class TetrisComponent implements OnInit {
 
   clearLines() {
     let lines = 0;
+    //if any row has only non zero values remove it and and a new on top
     this.board.forEach((row, y) => {
       if (row.every(value => value !== 0)) {
         lines++;
@@ -163,6 +161,7 @@ export class TetrisComponent implements OnInit {
         this.board.unshift(Array(COLS).fill(0));
       }
     });
+    //calculate points according to removed lines and change level if needed
     if (lines > 0) {
       this.points += this.service.getLinesClearedPoints(lines, this.level);
       this.lines += lines;
@@ -174,6 +173,7 @@ export class TetrisComponent implements OnInit {
     }
   }
 
+  //freeze the piece in place on bottom
   freeze() {
     this.piece.shape.forEach((row, y) => {
       row.forEach((value, x) => {
@@ -183,40 +183,8 @@ export class TetrisComponent implements OnInit {
       });
     });
   }
-
-  private add3D(x: number, y: number, color: number): void {
-    //Darker Color
-    this.ctx.fillStyle = COLORSDARKER[color];
-    // Vertical
-    this.ctx.fillRect(x + .9, y, .1, 1);
-    // Horizontal
-    this.ctx.fillRect(x, y + .9, 1, .1);
-
-    //Darker Color - Inner 
-    // Vertical
-    this.ctx.fillRect(x + .65, y + .3, .05, .3);
-    // Horizontal
-    this.ctx.fillRect(x + .3, y + .6, .4, .05);
-
-    // Lighter Color - Outer
-    this.ctx.fillStyle = COLORSLIGHTER[color];
-
-    // Lighter Color - Inner 
-    // Vertical
-    this.ctx.fillRect(x + .3, y + .3, .05, .3);
-    // Horizontal
-    this.ctx.fillRect(x + .3, y + .3, .4, .05);
-
-    // Lighter Color - Outer
-    // Vertical
-    this.ctx.fillRect(x, y, .05, 1);
-    this.ctx.fillRect(x, y, .1, .95);
-    // Horizontal
-    this.ctx.fillRect(x, y, 1 , .05);
-    this.ctx.fillRect(x, y, .95, .1);
-  }
-  
-  private addOutlines() {
+  //add the helping lines
+  private addGrid() {
     for(let index = 1; index < COLS; index++) {
       this.ctx.fillStyle = 'black';
       this.ctx.fillRect(index, 0, .025, this.ctx.canvas.height);
@@ -227,18 +195,17 @@ export class TetrisComponent implements OnInit {
       this.ctx.fillRect(0, index, this.ctx.canvas.width, .025);
     }
   }
-
+  //paint the board on canvas
   drawBoard() {
     this.board.forEach((row, y) => {
       row.forEach((value, x) => {
         if (value > 0) {
           this.ctx.fillStyle = COLORS[value];
           this.ctx.fillRect(x, y, 1, 1);
-          this.add3D(x, y, value);
         }
       });
     });
-    this.addOutlines();
+    this.addGrid();
   }
 
   pause() {
