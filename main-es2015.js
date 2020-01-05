@@ -191,7 +191,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"grid\">\n    <canvas #board class=\"game-board\"></canvas>\n    <div class=\"right-column\">\n        <div>\n            <h1>TETRIS</h1>\n            <p>Score: {{ points }}</p>\n            <p>Lines: {{ lines }}</p>\n            <p>Level: {{ level }}</p>\n            <p>High Score:</p>\n            <p>{{ highScore }}</p>\n            <p>Next Block:</p>\n            <canvas #next class=\"next\"></canvas>\n        </div>\n        <div class=\"button-container\">\n            <button\n                (click)=\"play()\"\n                class=\"play-button button\"\n                *ngIf=\"!gameStarted\"\n            >\n                Play\n            </button>\n            <button\n                (click)=\"gameOver()\"\n                class=\"reset-button button\"\n                *ngIf=\"gameStarted\"\n            >\n                Reset\n            </button>\n            <button\n                (click)=\"pause()\"\n                class=\"pause-button button\"\n                [class.button-disabled]=\"!gameStarted\"\n            >\n                Pause\n            </button>\n        </div>\n    </div>\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"grid\">\n    <canvas #board class=\"game-board\"></canvas>\n    <div class=\"right-column\">\n        <div>\n            <h1>TETRIS</h1>\n            <p>Score: {{ points }}</p>\n            <p>Lines: {{ lines }}</p>\n            <p>Level: {{ level }}</p>\n            <p>High Score:</p>\n            <p>{{ highScore }}</p>\n            <p>Next Block:</p>\n            <canvas #next class=\"next\"></canvas>\n        </div>\n        <div class=\"button-container\">\n            <button *ngIf=\"!gameStarted\" (click)=\"play()\" class=\"play-button button\">\n                Play\n            </button>\n            <button *ngIf=\"gameStarted\" (click)=\"gameOver()\" class=\"reset-button button\">\n                Reset\n            </button>\n            <button (click)=\"pause()\" class=\"pause-button button\" [class.button-disabled]=\"!gameStarted\">\n                Pause\n            </button>\n        </div>\n    </div>\n</div>");
 
 /***/ }),
 
@@ -3685,7 +3685,7 @@ SudokuGameComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*!*******************************************!*\
   !*** ./src/app/games/tetris/constants.ts ***!
   \*******************************************/
-/*! exports provided: COLS, ROWS, BLOCK_SIZE, LINES_PER_LEVEL, COLORS, COLORSLIGHTER, COLORSDARKER, SHAPES, KEY, POINTS, LEVEL */
+/*! exports provided: COLS, ROWS, BLOCK_SIZE, LINES_PER_LEVEL, COLORS, SHAPES, KEY, POINTS, LEVEL */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3695,8 +3695,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BLOCK_SIZE", function() { return BLOCK_SIZE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LINES_PER_LEVEL", function() { return LINES_PER_LEVEL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "COLORS", function() { return COLORS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "COLORSLIGHTER", function() { return COLORSLIGHTER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "COLORSDARKER", function() { return COLORSDARKER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SHAPES", function() { return SHAPES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "KEY", function() { return KEY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "POINTS", function() { return POINTS; });
@@ -3716,26 +3714,6 @@ const COLORS = [
     'rgba(0, 255, 0)',
     'rgba(255, 0, 255)',
     'rgba(255, 0, 0)',
-];
-const COLORSLIGHTER = [
-    'none',
-    'rgba(132, 255, 255)',
-    'rgba(132, 132, 255)',
-    'rgba(255, 195, 132)',
-    'rgba(255, 255, 132)',
-    'rgba(132, 255, 132)',
-    'rgba(255, 132, 255)',
-    'rgba(255, 132, 132)',
-];
-const COLORSDARKER = [
-    'none',
-    'rgba(0, 132, 132)',
-    'rgba(0, 0, 132)',
-    'rgba(132, 65, 0)',
-    'rgba(132, 132, 0)',
-    'rgba(0, 132, 0)',
-    'rgba(132, 0, 132)',
-    'rgba(132, 0, 0)',
 ];
 const SHAPES = [
     [],
@@ -3808,6 +3786,7 @@ __webpack_require__.r(__webpack_exports__);
 
 let GameService = class GameService {
     constructor() { }
+    //check every point of the piece if its in a valid place
     valid(p, board) {
         return p.shape.every((row, dy) => {
             return row.every((value, dx) => {
@@ -3833,15 +3812,19 @@ let GameService = class GameService {
         return board[y] && board[y][x] === 0;
     }
     rotate(piece) {
+        //create a (not shallow) copy / clone
         let p = JSON.parse(JSON.stringify(piece));
+        // Transpose matrix
         for (let y = 0; y < p.shape.length; ++y) {
             for (let x = 0; x < y; ++x) {
                 [p.shape[x][y], p.shape[y][x]] = [p.shape[y][x], p.shape[x][y]];
             }
         }
+        // Reverse the order of the columns.
         p.shape.forEach(row => row.reverse());
         return p;
     }
+    //points calculated as level multiplied by lines score
     getLinesClearedPoints(lines, level) {
         const lineClearPoints = lines === 1
             ? _constants__WEBPACK_IMPORTED_MODULE_2__["POINTS"].SINGLE
@@ -3885,81 +3868,52 @@ class Piece {
         this.ctx = ctx;
         this.spawn();
     }
+    //instantiate a random piece
     spawn() {
-        const typeId = this.randomizeTetrominoType(_constants__WEBPACK_IMPORTED_MODULE_1__["COLORS"].length - 1);
+        const typeId = this.randomizeTetrominoType(_constants__WEBPACK_IMPORTED_MODULE_1__["SHAPES"].length - 1);
         this.shape = _constants__WEBPACK_IMPORTED_MODULE_1__["SHAPES"][typeId];
         this.color = _constants__WEBPACK_IMPORTED_MODULE_1__["COLORS"][typeId];
-        this.colorLighter = _constants__WEBPACK_IMPORTED_MODULE_1__["COLORSLIGHTER"][typeId];
-        this.colorDarker = _constants__WEBPACK_IMPORTED_MODULE_1__["COLORSDARKER"][typeId];
         this.x = typeId === 4 ? 4 : 3;
         this.y = 0;
     }
-    add3D(ctx, x, y) {
-        //Darker Color
-        ctx.fillStyle = this.colorDarker;
-        // Vertical
-        ctx.fillRect(x + .9, y, .1, 1);
-        // Horizontal
-        ctx.fillRect(x, y + .9, 1, .1);
-        //Darker Color - Inner 
-        // Vertical
-        ctx.fillRect(x + .65, y + .3, .05, .3);
-        // Horizontal
-        ctx.fillRect(x + .3, y + .6, .4, .05);
-        // Lighter Color - Outer
-        ctx.fillStyle = this.colorLighter;
-        // Lighter Color - Inner 
-        // Vertical
-        ctx.fillRect(x + .3, y + .3, .05, .3);
-        // Horizontal
-        ctx.fillRect(x + .3, y + .3, .4, .05);
-        // Lighter Color - Outer
-        // Vertical
-        ctx.fillRect(x, y, .05, 1);
-        ctx.fillRect(x, y, .1, .95);
-        // Horizontal
-        ctx.fillRect(x, y, 1, .05);
-        ctx.fillRect(x, y, .95, .1);
-    }
+    //show a black border for the next piece
     addNextBorder(ctx, x, y) {
         ctx.fillStyle = 'black';
         ctx.fillRect(x, y, 1.025, 1.025);
     }
+    //draw each point of the piece
     draw() {
         this.shape.forEach((row, y) => {
             row.forEach((value, x) => {
                 if (value > 0) {
                     this.ctx.fillStyle = this.color;
+                    // this.x & this.y = position on the board
+                    // x & y position are the positions of the shape
                     const currentX = this.x + x;
                     const currentY = this.y + y;
                     this.ctx.fillRect(currentX, currentY, 1, 1);
-                    // this.add3D(this.ctx, currentX, currentY);
                 }
             });
         });
     }
+    //draw next piece (with border)
     drawNext(ctxNext) {
         ctxNext.clearRect(0, 0, ctxNext.canvas.width, ctxNext.canvas.height);
-        this.shape.forEach((row, y) => {
-            row.forEach((value, x) => {
-                if (value > 0) {
-                    this.addNextBorder(ctxNext, x, y);
-                }
-            });
-        });
         ctxNext.fillStyle = this.color;
         this.shape.forEach((row, y) => {
             row.forEach((value, x) => {
                 if (value > 0) {
+                    this.addNextBorder(ctxNext, x, y);
                     ctxNext.fillStyle = this.color;
+                    //making space for the border
                     const currentX = x + .025;
                     const currentY = y + .025;
                     ctxNext.fillRect(currentX, currentY, 1 - .025, 1 - .025);
-                    // this.add3D(ctxNext, currentX, currentY);
                 }
             });
         });
     }
+    //setting values for draw
     move(p) {
         this.x = p.x;
         this.y = p.y;
@@ -3982,7 +3936,7 @@ class Piece {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("/* <link href=”https://fonts.googleapis.com/css?family=Press+Start+2P\" rel=”stylesheet” /> */\r\n\r\n.grid {\r\n    display: grid;\r\n    grid-template-columns: 320px 200px;\r\n  }\r\n\r\n.right-column {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-between;\r\n  }\r\n\r\n.game-board {\r\n    border: solid 2px;\r\n  }\r\n\r\n.play-button {\r\n    background-color: #4caf50;\r\n    font-size: 16px;\r\n    padding: 15px 30px;\r\n    cursor: pointer;\r\n  }\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZ2FtZXMvdGV0cmlzL3RldHJpcy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLDRGQUE0Rjs7QUFFNUY7SUFDSSxhQUFhO0lBQ2Isa0NBQWtDO0VBQ3BDOztBQUVBO0lBQ0UsYUFBYTtJQUNiLHNCQUFzQjtJQUN0Qiw4QkFBOEI7RUFDaEM7O0FBRUE7SUFDRSxpQkFBaUI7RUFDbkI7O0FBRUE7SUFDRSx5QkFBeUI7SUFDekIsZUFBZTtJQUNmLGtCQUFrQjtJQUNsQixlQUFlO0VBQ2pCIiwiZmlsZSI6InNyYy9hcHAvZ2FtZXMvdGV0cmlzL3RldHJpcy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLyogPGxpbmsgaHJlZj3igJ1odHRwczovL2ZvbnRzLmdvb2dsZWFwaXMuY29tL2Nzcz9mYW1pbHk9UHJlc3MrU3RhcnQrMlBcIiByZWw94oCdc3R5bGVzaGVldOKAnSAvPiAqL1xyXG5cclxuLmdyaWQge1xyXG4gICAgZGlzcGxheTogZ3JpZDtcclxuICAgIGdyaWQtdGVtcGxhdGUtY29sdW1uczogMzIwcHggMjAwcHg7XHJcbiAgfVxyXG4gIFxyXG4gIC5yaWdodC1jb2x1bW4ge1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XHJcbiAgfVxyXG4gIFxyXG4gIC5nYW1lLWJvYXJkIHtcclxuICAgIGJvcmRlcjogc29saWQgMnB4O1xyXG4gIH1cclxuICBcclxuICAucGxheS1idXR0b24ge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzRjYWY1MDtcclxuICAgIGZvbnQtc2l6ZTogMTZweDtcclxuICAgIHBhZGRpbmc6IDE1cHggMzBweDtcclxuICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICB9Il19 */");
+/* harmony default export */ __webpack_exports__["default"] = (".grid {\r\n    display: grid;\r\n    grid-template-columns: 320px 200px;\r\n  }\r\n  \r\n  .right-column {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-between;\r\n  }\r\n  \r\n  .game-board {\r\n    border: solid 2px;\r\n  }\r\n  \r\n  /* .play-button {\r\n    background-color: #4caf50;\r\n    font-size: 16px;\r\n    padding: 15px 30px;\r\n    cursor: pointer;\r\n  } */\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZ2FtZXMvdGV0cmlzL3RldHJpcy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0lBQ0ksYUFBYTtJQUNiLGtDQUFrQztFQUNwQzs7RUFFQTtJQUNFLGFBQWE7SUFDYixzQkFBc0I7SUFDdEIsOEJBQThCO0VBQ2hDOztFQUVBO0lBQ0UsaUJBQWlCO0VBQ25COztFQUVBOzs7OztLQUtHIiwiZmlsZSI6InNyYy9hcHAvZ2FtZXMvdGV0cmlzL3RldHJpcy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmdyaWQge1xyXG4gICAgZGlzcGxheTogZ3JpZDtcclxuICAgIGdyaWQtdGVtcGxhdGUtY29sdW1uczogMzIwcHggMjAwcHg7XHJcbiAgfVxyXG4gIFxyXG4gIC5yaWdodC1jb2x1bW4ge1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XHJcbiAgfVxyXG4gIFxyXG4gIC5nYW1lLWJvYXJkIHtcclxuICAgIGJvcmRlcjogc29saWQgMnB4O1xyXG4gIH1cclxuICBcclxuICAvKiAucGxheS1idXR0b24ge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzRjYWY1MDtcclxuICAgIGZvbnQtc2l6ZTogMTZweDtcclxuICAgIHBhZGRpbmc6IDE1cHggMzBweDtcclxuICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICB9ICovIl19 */");
 
 /***/ }),
 
@@ -4010,6 +3964,7 @@ let TetrisComponent = class TetrisComponent {
     constructor(service) {
         this.service = service;
         this.moves = {
+            //... = shallow copy
             [_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].LEFT]: (p) => (Object.assign({}, p, { x: p.x - 1 })),
             [_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].RIGHT]: (p) => (Object.assign({}, p, { x: p.x + 1 })),
             [_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].DOWN]: (p) => (Object.assign({}, p, { y: p.y + 1 })),
@@ -4022,7 +3977,6 @@ let TetrisComponent = class TetrisComponent {
             this.gameOver();
         }
         else if (this.moves[event.keyCode]) {
-            event.preventDefault();
             // Get new state
             let p = this.moves[event.keyCode](this.piece);
             if (event.keyCode === _constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].SPACE) {
@@ -4052,14 +4006,13 @@ let TetrisComponent = class TetrisComponent {
         // Calculate size of canvas from constants.
         this.ctx.canvas.width = _constants__WEBPACK_IMPORTED_MODULE_2__["COLS"] * _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"];
         this.ctx.canvas.height = _constants__WEBPACK_IMPORTED_MODULE_2__["ROWS"] * _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"];
-        // Scale so we don't need to give size on every draw.
+        // Scale so we don't need to give size on every draw. scale up from 1px to 1 block
         this.ctx.scale(_constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"], _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"]);
     }
     initNext() {
         this.ctxNext = this.canvasNext.nativeElement.getContext('2d');
         // Calculate size of canvas from constants.
-        // The + 2 is to allow for space to add the drop shadow to
-        // the "next piece"
+        //+2 for the ---- border
         this.ctxNext.canvas.width = 4 * _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"] + 2;
         this.ctxNext.canvas.height = 4 * _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"];
         this.ctxNext.scale(_constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"], _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"]);
@@ -4084,10 +4037,11 @@ let TetrisComponent = class TetrisComponent {
         this.board = this.getEmptyBoard();
         this.time = { start: 0, elapsed: 0, level: _constants__WEBPACK_IMPORTED_MODULE_2__["LEVEL"][this.level] };
         this.paused = false;
-        this.addOutlines();
+        this.addGrid();
     }
     animate(now = 0) {
         this.time.elapsed = now - this.time.start;
+        //check for the time in current level
         if (this.time.elapsed > this.time.level) {
             this.time.start = now;
             if (!this.drop()) {
@@ -4111,8 +4065,8 @@ let TetrisComponent = class TetrisComponent {
         else {
             this.freeze();
             this.clearLines();
+            //when a piece cant move down and its position is 0 its Game over
             if (this.piece.y === 0) {
-                // Game over
                 return false;
             }
             this.piece = this.next;
@@ -4123,6 +4077,7 @@ let TetrisComponent = class TetrisComponent {
     }
     clearLines() {
         let lines = 0;
+        //if any row has only non zero values remove it and and a new on top
         this.board.forEach((row, y) => {
             if (row.every(value => value !== 0)) {
                 lines++;
@@ -4130,6 +4085,7 @@ let TetrisComponent = class TetrisComponent {
                 this.board.unshift(Array(_constants__WEBPACK_IMPORTED_MODULE_2__["COLS"]).fill(0));
             }
         });
+        //calculate points according to removed lines and change level if needed
         if (lines > 0) {
             this.points += this.service.getLinesClearedPoints(lines, this.level);
             this.lines += lines;
@@ -4140,6 +4096,7 @@ let TetrisComponent = class TetrisComponent {
             }
         }
     }
+    //freeze the piece in place on bottom
     freeze() {
         this.piece.shape.forEach((row, y) => {
             row.forEach((value, x) => {
@@ -4149,34 +4106,8 @@ let TetrisComponent = class TetrisComponent {
             });
         });
     }
-    add3D(x, y, color) {
-        //Darker Color
-        this.ctx.fillStyle = _constants__WEBPACK_IMPORTED_MODULE_2__["COLORSDARKER"][color];
-        // Vertical
-        this.ctx.fillRect(x + .9, y, .1, 1);
-        // Horizontal
-        this.ctx.fillRect(x, y + .9, 1, .1);
-        //Darker Color - Inner 
-        // Vertical
-        this.ctx.fillRect(x + .65, y + .3, .05, .3);
-        // Horizontal
-        this.ctx.fillRect(x + .3, y + .6, .4, .05);
-        // Lighter Color - Outer
-        this.ctx.fillStyle = _constants__WEBPACK_IMPORTED_MODULE_2__["COLORSLIGHTER"][color];
-        // Lighter Color - Inner 
-        // Vertical
-        this.ctx.fillRect(x + .3, y + .3, .05, .3);
-        // Horizontal
-        this.ctx.fillRect(x + .3, y + .3, .4, .05);
-        // Lighter Color - Outer
-        // Vertical
-        this.ctx.fillRect(x, y, .05, 1);
-        this.ctx.fillRect(x, y, .1, .95);
-        // Horizontal
-        this.ctx.fillRect(x, y, 1, .05);
-        this.ctx.fillRect(x, y, .95, .1);
-    }
-    addOutlines() {
+    //add the helping lines
+    addGrid() {
         for (let index = 1; index < _constants__WEBPACK_IMPORTED_MODULE_2__["COLS"]; index++) {
             this.ctx.fillStyle = 'black';
             this.ctx.fillRect(index, 0, .025, this.ctx.canvas.height);
@@ -4186,17 +4117,17 @@ let TetrisComponent = class TetrisComponent {
             this.ctx.fillRect(0, index, this.ctx.canvas.width, .025);
         }
     }
+    //paint the board on canvas
     drawBoard() {
         this.board.forEach((row, y) => {
             row.forEach((value, x) => {
                 if (value > 0) {
                     this.ctx.fillStyle = _constants__WEBPACK_IMPORTED_MODULE_2__["COLORS"][value];
                     this.ctx.fillRect(x, y, 1, 1);
-                    // this.add3D(x, y, value);
                 }
             });
         });
-        this.addOutlines();
+        this.addGrid();
     }
     pause() {
         if (this.gameStarted) {

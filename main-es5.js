@@ -201,7 +201,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"grid\">\n    <canvas #board class=\"game-board\"></canvas>\n    <div class=\"right-column\">\n        <div>\n            <h1>TETRIS</h1>\n            <p>Score: {{ points }}</p>\n            <p>Lines: {{ lines }}</p>\n            <p>Level: {{ level }}</p>\n            <p>High Score:</p>\n            <p>{{ highScore }}</p>\n            <p>Next Block:</p>\n            <canvas #next class=\"next\"></canvas>\n        </div>\n        <div class=\"button-container\">\n            <button\n                (click)=\"play()\"\n                class=\"play-button button\"\n                *ngIf=\"!gameStarted\"\n            >\n                Play\n            </button>\n            <button\n                (click)=\"gameOver()\"\n                class=\"reset-button button\"\n                *ngIf=\"gameStarted\"\n            >\n                Reset\n            </button>\n            <button\n                (click)=\"pause()\"\n                class=\"pause-button button\"\n                [class.button-disabled]=\"!gameStarted\"\n            >\n                Pause\n            </button>\n        </div>\n    </div>\n</div>");
+            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"grid\">\n    <canvas #board class=\"game-board\"></canvas>\n    <div class=\"right-column\">\n        <div>\n            <h1>TETRIS</h1>\n            <p>Score: {{ points }}</p>\n            <p>Lines: {{ lines }}</p>\n            <p>Level: {{ level }}</p>\n            <p>High Score:</p>\n            <p>{{ highScore }}</p>\n            <p>Next Block:</p>\n            <canvas #next class=\"next\"></canvas>\n        </div>\n        <div class=\"button-container\">\n            <button *ngIf=\"!gameStarted\" (click)=\"play()\" class=\"play-button button\">\n                Play\n            </button>\n            <button *ngIf=\"gameStarted\" (click)=\"gameOver()\" class=\"reset-button button\">\n                Reset\n            </button>\n            <button (click)=\"pause()\" class=\"pause-button button\" [class.button-disabled]=\"!gameStarted\">\n                Pause\n            </button>\n        </div>\n    </div>\n</div>");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/home/home.component.html": 
@@ -3523,7 +3523,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         /*!*******************************************!*\
           !*** ./src/app/games/tetris/constants.ts ***!
           \*******************************************/
-        /*! exports provided: COLS, ROWS, BLOCK_SIZE, LINES_PER_LEVEL, COLORS, COLORSLIGHTER, COLORSDARKER, SHAPES, KEY, POINTS, LEVEL */
+        /*! exports provided: COLS, ROWS, BLOCK_SIZE, LINES_PER_LEVEL, COLORS, SHAPES, KEY, POINTS, LEVEL */
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
@@ -3532,8 +3532,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
             /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BLOCK_SIZE", function () { return BLOCK_SIZE; });
             /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LINES_PER_LEVEL", function () { return LINES_PER_LEVEL; });
             /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "COLORS", function () { return COLORS; });
-            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "COLORSLIGHTER", function () { return COLORSLIGHTER; });
-            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "COLORSDARKER", function () { return COLORSDARKER; });
             /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SHAPES", function () { return SHAPES; });
             /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "KEY", function () { return KEY; });
             /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "POINTS", function () { return POINTS; });
@@ -3552,26 +3550,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                 'rgba(0, 255, 0)',
                 'rgba(255, 0, 255)',
                 'rgba(255, 0, 0)',
-            ];
-            var COLORSLIGHTER = [
-                'none',
-                'rgba(132, 255, 255)',
-                'rgba(132, 132, 255)',
-                'rgba(255, 195, 132)',
-                'rgba(255, 255, 132)',
-                'rgba(132, 255, 132)',
-                'rgba(255, 132, 255)',
-                'rgba(255, 132, 132)',
-            ];
-            var COLORSDARKER = [
-                'none',
-                'rgba(0, 132, 132)',
-                'rgba(0, 0, 132)',
-                'rgba(132, 65, 0)',
-                'rgba(132, 132, 0)',
-                'rgba(0, 132, 0)',
-                'rgba(132, 0, 132)',
-                'rgba(132, 0, 0)',
             ];
             var SHAPES = [
                 [],
@@ -3648,6 +3626,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
             var GameService = /** @class */ (function () {
                 function GameService() {
                 }
+                //check every point of the piece if its in a valid place
                 GameService.prototype.valid = function (p, board) {
                     var _this = this;
                     return p.shape.every(function (row, dy) {
@@ -3675,15 +3654,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                 };
                 GameService.prototype.rotate = function (piece) {
                     var _a;
+                    //create a (not shallow) copy / clone
                     var p = JSON.parse(JSON.stringify(piece));
+                    // Transpose matrix
                     for (var y = 0; y < p.shape.length; ++y) {
                         for (var x = 0; x < y; ++x) {
                             _a = [p.shape[y][x], p.shape[x][y]], p.shape[x][y] = _a[0], p.shape[y][x] = _a[1];
                         }
                     }
+                    // Reverse the order of the columns.
                     p.shape.forEach(function (row) { return row.reverse(); });
                     return p;
                 };
+                //points calculated as level multiplied by lines score
                 GameService.prototype.getLinesClearedPoints = function (lines, level) {
                     var lineClearPoints = lines === 1
                         ? _constants__WEBPACK_IMPORTED_MODULE_2__["POINTS"].SINGLE
@@ -3722,83 +3705,54 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                     this.ctx = ctx;
                     this.spawn();
                 }
+                //instantiate a random piece
                 Piece.prototype.spawn = function () {
-                    var typeId = this.randomizeTetrominoType(_constants__WEBPACK_IMPORTED_MODULE_1__["COLORS"].length - 1);
+                    var typeId = this.randomizeTetrominoType(_constants__WEBPACK_IMPORTED_MODULE_1__["SHAPES"].length - 1);
                     this.shape = _constants__WEBPACK_IMPORTED_MODULE_1__["SHAPES"][typeId];
                     this.color = _constants__WEBPACK_IMPORTED_MODULE_1__["COLORS"][typeId];
-                    this.colorLighter = _constants__WEBPACK_IMPORTED_MODULE_1__["COLORSLIGHTER"][typeId];
-                    this.colorDarker = _constants__WEBPACK_IMPORTED_MODULE_1__["COLORSDARKER"][typeId];
                     this.x = typeId === 4 ? 4 : 3;
                     this.y = 0;
                 };
-                Piece.prototype.add3D = function (ctx, x, y) {
-                    //Darker Color
-                    ctx.fillStyle = this.colorDarker;
-                    // Vertical
-                    ctx.fillRect(x + .9, y, .1, 1);
-                    // Horizontal
-                    ctx.fillRect(x, y + .9, 1, .1);
-                    //Darker Color - Inner 
-                    // Vertical
-                    ctx.fillRect(x + .65, y + .3, .05, .3);
-                    // Horizontal
-                    ctx.fillRect(x + .3, y + .6, .4, .05);
-                    // Lighter Color - Outer
-                    ctx.fillStyle = this.colorLighter;
-                    // Lighter Color - Inner 
-                    // Vertical
-                    ctx.fillRect(x + .3, y + .3, .05, .3);
-                    // Horizontal
-                    ctx.fillRect(x + .3, y + .3, .4, .05);
-                    // Lighter Color - Outer
-                    // Vertical
-                    ctx.fillRect(x, y, .05, 1);
-                    ctx.fillRect(x, y, .1, .95);
-                    // Horizontal
-                    ctx.fillRect(x, y, 1, .05);
-                    ctx.fillRect(x, y, .95, .1);
-                };
+                //show a black border for the next piece
                 Piece.prototype.addNextBorder = function (ctx, x, y) {
                     ctx.fillStyle = 'black';
                     ctx.fillRect(x, y, 1.025, 1.025);
                 };
+                //draw each point of the piece
                 Piece.prototype.draw = function () {
                     var _this = this;
                     this.shape.forEach(function (row, y) {
                         row.forEach(function (value, x) {
                             if (value > 0) {
                                 _this.ctx.fillStyle = _this.color;
+                                // this.x & this.y = position on the board
+                                // x & y position are the positions of the shape
                                 var currentX = _this.x + x;
                                 var currentY = _this.y + y;
                                 _this.ctx.fillRect(currentX, currentY, 1, 1);
-                                // this.add3D(this.ctx, currentX, currentY);
                             }
                         });
                     });
                 };
+                //draw next piece (with border)
                 Piece.prototype.drawNext = function (ctxNext) {
                     var _this = this;
                     ctxNext.clearRect(0, 0, ctxNext.canvas.width, ctxNext.canvas.height);
-                    this.shape.forEach(function (row, y) {
-                        row.forEach(function (value, x) {
-                            if (value > 0) {
-                                _this.addNextBorder(ctxNext, x, y);
-                            }
-                        });
-                    });
                     ctxNext.fillStyle = this.color;
                     this.shape.forEach(function (row, y) {
                         row.forEach(function (value, x) {
                             if (value > 0) {
+                                _this.addNextBorder(ctxNext, x, y);
                                 ctxNext.fillStyle = _this.color;
+                                //making space for the border
                                 var currentX = x + .025;
                                 var currentY = y + .025;
                                 ctxNext.fillRect(currentX, currentY, 1 - .025, 1 - .025);
-                                // this.add3D(ctxNext, currentX, currentY);
                             }
                         });
                     });
                 };
+                //setting values for draw
                 Piece.prototype.move = function (p) {
                     this.x = p.x;
                     this.y = p.y;
@@ -3819,7 +3773,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("/* <link href=”https://fonts.googleapis.com/css?family=Press+Start+2P\" rel=”stylesheet” /> */\r\n\r\n.grid {\r\n    display: grid;\r\n    grid-template-columns: 320px 200px;\r\n  }\r\n\r\n.right-column {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-between;\r\n  }\r\n\r\n.game-board {\r\n    border: solid 2px;\r\n  }\r\n\r\n.play-button {\r\n    background-color: #4caf50;\r\n    font-size: 16px;\r\n    padding: 15px 30px;\r\n    cursor: pointer;\r\n  }\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZ2FtZXMvdGV0cmlzL3RldHJpcy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLDRGQUE0Rjs7QUFFNUY7SUFDSSxhQUFhO0lBQ2Isa0NBQWtDO0VBQ3BDOztBQUVBO0lBQ0UsYUFBYTtJQUNiLHNCQUFzQjtJQUN0Qiw4QkFBOEI7RUFDaEM7O0FBRUE7SUFDRSxpQkFBaUI7RUFDbkI7O0FBRUE7SUFDRSx5QkFBeUI7SUFDekIsZUFBZTtJQUNmLGtCQUFrQjtJQUNsQixlQUFlO0VBQ2pCIiwiZmlsZSI6InNyYy9hcHAvZ2FtZXMvdGV0cmlzL3RldHJpcy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLyogPGxpbmsgaHJlZj3igJ1odHRwczovL2ZvbnRzLmdvb2dsZWFwaXMuY29tL2Nzcz9mYW1pbHk9UHJlc3MrU3RhcnQrMlBcIiByZWw94oCdc3R5bGVzaGVldOKAnSAvPiAqL1xyXG5cclxuLmdyaWQge1xyXG4gICAgZGlzcGxheTogZ3JpZDtcclxuICAgIGdyaWQtdGVtcGxhdGUtY29sdW1uczogMzIwcHggMjAwcHg7XHJcbiAgfVxyXG4gIFxyXG4gIC5yaWdodC1jb2x1bW4ge1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XHJcbiAgfVxyXG4gIFxyXG4gIC5nYW1lLWJvYXJkIHtcclxuICAgIGJvcmRlcjogc29saWQgMnB4O1xyXG4gIH1cclxuICBcclxuICAucGxheS1idXR0b24ge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzRjYWY1MDtcclxuICAgIGZvbnQtc2l6ZTogMTZweDtcclxuICAgIHBhZGRpbmc6IDE1cHggMzBweDtcclxuICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICB9Il19 */");
+            /* harmony default export */ __webpack_exports__["default"] = (".grid {\r\n    display: grid;\r\n    grid-template-columns: 320px 200px;\r\n  }\r\n  \r\n  .right-column {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-between;\r\n  }\r\n  \r\n  .game-board {\r\n    border: solid 2px;\r\n  }\r\n  \r\n  /* .play-button {\r\n    background-color: #4caf50;\r\n    font-size: 16px;\r\n    padding: 15px 30px;\r\n    cursor: pointer;\r\n  } */\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZ2FtZXMvdGV0cmlzL3RldHJpcy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0lBQ0ksYUFBYTtJQUNiLGtDQUFrQztFQUNwQzs7RUFFQTtJQUNFLGFBQWE7SUFDYixzQkFBc0I7SUFDdEIsOEJBQThCO0VBQ2hDOztFQUVBO0lBQ0UsaUJBQWlCO0VBQ25COztFQUVBOzs7OztLQUtHIiwiZmlsZSI6InNyYy9hcHAvZ2FtZXMvdGV0cmlzL3RldHJpcy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmdyaWQge1xyXG4gICAgZGlzcGxheTogZ3JpZDtcclxuICAgIGdyaWQtdGVtcGxhdGUtY29sdW1uczogMzIwcHggMjAwcHg7XHJcbiAgfVxyXG4gIFxyXG4gIC5yaWdodC1jb2x1bW4ge1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XHJcbiAgfVxyXG4gIFxyXG4gIC5nYW1lLWJvYXJkIHtcclxuICAgIGJvcmRlcjogc29saWQgMnB4O1xyXG4gIH1cclxuICBcclxuICAvKiAucGxheS1idXR0b24ge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzRjYWY1MDtcclxuICAgIGZvbnQtc2l6ZTogMTZweDtcclxuICAgIHBhZGRpbmc6IDE1cHggMzBweDtcclxuICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICB9ICovIl19 */");
             /***/ 
         }),
         /***/ "./src/app/games/tetris/tetris.component.ts": 
@@ -3842,6 +3796,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                     var _this = this;
                     this.service = service;
                     this.moves = (_a = {},
+                        //... = shallow copy
                         _a[_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].LEFT] = function (p) { return (Object.assign({}, p, { x: p.x - 1 })); },
                         _a[_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].RIGHT] = function (p) { return (Object.assign({}, p, { x: p.x + 1 })); },
                         _a[_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].DOWN] = function (p) { return (Object.assign({}, p, { y: p.y + 1 })); },
@@ -3854,7 +3809,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                         this.gameOver();
                     }
                     else if (this.moves[event.keyCode]) {
-                        event.preventDefault();
                         // Get new state
                         var p = this.moves[event.keyCode](this.piece);
                         if (event.keyCode === _constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].SPACE) {
@@ -3884,14 +3838,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                     // Calculate size of canvas from constants.
                     this.ctx.canvas.width = _constants__WEBPACK_IMPORTED_MODULE_2__["COLS"] * _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"];
                     this.ctx.canvas.height = _constants__WEBPACK_IMPORTED_MODULE_2__["ROWS"] * _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"];
-                    // Scale so we don't need to give size on every draw.
+                    // Scale so we don't need to give size on every draw. scale up from 1px to 1 block
                     this.ctx.scale(_constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"], _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"]);
                 };
                 TetrisComponent.prototype.initNext = function () {
                     this.ctxNext = this.canvasNext.nativeElement.getContext('2d');
                     // Calculate size of canvas from constants.
-                    // The + 2 is to allow for space to add the drop shadow to
-                    // the "next piece"
+                    //+2 for the ---- border
                     this.ctxNext.canvas.width = 4 * _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"] + 2;
                     this.ctxNext.canvas.height = 4 * _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"];
                     this.ctxNext.scale(_constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"], _constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE"]);
@@ -3916,11 +3869,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                     this.board = this.getEmptyBoard();
                     this.time = { start: 0, elapsed: 0, level: _constants__WEBPACK_IMPORTED_MODULE_2__["LEVEL"][this.level] };
                     this.paused = false;
-                    this.addOutlines();
+                    this.addGrid();
                 };
                 TetrisComponent.prototype.animate = function (now) {
                     if (now === void 0) { now = 0; }
                     this.time.elapsed = now - this.time.start;
+                    //check for the time in current level
                     if (this.time.elapsed > this.time.level) {
                         this.time.start = now;
                         if (!this.drop()) {
@@ -3944,8 +3898,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                     else {
                         this.freeze();
                         this.clearLines();
+                        //when a piece cant move down and its position is 0 its Game over
                         if (this.piece.y === 0) {
-                            // Game over
                             return false;
                         }
                         this.piece = this.next;
@@ -3957,6 +3911,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                 TetrisComponent.prototype.clearLines = function () {
                     var _this = this;
                     var lines = 0;
+                    //if any row has only non zero values remove it and and a new on top
                     this.board.forEach(function (row, y) {
                         if (row.every(function (value) { return value !== 0; })) {
                             lines++;
@@ -3964,6 +3919,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                             _this.board.unshift(Array(_constants__WEBPACK_IMPORTED_MODULE_2__["COLS"]).fill(0));
                         }
                     });
+                    //calculate points according to removed lines and change level if needed
                     if (lines > 0) {
                         this.points += this.service.getLinesClearedPoints(lines, this.level);
                         this.lines += lines;
@@ -3974,6 +3930,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                         }
                     }
                 };
+                //freeze the piece in place on bottom
                 TetrisComponent.prototype.freeze = function () {
                     var _this = this;
                     this.piece.shape.forEach(function (row, y) {
@@ -3984,34 +3941,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                         });
                     });
                 };
-                TetrisComponent.prototype.add3D = function (x, y, color) {
-                    //Darker Color
-                    this.ctx.fillStyle = _constants__WEBPACK_IMPORTED_MODULE_2__["COLORSDARKER"][color];
-                    // Vertical
-                    this.ctx.fillRect(x + .9, y, .1, 1);
-                    // Horizontal
-                    this.ctx.fillRect(x, y + .9, 1, .1);
-                    //Darker Color - Inner 
-                    // Vertical
-                    this.ctx.fillRect(x + .65, y + .3, .05, .3);
-                    // Horizontal
-                    this.ctx.fillRect(x + .3, y + .6, .4, .05);
-                    // Lighter Color - Outer
-                    this.ctx.fillStyle = _constants__WEBPACK_IMPORTED_MODULE_2__["COLORSLIGHTER"][color];
-                    // Lighter Color - Inner 
-                    // Vertical
-                    this.ctx.fillRect(x + .3, y + .3, .05, .3);
-                    // Horizontal
-                    this.ctx.fillRect(x + .3, y + .3, .4, .05);
-                    // Lighter Color - Outer
-                    // Vertical
-                    this.ctx.fillRect(x, y, .05, 1);
-                    this.ctx.fillRect(x, y, .1, .95);
-                    // Horizontal
-                    this.ctx.fillRect(x, y, 1, .05);
-                    this.ctx.fillRect(x, y, .95, .1);
-                };
-                TetrisComponent.prototype.addOutlines = function () {
+                //add the helping lines
+                TetrisComponent.prototype.addGrid = function () {
                     for (var index = 1; index < _constants__WEBPACK_IMPORTED_MODULE_2__["COLS"]; index++) {
                         this.ctx.fillStyle = 'black';
                         this.ctx.fillRect(index, 0, .025, this.ctx.canvas.height);
@@ -4021,6 +3952,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                         this.ctx.fillRect(0, index, this.ctx.canvas.width, .025);
                     }
                 };
+                //paint the board on canvas
                 TetrisComponent.prototype.drawBoard = function () {
                     var _this = this;
                     this.board.forEach(function (row, y) {
@@ -4028,11 +3960,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                             if (value > 0) {
                                 _this.ctx.fillStyle = _constants__WEBPACK_IMPORTED_MODULE_2__["COLORS"][value];
                                 _this.ctx.fillRect(x, y, 1, 1);
-                                // this.add3D(x, y, value);
                             }
                         });
                     });
-                    this.addOutlines();
+                    this.addGrid();
                 };
                 TetrisComponent.prototype.pause = function () {
                     if (this.gameStarted) {
