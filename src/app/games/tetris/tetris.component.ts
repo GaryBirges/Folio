@@ -1,8 +1,9 @@
 
 import { Component, ViewChild, ElementRef, OnInit, HostListener } from '@angular/core';
-import { COLS, BLOCK_SIZE, ROWS, KEY, POINTS, COLORS, LEVEL, LINES_PER_LEVEL } from './constants';
+import { COLS, BLOCK_SIZE, BLOCK_SIZE_MOBILE, ROWS, KEY, POINTS, COLORS, LEVEL, LINES_PER_LEVEL } from './constants';
 import { Piece, IPiece } from './piece.component';
 import { GameService } from './game.service';
+import { HighScoreService } from '../services/highScore/high-score.service';
 
 @Component({
   selector: 'app-tetris',
@@ -22,7 +23,7 @@ export class TetrisComponent implements OnInit {
   gameStarted: boolean;
   time: { start: number; elapsed: number; level: number };
   points: number;
-  highScore: number;
+  // highScore: number;
   lines: number;
   level: number;
   moves = {
@@ -55,36 +56,70 @@ export class TetrisComponent implements OnInit {
       }
     }
   }
-
-  constructor(private service: GameService) {}
-
-  ngOnInit() {
-    this.initBoard();
-    this.initNext();
-    this.resetGame();
-    this.highScore = 0;
+  swipeLeft(){
+    let p = this.moves[KEY.LEFT](this.piece)
+    if (this.service.valid(p, this.board)){
+      this.piece.move(p);
+    }
+  }
+  swipeRight(){
+    let p = this.moves[KEY.RIGHT](this.piece)
+    if (this.service.valid(p, this.board)){
+      this.piece.move(p);
+    }
+  }
+  swipeUp(){
+    let p = this.moves[KEY.UP](this.piece)
+    if (this.service.valid(p, this.board)){
+      this.piece.move(p);
+    }
+  }
+  swipeDown(){
+    let p = this.moves[KEY.SPACE](this.piece)
+    // Hard drop
+    while (this.service.valid(p, this.board)) {
+      console.log("space")
+      this.points += POINTS.HARD_DROP;
+      this.piece.move(p);
+      p = this.moves[KEY.DOWN](this.piece);
+    }
   }
 
-  initBoard() {
+  constructor(private service: GameService, private highScore: HighScoreService) {}
+
+  ngOnInit() {
+    // console.log(window.screen.width)
+    if(window.screen.width<600){
+      this.initBoard(BLOCK_SIZE_MOBILE);
+      this.initNext(BLOCK_SIZE_MOBILE);
+    }else{
+      this.initBoard(BLOCK_SIZE);
+      this.initNext(BLOCK_SIZE);
+    }
+    this.resetGame();
+    // this.highScore = 0;
+  }
+
+  initBoard(blockSize) {
     this.ctx = this.canvas.nativeElement.getContext('2d');
 
     // Calculate size of canvas from constants.
-    this.ctx.canvas.width = COLS * BLOCK_SIZE;
-    this.ctx.canvas.height = ROWS * BLOCK_SIZE;
+    this.ctx.canvas.width = COLS * blockSize;
+    this.ctx.canvas.height = ROWS * blockSize;
 
     // Scale so we don't need to give size on every draw. scale up from 1px to 1 block
-    this.ctx.scale(BLOCK_SIZE, BLOCK_SIZE);
+    this.ctx.scale(blockSize, blockSize);
   }
 
-  initNext() {
+  initNext(blockSize) {
     this.ctxNext = this.canvasNext.nativeElement.getContext('2d');
 
     // Calculate size of canvas from constants.
     //+2 for the ---- border
-    this.ctxNext.canvas.width = 4 * BLOCK_SIZE +2;
-    this.ctxNext.canvas.height = 4 * BLOCK_SIZE;
+    this.ctxNext.canvas.width = 4 * blockSize +2;
+    this.ctxNext.canvas.height = 4 * blockSize;
 
-    this.ctxNext.scale(BLOCK_SIZE, BLOCK_SIZE);
+    this.ctxNext.scale(blockSize, blockSize);
   }
 
   play() {
@@ -226,12 +261,16 @@ export class TetrisComponent implements OnInit {
   gameOver() {
     this.gameStarted = false;
     cancelAnimationFrame(this.requestId);
-    this.highScore = this.points > this.highScore ? this.points : this.highScore;
+    // this.highScore = this.points > this.highScore ? this.points : this.highScore;
+    this.highScore.addScore('Tetris', this.getScore())
     this.ctx.fillStyle = 'black';
     this.ctx.fillRect(1, 3, 8, 1.2);
     this.ctx.font = '1px Arial';
     this.ctx.fillStyle = 'red';
     this.ctx.fillText('GAME OVER', 1.8, 4);
+  }
+  getScore(): any {
+    return {score: this.points, level:this.level, lines:this.lines}
   }
 
   getEmptyBoard(): number[][] {

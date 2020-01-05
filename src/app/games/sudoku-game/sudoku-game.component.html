@@ -1,5 +1,5 @@
 
-<mat-card>
+<mat-card class="sudokuCard">
     <mat-card-title>
         Sudoku 
     </mat-card-title>
@@ -23,7 +23,8 @@
   <div class="infoTab">
       <div>
         <button mat-raised-button (click)="solveSudoku()">Solve</button>
-        <button  mat-raised-button (click)="validateSudoku()">validate</button>
+        <button  mat-raised-button (click)="validateSudoku()">Validate</button>
+        <button  mat-raised-button (click)="reset()">New Game</button>
       </div>
       <div>
         <p>
@@ -36,4 +37,4 @@
         <p> Currently you have {{this.counter}} errors! </p>
       </div>
     </div>
-</mat-card>
+

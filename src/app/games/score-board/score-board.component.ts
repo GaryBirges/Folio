@@ -30,6 +30,12 @@ export class ScoreBoardComponent implements OnInit {
   pongDisplayedColumns: string[] = ['score', 'name'];
   @ViewChild('pongPaginator', { static: true }) paginatorPong: MatPaginator;
   @ViewChild('pongSort', { static: true }) sortPong: MatSort;
+
+  tetrisScore
+  tetrisData: any;
+  tetrisDisplayedColumns: string[] = ['score', 'name', 'level', 'lines'];
+  @ViewChild('pongPaginator', { static: true }) paginatorTetris: MatPaginator;
+  @ViewChild('pongSort', { static: true }) sortTetris: MatSort;
   
   ngOnInit() {
     this.highScore.snakeCollection.valueChanges().subscribe(res=>{
@@ -37,7 +43,6 @@ export class ScoreBoardComponent implements OnInit {
       this.snakeData = new MatTableDataSource<any>(this.snakeScore);
       this.snakeData.paginator = this.paginatorSnake;
       this.snakeData.sort = this.sortSnake;
-      console.log(res)
     })
     this.highScore.puzzleCollection.valueChanges().subscribe(res=>{
       this.puzzleScore=res
@@ -50,6 +55,12 @@ export class ScoreBoardComponent implements OnInit {
       this.pongData = new MatTableDataSource<any>(this.pongScore);
       this.pongData.paginator = this.paginatorPong;
       this.pongData.sort = this.sortPong;
+    })
+    this.highScore.tetrisCollection.valueChanges().subscribe(res=>{
+      this.tetrisScore=res
+      this.tetrisData = new MatTableDataSource<any>(this.tetrisScore);
+      this.tetrisData.paginator = this.paginatorTetris;
+      this.tetrisData.sort = this.sortTetris;
     })
   }
 

@@ -15,9 +15,11 @@ export class HighScoreService {
   puzzleCollection : AngularFirestoreCollection
   snakeCollection : AngularFirestoreCollection
   pongCollection : AngularFirestoreCollection
+  tetrisCollection : AngularFirestoreCollection
   puzzleScores
   snakeScores
   pongScores
+  tetrisScores
 
   snakeDoc: AngularFirestoreDocument<any>
   puzzleDoc: AngularFirestoreDocument<any>
@@ -37,6 +39,7 @@ export class HighScoreService {
     this.puzzleCollection=db.collection('Puzzle')
     this.snakeCollection=db.collection('Snake')
     this.pongCollection=db.collection('Pong')
+    this.tetrisCollection=db.collection('Tetris')
     this.puzzleCollection.valueChanges().subscribe(res=>{
       this.puzzleScores=res
       console.log(this.puzzleScores)
@@ -49,6 +52,10 @@ export class HighScoreService {
       this.pongScores=res
       console.log(res)
     })
+    this.tetrisCollection.valueChanges().subscribe(res=>{
+      this.tetrisScores=res
+      console.log(res)
+    })
   }
 
   setUser(user){
@@ -58,7 +65,6 @@ export class HighScoreService {
     return this.currentUser
   }
   addScoreToBoard(game, score){
-    console.log(score)
     score.name=this.currentUser
     if(game=='Snake'){
       this.snakeCollection.add(score)
@@ -66,6 +72,9 @@ export class HighScoreService {
       this.puzzleCollection.add(score)
     }else if(game=='Pong'){
       this.pongCollection.add(score)
+    }else if(game=='Tetris'){
+      console.log(score)
+      this.tetrisCollection.add(score)
     }
   }
   // updateScores(item: Item) {

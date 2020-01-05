@@ -20,6 +20,11 @@ export class SudokuGameComponent implements OnInit {
     this.timeElapsed()
   }
 
+  reset(){
+    this.sudoku = this.generateSudoku()
+    this.timeElapsed()
+  }
+
  /* 
   generates a sudoku with structure :
   {rows:[{index: 0, cols:[{row: 0, col:0 value: 1 readOnly:true}, ...]}, ...]}
@@ -87,8 +92,10 @@ export class SudokuGameComponent implements OnInit {
       row.cols.forEach(col=>{
           col.value = this.sudoku.solution[col.row*9+col.col]
           col.invalid=false
+          col.readonly=true  //sudoku cant be edited after solve click
       })
     );
+    clearInterval(this.interval)
   }
 
 

@@ -76,4 +76,5 @@ export class Piece implements IPiece {
   randomizeTetrominoType(noOfTypes: number): number {
     return Math.floor(Math.random() * noOfTypes + 1);
   }
+
 }
