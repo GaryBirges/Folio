@@ -3843,8 +3843,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                 };
                 TetrisComponent.prototype.swipeDown = function () {
                     var p = this.moves[_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].SPACE](this.piece);
-                    if (this.service.valid(p, this.board)) {
+                    // Hard drop
+                    while (this.service.valid(p, this.board)) {
+                        console.log("space");
+                        this.points += _constants__WEBPACK_IMPORTED_MODULE_2__["POINTS"].HARD_DROP;
                         this.piece.move(p);
+                        p = this.moves[_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].DOWN](this.piece);
                     }
                 };
                 TetrisComponent.prototype.ngOnInit = function () {
