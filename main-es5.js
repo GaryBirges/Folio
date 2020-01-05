@@ -3825,22 +3825,30 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                 };
                 TetrisComponent.prototype.swipeLeft = function () {
                     var p = this.moves[_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].LEFT](this.piece);
-                    this.piece.move(p);
+                    if (this.service.valid(p, this.board)) {
+                        this.piece.move(p);
+                    }
                 };
                 TetrisComponent.prototype.swipeRight = function () {
                     var p = this.moves[_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].RIGHT](this.piece);
-                    this.piece.move(p);
+                    if (this.service.valid(p, this.board)) {
+                        this.piece.move(p);
+                    }
                 };
                 TetrisComponent.prototype.swipeUp = function () {
                     var p = this.moves[_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].UP](this.piece);
-                    this.piece.move(p);
+                    if (this.service.valid(p, this.board)) {
+                        this.piece.move(p);
+                    }
                 };
                 TetrisComponent.prototype.swipeDown = function () {
                     var p = this.moves[_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].SPACE](this.piece);
-                    this.piece.move(p);
+                    if (this.service.valid(p, this.board)) {
+                        this.piece.move(p);
+                    }
                 };
                 TetrisComponent.prototype.ngOnInit = function () {
-                    console.log(window.screen.width);
+                    // console.log(window.screen.width)
                     if (window.screen.width < 600) {
                         this.initBoard(_constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE_MOBILE"]);
                         this.initNext(_constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE_MOBILE"]);

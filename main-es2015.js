@@ -3993,22 +3993,30 @@ let TetrisComponent = class TetrisComponent {
     }
     swipeLeft() {
         let p = this.moves[_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].LEFT](this.piece);
-        this.piece.move(p);
+        if (this.service.valid(p, this.board)) {
+            this.piece.move(p);
+        }
     }
     swipeRight() {
         let p = this.moves[_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].RIGHT](this.piece);
-        this.piece.move(p);
+        if (this.service.valid(p, this.board)) {
+            this.piece.move(p);
+        }
     }
     swipeUp() {
         let p = this.moves[_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].UP](this.piece);
-        this.piece.move(p);
+        if (this.service.valid(p, this.board)) {
+            this.piece.move(p);
+        }
     }
     swipeDown() {
         let p = this.moves[_constants__WEBPACK_IMPORTED_MODULE_2__["KEY"].SPACE](this.piece);
-        this.piece.move(p);
+        if (this.service.valid(p, this.board)) {
+            this.piece.move(p);
+        }
     }
     ngOnInit() {
-        console.log(window.screen.width);
+        // console.log(window.screen.width)
         if (window.screen.width < 600) {
             this.initBoard(_constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE_MOBILE"]);
             this.initNext(_constants__WEBPACK_IMPORTED_MODULE_2__["BLOCK_SIZE_MOBILE"]);
