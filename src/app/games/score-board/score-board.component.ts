@@ -34,8 +34,8 @@ export class ScoreBoardComponent implements OnInit {
   tetrisScore
   tetrisData: any;
   tetrisDisplayedColumns: string[] = ['score', 'name', 'level', 'lines'];
-  @ViewChild('pongPaginator', { static: true }) paginatorTetris: MatPaginator;
-  @ViewChild('pongSort', { static: true }) sortTetris: MatSort;
+  @ViewChild('tetrisPaginator', { static: true }) paginatorTetris: MatPaginator;
+  @ViewChild('tetrisSort', { static: true }) sortTetris: MatSort; 
 
   sudokuScore
   sudokuData: any;

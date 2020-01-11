@@ -10,6 +10,10 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": false,
+    "step_definitions":"cypress/step_definitions"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^8.2.10",
@@ -29,6 +33,7 @@
     "@ng-bootstrap/ng-bootstrap": "^4.2.2",
     "angular-gridster2": "^7.2.0",
     "core-js": "^2.6.9",
+    "cypress": "^3.8.1",
     "firebase": "^5.11.1",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
@@ -44,7 +49,7 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.12.4",
+    "@angular-devkit/build-angular": "^0.803.21",
     "@angular/cli": "^8.3.9",
     "@angular/compiler-cli": "^8.2.10",
     "@angular/language-service": "^8.2.10",
@@ -54,10 +59,11 @@
     "@types/underscore": "^1.9.3",
     "angular-cli-ghpages": "^0.5.3",
     "codelyzer": "^5.0.1",
+    "cypress-cucumber-preprocessor": "^1.19.0",
     "gh-pages": "^2.1.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~3.0.0",
+    "karma": "^4.4.1",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "^2.0.6",
     "karma-jasmine": "~1.1.2",
