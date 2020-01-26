@@ -5,7 +5,7 @@
   <mat-card-content>
     <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
     <div class="filterButtonRow">
-      <button mat-flat-button [color]="criteria==f.name?'primary':'accent'"  *ngFor="let f of this.filters" type="button" (click)="filter(f.name)">{{f.name}}</button>
+      <button mat-flat-button  [color]="criteria==f.name?'primary':'accent'"  *ngFor="let f of this.filters" type="button" (click)="filter(f.name)">{{f.name}}</button>
     </div>
   </mat-card-content>
 

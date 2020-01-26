@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CompareImageComponent } from './compare-image.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 describe('CompareImageComponent', () => {
   let component: CompareImageComponent;
@@ -8,7 +10,10 @@ describe('CompareImageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CompareImageComponent ]
+      imports: [    ReactiveFormsModule, MatDialogModule ],
+      declarations: [ CompareImageComponent ], 
+      providers:[{ provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {image:{url:''},toCompare:{url:''}}} ]
     })
     .compileComponents();
   }));

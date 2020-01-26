@@ -16,8 +16,7 @@ export class ImageDetailComponent implements OnInit, OnDestroy {
   imagesSubscription: any;
   images: any[];
   haveImages
-  constructor(private imgservice: ImageService,
-              private route: ActivatedRoute) { }
+  constructor(private imgservice: ImageService) { }
 
   ngOnInit() {
     // this.image= 

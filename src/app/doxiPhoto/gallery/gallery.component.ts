@@ -23,9 +23,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   timer
   criteria: string;
-  constructor(private imgservice: ImageService,
+  constructor(
               public dialog: MatDialog,
-              // private auth: AuthenticationService,
               public upload: UploadService){
                 this.timer=Date.now()
               }

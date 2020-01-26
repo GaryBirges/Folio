@@ -12,7 +12,7 @@
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": false,
-    "step_definitions":"cypress/step_definitions"
+    "step_definitions": "cypress/step_definitions"
   },
   "private": true,
   "dependencies": {
@@ -49,7 +49,7 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.803.21",
+    "@angular-devkit/build-angular": "^0.803.23",
     "@angular/cli": "^8.3.9",
     "@angular/compiler-cli": "^8.2.10",
     "@angular/language-service": "^8.2.10",
@@ -61,12 +61,13 @@
     "codelyzer": "^5.0.1",
     "cypress-cucumber-preprocessor": "^1.19.0",
     "gh-pages": "^2.1.1",
-    "jasmine-core": "~2.99.1",
+    "jasmine": "^3.5.0",
+    "jasmine-core": "^2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^4.4.1",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "^2.0.6",
-    "karma-jasmine": "~1.1.2",
+    "karma-jasmine": "^1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "^5.4.2",
     "ts-node": "~7.0.0",
