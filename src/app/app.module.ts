@@ -139,7 +139,7 @@ export class MyHammerConfig extends HammerGestureConfig {
   providers: [MessageService,
     ImageFilterPipe,
     IsActiveService,
-    ImageService,
+    // ImageService,
     AuthGuard,
     AuthenticationService,
     UploadService,

@@ -19,9 +19,7 @@ export class ImageService {
   imagesSubj = new BehaviorSubject<any>(null)
   galleryImages
 
-  constructor(private afAuth : AngularFireAuth,
-              private db: AngularFireDatabase,
-              private storage: AngularFireStorage) {
+  constructor(private afAuth : AngularFireAuth,) {
                   this.afAuth.authState.subscribe(auth=>{
                     if(auth !== undefined && auth !== null) {
                       this.uid= auth.uid;
