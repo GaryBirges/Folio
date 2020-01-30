@@ -17,7 +17,7 @@ import { IsActiveService } from '../services/is-active.service';
 })
 export class PuzzleComponent implements OnInit {
 
-  constructor(private message: MessageService,
+  constructor(
               private highScore: HighScoreService,
               public dialog: MatDialog,
               public ias: IsActiveService) { }

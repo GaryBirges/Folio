@@ -9,7 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class AskForNameComponent {
 
   constructor(    public dialogRef: MatDialogRef<AskForNameComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { console.log(data) }
 
     onNoClick(): void {
       this.dialogRef.close();
