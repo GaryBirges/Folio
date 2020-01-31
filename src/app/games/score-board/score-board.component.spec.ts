@@ -8,22 +8,23 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { HighScoreService } from '../services/highScore/high-score.service';
 import { of } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HAMMER_LOADER } from '@angular/platform-browser';
 
 const highscoreMock ={
   snakeCollection: {
-      valueChanges:() =>of({property: 'test'})  
+      valueChanges:() =>of(['score', 'name'])  
   },
   puzzleCollection: {
-      valueChanges:() =>of({property: 'test'})  
+      valueChanges:() =>of(['steps', 'time', 'name', 'difficulty'])  
   },
   pongCollection: {
-      valueChanges:() =>of({property: 'test'})  
+      valueChanges:() =>of(['score', 'name'])  
   },
   tetrisCollection: {
-      valueChanges:() =>of({property: 'test'})  
+      valueChanges:() =>of(['score', 'name', 'level', 'lines'])  
   },
   sudokuCollection: {
-      valueChanges:() =>of({property: 'test'})  
+      valueChanges:() =>of(['time', 'name'])  
   },
 }
 describe('ScoreBoardComponent', () => {

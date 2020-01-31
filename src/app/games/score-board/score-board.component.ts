@@ -68,7 +68,7 @@ export class ScoreBoardComponent implements OnInit {
       this.tetrisData.paginator = this.paginatorTetris;
       this.tetrisData.sort = this.sortTetris;
     })
-    this.highScore.sudokuCollection.valueChanges().subscribe(res=>{
+    this.highScore.sudokuCollection.valueChanges().subscribe(res=>{ 
       this.sudokuScore=res
       this.sudokuData = new MatTableDataSource<any>(this.sudokuScore);
       this.sudokuData.paginator = this.paginatorSudoku;

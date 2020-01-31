@@ -21,7 +21,7 @@ export class MatDialogMock {
     return of({closed:true})
   }
 }
-xdescribe('AskForNameComponent', () => {
+describe('AskForNameComponent', () => {
   let component: AskForNameComponent;
   let fixture: ComponentFixture<AskForNameComponent>;
 
