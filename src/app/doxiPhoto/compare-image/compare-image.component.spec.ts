@@ -27,4 +27,12 @@ describe('CompareImageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should create a form', ()=>{
+    expect(component.rangeForm).toBeTruthy()
+  })
+  it('should set width if user changes form value', ()=>{
+    component.rangeForm.patchValue({slider:65})
+    expect(component.width).toBe('65%')
+  })
 });

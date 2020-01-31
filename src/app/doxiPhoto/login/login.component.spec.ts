@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -24,9 +24,9 @@ let router = {
   navigate: jasmine.createSpy('navigate')
 }
 let AuthenticationServiceStub={
-  
+  login (){return Promise.resolve({email:'email', pw:'pw'}).then(()=>console.log())}
 }
-describe('LoginComponent', () => {
+fdescribe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
@@ -44,7 +44,7 @@ describe('LoginComponent', () => {
         { provide: MatDialog, useValue: MatDialogMock },
         { provide: Router, useValue: router },
         { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: {image:{url:''},toCompare:{url:''}}},
+        { provide: MAT_DIALOG_DATA, useValue: {email:'email', pw:'pw'}},
         { provide: AuthenticationService, useValue: AuthenticationServiceStub },
       ]
     })
@@ -60,4 +60,12 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  xit('should sign user in', ()=>{
+    const auth = TestBed.get(AuthenticationService)
+    spyOn(auth, 'login').and.returnValue(new Observable<any>())
+    component.signIn()
+    console.log(this.auth.login())
+    expect(auth.login).toHaveBeenCalled()
+  })
 });

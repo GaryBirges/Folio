@@ -30,23 +30,34 @@ export class GalleryComponent implements OnInit, OnDestroy {
               }
 
   ngOnInit() {
-    this.upload.getImages().subscribe(res=>{
-      this.images=[]
-      this.pairs=[]
-      console.log(res)
-      res.forEach(x=>{
-          if(x.pairof==''){
-            this.pairs.push(x)
-          }else{
-            this.images.push(x)
-          }
-      })
-      this.filter('all')
-    })
-    this.upload.getFilters().subscribe(res=>{
-      this.filters=res
-    })
+    this.getImages();
+    this.getFilters();
     this.SetNgGallery();
+  }
+
+  private getFilters() {
+    this.upload.getFilters().subscribe(res => {
+      this.filters = res;
+      
+    });
+  }
+
+  private getImages() {
+    this.upload.getImages().subscribe(res => {
+      this.images = [];
+      this.pairs = [];
+      console.log(res);
+      res.forEach(x => {
+        if (x.pairof == '') {
+          this.pairs.push(x);
+          // console.log(this.pairs)
+        }
+        else {
+          this.images.push(x);
+        }
+      });
+      this.filter('all');
+    });
   }
 
   ngOnDestroy(){

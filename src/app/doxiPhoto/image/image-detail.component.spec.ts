@@ -29,4 +29,6 @@ describe('ImageDetailComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // it('should get images to compare')
 });

@@ -26,7 +26,8 @@ describe('AuthenticationService', () => {
     // service= new AuthenticationService(null)
     TestBed.configureTestingModule({
       providers: [
-        AuthenticationService,
+        // AuthenticationService,
+        { provide: AuthenticationService, useClass: AuthenticationService },
         { provide: AngularFireAuth, useValue: mockAngularFireAuth },
       ]
     });
