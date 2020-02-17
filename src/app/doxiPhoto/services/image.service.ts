@@ -10,6 +10,10 @@ import { AngularFireStorage } from '@angular/fire/storage';
 // import * as firebase from 'firebase'
 // import { map } from 'rxjs/operators';
 
+
+/**
+ * not in use should be removed
+ */
 @Injectable({
   providedIn: 'root'
 })
