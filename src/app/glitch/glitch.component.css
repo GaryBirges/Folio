@@ -1,0 +1,39 @@
+
+  .glitchCard{
+    max-width: 800px;
+  }
+  #bar1{
+      height:15px;
+      width:25px;
+      background-color: brown;
+  }
+  #bar2{
+      height:15px;
+      width:25px;
+      background-color: royalblue;
+  }
+  #bar3{
+      height:15px;
+      width:25px;
+      background-color: teal;
+  }
+  #bar4{
+      height:15px;
+      width:25px;
+      background-color: goldenrod;
+  }
+  #bar5{
+      height:15px;
+      width:25px;
+      background-color: wheat;
+  }
+  #bar6{
+      height:15px;
+      width:25px;
+      background-color: slateblue;
+  }
+
+  #party{
+      width:640px;
+      height:480px;
+  }

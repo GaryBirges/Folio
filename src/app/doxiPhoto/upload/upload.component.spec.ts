@@ -32,7 +32,10 @@ let messageServiceStub={
     return string;
   }
 }
-describe('UploadComponent', () => {
+let file = new File([new ArrayBuffer(2e+5)], 'test-file.jpg', { lastModified: null, type: 'image/jpeg' });
+    let fileInput={ files: [file] };
+   let fileList = { 0: { name: 'foo', size: 500001 } };
+fdescribe('UploadComponent', () => {
   let component: UploadComponent;
   let fixture: ComponentFixture<UploadComponent>;
 
@@ -67,4 +70,19 @@ describe('UploadComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  /**
+   * You can fire change event after spyOn:
+
+spyOn(component, 'fileChange');
+input.dispatchEvent(new Event('change'));
+expect(component.fileChange).toHaveBeenCalled();
+   */
+  it('should be invalid if not both of the images are selected', ()=>{
+    component.uploadForm.controls['original'].setValue({filename:''});
+    component.uploadForm.controls['edited'].setValue('');
+    component.uploadForm.controls['caption'].setValue('caption');
+    console.log(component.uploadForm.valid)
+    expect(component.uploadForm.valid).not.toBeTruthy()
+  })
 });

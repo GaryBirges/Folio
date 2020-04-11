@@ -13,6 +13,7 @@ import { LoginComponent } from './doxiPhoto/login/login.component';
 import { PongComponent } from './games/pong/pong.component';
 import { SudokuGameComponent } from './games/sudoku-game/sudoku-game.component';
 import { TetrisComponent } from './games/tetris/tetris.component';
+import { GlitchComponent } from './glitch/glitch.component';
 
 
 const routes: Routes = [
@@ -35,6 +36,7 @@ const routes: Routes = [
           {path: 'upload', component: UploadComponent,},// canActivate: [AuthGuard]},
           {path: 'login', component: LoginComponent},
           {path: 'upload', component: UploadComponent},
+          {path: 'glitch', component: GlitchComponent},
   ] },
   {path: '**',redirectTo: ''}
 ];

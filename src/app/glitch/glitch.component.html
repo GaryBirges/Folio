@@ -1,0 +1,21 @@
+<mat-card class="glitchCard">
+    <mat-card-title>
+        VISUALIZER
+    </mat-card-title>
+    <div class="button-container">
+        <button (click)="playSample()" [disabled]=this.loadingSample||this.inPlay>
+            <span *ngIf="!this.loadingSample">Play</span>
+            <span *ngIf="this.loadingSample">Loading...</span>
+        </button>
+        <button (click)="pause()">pause</button>
+    </div>
+    <canvas id="canvas" width="800" height="600"></canvas>
+</mat-card>
+<!-- <div id="bar1"    [ngStyle]="{'width.px': this.bar1Width}"></div>
+<div id="bar2"    [ngStyle]="{'width.px': this.bar2Width}"> </div>
+<div id="bar3"    [ngStyle]="{'width.px': this.bar3Width}"></div>
+<div id="bar4"    [ngStyle]="{'width.px': this.bar4Width}"></div>
+<div id="bar5"    [ngStyle]="{'width.px': this.bar5Width}"></div>
+<div id="bar6"    [ngStyle]="{'width.px': this.bar6Width}"></div> -->
+
+<!-- <img id="party" src= './assets/party.jpg' [ngStyle]="{'width.px': this.bar1Width, 'height.px': this.bar5Width || 100}"  > -->
