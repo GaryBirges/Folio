@@ -1,10 +1,11 @@
-import {ChangeDetectorRef, Component, OnInit, OnDestroy} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, OnDestroy, HostBinding} from '@angular/core';
 
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MediaMatcher} from '@angular/cdk/layout';
 import { IsActiveService } from '../games/services/is-active.service';
 import { environment } from '../../environments/environment.prod';
-
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { OverlayContainer} from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-home',
@@ -15,10 +16,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
   version=environment.version
+  darkModeForm:FormGroup
   
   constructor(changeDetectorRef: ChangeDetectorRef, 
               media: MediaMatcher,
-              public ias: IsActiveService
+              public ias: IsActiveService,
+              private fb: FormBuilder,
+              public overlayContainer: OverlayContainer,
               ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -26,6 +30,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   
   ngOnInit() {
+    this.createDarkModeForm()
+    this.changeStyle()
+   
   }
 
   ngOnDestroy(): void {
@@ -33,7 +40,28 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   active() {
-    console.log('called')
     this.ias.active()
+  }
+
+  createDarkModeForm(){
+    this.darkModeForm = this.fb.group({
+      darkMode: false,
+    });
+  }
+  changeStyle(){
+    this.darkModeForm.valueChanges.subscribe(e=>{
+      if(e.darkMode){
+        this.onSetTheme('dark-theme')
+      }else{
+        this.onSetTheme('light-theme')
+      }
+    })
+  }
+
+  @HostBinding('class') componentCssClass;
+
+  onSetTheme(theme) {
+    this.overlayContainer.getContainerElement().classList.add(theme);
+    this.componentCssClass = theme;
   }
 }

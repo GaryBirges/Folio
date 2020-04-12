@@ -71,6 +71,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { TetrisComponent } from './games/tetris/tetris.component';
 import { GlitchComponent } from './glitch/glitch.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { OverlayModule} from '@angular/cdk/overlay';
 
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any> {
@@ -135,8 +137,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatProgressBarModule,
     // FontAwesomeModule,
     AngularFireAuthModule,
-    MatTooltipModule
-
+    MatTooltipModule,
+    MatSlideToggleModule,
+    OverlayModule
   ],
   providers: [MessageService,
     ImageFilterPipe,

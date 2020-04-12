@@ -101,7 +101,7 @@ playSound(buffer) {
     this.inPlay=false
     setTimeout(() => {
       cancelAnimationFrame(this.animateID)
-    }, 1000);
+    }, 1500);
   }
   getNoisia(){
     let noisia = this.storage.ref('music/noisia.mp3')

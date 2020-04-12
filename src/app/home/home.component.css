@@ -10,11 +10,12 @@
   mat-sidenav {
     width: 200px;
   }
-  /* .toolbar {
-    position: fixed; */
-    /* Make sure the toolbar will stay on top of the content as it scrolls past. */
-    /* z-index: 2;
-  } */
+ .toolbar{
+   display:flex;
+ }
+ .fillSpace{
+  flex: 1 1 auto;
+ }
   .home-is-mobile .example-toolbar {
     position: fixed;
     /* Make sure the toolbar will stay on top of the content as it scrolls past. */

@@ -22,8 +22,18 @@
 </div> -->
 <div class="home-container" [class.home-is-mobile]="mobileQuery.matches" >
     <mat-toolbar color="primary" class="toolbar">
-      <button mat-icon-button (click)="snav.toggle(); active()"><mat-icon>menu</mat-icon></button>
-      <h1 class="app-name">Projects</h1>
+      <!-- <span> -->
+        <button mat-icon-button (click)="snav.toggle(); active()"><mat-icon>menu</mat-icon></button>
+        <h1 class="app-name">Projects</h1>
+      <!-- </span> -->
+      <span class="fillSpace"></span>
+      <!-- <p style="float:right">x</p> -->
+      <small>
+        <form [formGroup]="darkModeForm">
+          <mat-slide-toggle formControlName="darkMode">Dark mode</mat-slide-toggle>
+        </form>
+
+      </small>
     </mat-toolbar>
   
     <mat-sidenav-container class="example-sidenav-container"
