@@ -4,7 +4,7 @@
 <!-- <div>
   <mat-drawer-container class="home-container" [hasBackdrop]="true">
     <mat-drawer class="sidenav" #drawer [mode]="over">
-      
+
       <div>
         <button mat-icon-button (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button>
       </div>
@@ -35,12 +35,12 @@
 
       </small>
     </mat-toolbar>
-  
+
     <mat-sidenav-container class="example-sidenav-container"
                            [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
-      <mat-sidenav  #snav 
+      <mat-sidenav  #snav
                     [mode]="mobileQuery.matches ? 'over' : 'side'"
-                    [fixedInViewport]="mobileQuery.matches" 
+                    [fixedInViewport]="mobileQuery.matches"
                     fixedTopGap="56">
         <mat-nav-list>
           <a mat-list-item routerLink="/">Home</a>
@@ -58,10 +58,14 @@
           <a mat-list-item routerLink="/upload">Upload</a>
           <hr>
           <a mat-list-item routerLink="/glitch">Visualizer</a>
+          <!-- <hr>
+          <a mat-list-item routerLink="/test">test</a> -->
+          <hr>
+          <a mat-list-item routerLink="/jobsearch">Job Scraper</a>
         </mat-nav-list>
         <small class="version">ver.{{this.version}}</small>
       </mat-sidenav>
-  
+
       <mat-sidenav-content>
         <!-- <p *ngFor="let content of fillerContent">{{content}}</p> -->
         <router-outlet></router-outlet>

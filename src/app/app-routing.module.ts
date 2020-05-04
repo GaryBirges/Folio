@@ -14,11 +14,13 @@ import { PongComponent } from './games/pong/pong.component';
 import { SudokuGameComponent } from './games/sudoku-game/sudoku-game.component';
 import { TetrisComponent } from './games/tetris/tetris.component';
 import { GlitchComponent } from './glitch/glitch.component';
+import { TestComponent } from './test/test.component';
+import { JobScraperComponent } from './job-scraper/job-scraper.component';
 
 
 const routes: Routes = [
   // { path: '', redirectTo: 'loginBroker', pathMatch: 'full' },  //change it from login
-  { path: '', component: HomeComponent, 
+  { path: '', component: HomeComponent,
 
   //   canActivate:[AuthGuard],
   //   canDeactivate:[CanDeactivateGuard],
@@ -37,6 +39,8 @@ const routes: Routes = [
           {path: 'login', component: LoginComponent},
           {path: 'upload', component: UploadComponent},
           {path: 'glitch', component: GlitchComponent},
+          {path: 'test', component: TestComponent},
+          {path: 'jobsearch', component: JobScraperComponent},
   ] },
   {path: '**',redirectTo: ''}
 ];

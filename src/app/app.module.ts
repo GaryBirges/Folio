@@ -73,6 +73,9 @@ import { TetrisComponent } from './games/tetris/tetris.component';
 import { GlitchComponent } from './glitch/glitch.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { OverlayModule} from '@angular/cdk/overlay';
+import { TestComponent } from './test/test.component';
+import { JobScraperComponent } from './job-scraper/job-scraper.component';
+import { HttpClientModule } from '@angular/common/http';
 
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any> {
@@ -100,10 +103,14 @@ export class MyHammerConfig extends HammerGestureConfig {
     ImageFilterPipe,
     SudokuGameComponent,
     TetrisComponent,
-    GlitchComponent
+    GlitchComponent,
+    TestComponent,
+    JobScraperComponent,
+
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),
     // AngularFirestoreDocument,
@@ -139,7 +146,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     AngularFireAuthModule,
     MatTooltipModule,
     MatSlideToggleModule,
-    OverlayModule
+    OverlayModule,
   ],
   providers: [MessageService,
     ImageFilterPipe,

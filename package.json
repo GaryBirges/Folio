@@ -8,7 +8,8 @@
     "build-prod": "npm version patch && node ./src/app/preBuild.js && ng build --prod --output-path=docs --base-href=https://garybirges.github.io/Folio/",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy": "ngh --dir=docs"
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": false,

@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-title>Jobs</mat-card-title>
+<table mat-table [dataSource]="jobData" #jobSort="matSort" matSort matSortActive="date" matSortDirection="desc" class="mat-elevation-z8">
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> title </th>
+    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+  </ng-container>
+  <ng-container matColumnDef="link">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> link </th>
+    <td mat-cell *matCellDef="let element"><a [href]=element.link>Link</a> </td>
+  </ng-container>
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> description </th>
+    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+  </ng-container>
+  <ng-container matColumnDef="from">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> from </th>
+    <td mat-cell *matCellDef="let element"> {{element.from}} </td>
+  </ng-container>
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> date </th>
+    <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="jobDisplayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: jobDisplayedColumns;"></tr>
+</table>
+<mat-paginator #jobPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</mat-card>
