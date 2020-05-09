@@ -76,6 +76,11 @@ import { OverlayModule} from '@angular/cdk/overlay';
 import { TestComponent } from './test/test.component';
 import { JobScraperComponent } from './job-scraper/job-scraper.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AddBugComponent } from './bugtracker/add-bug/add-bug.component';
+import { ListBugsComponent } from './bugtracker/list-bugs/list-bugs.component';
+import { BugDetailsComponent } from './bugtracker/bug-details/bug-details.component';
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
+import { LoginRegisterComponent } from './bugtracker/login-register/login-register.component';
 
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any> {
@@ -106,6 +111,10 @@ export class MyHammerConfig extends HammerGestureConfig {
     GlitchComponent,
     TestComponent,
     JobScraperComponent,
+    AddBugComponent,
+    ListBugsComponent,
+    BugDetailsComponent,
+    LoginRegisterComponent,
 
   ],
   imports: [
@@ -157,6 +166,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     UploadService,
     AngularFireAuth,
     AngularFireStorage,
+    AngularFireAuthGuard,
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig,

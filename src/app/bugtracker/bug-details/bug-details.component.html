@@ -1,0 +1,63 @@
+<button mat-button  [routerLink]="['/bugtracker']" >back</button>
+<mat-card  *ngIf="this.bug">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image flexStart">
+      <div [ngSwitch]="this.bug.status">
+        <mat-icon class="iconSize" *ngSwitchCase="'open'">lock_open</mat-icon>
+        <mat-icon class="iconSize" *ngSwitchCase="'closed'">lock</mat-icon>
+        <mat-icon class="iconSize" *ngSwitchCase="'pending'">schedule</mat-icon>
+        <mat-icon class="iconSize" *ngSwitchCase="'inProgress'">loop</mat-icon>
+      </div>
+    </div>
+    <mat-card-title class="flexStart">{{this.bug.title}}</mat-card-title>
+    <mat-card-subtitle class="flexStart">Opened on {{this.bug.createdDate | date}} by {{this.bug.reportedBy}}</mat-card-subtitle>
+    <mat-form-field class="flexEnd"
+    matTooltip="Log in to change" [matTooltipDisabled]="authorized()">
+      <mat-label>Status</mat-label>
+      <mat-select [(value)]="this.bug.status"  [disabled]="!authorized()" (selectionChange)="onStatusChange()">
+        <mat-option [value]="'open'">Open</mat-option>
+        <mat-option [value]="'closed'">Closed</mat-option>
+        <mat-option [value]="'pending'">Pending</mat-option>
+        <mat-option [value]="'inProgress'">In Progress</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      {{this.bug.description}}
+    </p>
+  </mat-card-content>
+  <mat-card-actions class="flexEnd">
+    <button class="editButton" mat-button [routerLink]="['/bugtracker/editbug/' + this.bugId]">Edit</button>
+  </mat-card-actions>
+</mat-card>
+<mat-card>
+  <mat-card-header>
+    Events
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <!-- <div *ngFor="let event of this.events"> -->
+        <mat-list-item *ngFor="let event of this.events">
+          <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
+          <div mat-line>{{event.action}} <span class="lessImportant">by</span> {{event.createdBy}} <span class="lessImportant">on</span> {{event.createdDate | date}}</div>
+          <div mat-line *ngIf="event.message!=''">  {{event.message}} </div>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      <!-- </div> -->
+    </mat-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <form  [formGroup]="commentForm">
+      <mat-form-field class="widthMax">
+        <input matInput formControlName="comment" placeholder="comment" >
+        <!-- <mat-error *ngIf="commentForm.controls['comment'].invalid && (commentForm.controls['comment'].dirty || commentForm.controls['comment'].touched)">
+          Please enter a comment
+        </mat-error> -->
+      </mat-form-field>
+      <div matTooltip="Log in comment" [matTooltipDisabled]="authorized()">
+        <button mat-button [disabled]='!commentForm.valid || !authorized()' (click)="addComment()">Add comment</button>
+      </div>
+    </form>
+  </mat-card-actions>
+</mat-card>

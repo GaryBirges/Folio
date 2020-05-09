@@ -1,0 +1,53 @@
+<div class="midScreen">
+  <div *ngIf="!newUser">
+    <div >
+      <mat-form-field class="paddingTop">
+        <input matInput #em='ngModel' placeholder="Email" [(ngModel)]="email" email required>
+        <!-- <mat-error *ngIf="em.invalid"> -->
+        <mat-error *ngIf="em.invalid && (em.dirty || em.touched)">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="paddingTop">
+        <input type="password" matInput #pass='ngModel' placeholder="Password" [(ngModel)]="pw">
+        <mat-error *ngIf="pass.invalid && (pass.dirty || pass.touched)">
+            Please enter your password
+          </mat-error>
+      </mat-form-field>
+    </div>
+    <button type="submit" mat-raised-button (click)="signIn()">Sign In</button>
+    <button mat-button (click)="newUser=true">Register</button>
+    <p *ngIf="errorMsg">{{errorMsg}}</p>
+  </div>
+  <div *ngIf="newUser">
+    <div >
+      <mat-form-field class="paddingTop">
+        <input matInput #em2='ngModel' placeholder="Email" [(ngModel)]="email" email required>
+        <mat-error *ngIf="em2.invalid && (em2.dirty || em2.touched)">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="paddingTop">
+        <input type="password" #pass1='ngModel' required matInput pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" placeholder="Password" [(ngModel)]="pw">
+        <mat-error *ngIf="pass1.invalid && (pass1.dirty || pass1.touched)">
+          Must contain letters, capital letters and numbers.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="paddingTop">
+        <input type="password"  #pass2='ngModel' matInput  placeholder="Repeat-Password" [(ngModel)]="pw2" required>
+        <mat-error *ngIf="pass2.invalid && (pass2.dirty || pass2.touched)">
+          password required
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <button type="submit" mat-raised-button (click)="register()">Register</button>
+    <button mat-button (click)="newUser=false">Back</button>
+    <p *ngIf="errorMsg">{{errorMsg}}</p>
+  </div>
+</div>

@@ -16,15 +16,16 @@ import { TetrisComponent } from './games/tetris/tetris.component';
 import { GlitchComponent } from './glitch/glitch.component';
 import { TestComponent } from './test/test.component';
 import { JobScraperComponent } from './job-scraper/job-scraper.component';
+import { ListBugsComponent } from './bugtracker/list-bugs/list-bugs.component';
+import { AddBugComponent } from './bugtracker/add-bug/add-bug.component';
+import { BugDetailsComponent } from './bugtracker/bug-details/bug-details.component';
+import { AngularFireAuthGuard,  redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/auth-guard';
+import { LoginRegisterComponent } from './bugtracker/login-register/login-register.component';
 
-
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['bugtracker/login']);
+const redirectLoggedInToItems = () => redirectLoggedInTo(['bugtracker']);
 const routes: Routes = [
-  // { path: '', redirectTo: 'loginBroker', pathMatch: 'full' },  //change it from login
   { path: '', component: HomeComponent,
-
-  //   canActivate:[AuthGuard],
-  //   canDeactivate:[CanDeactivateGuard],
-  //   canActivateChild:[AuthGuard],
     children: [
           {path: '', component: WelcomeComponent,  pathMatch: 'full' },
           {path : 'puzzle', component: PuzzleComponent},
@@ -41,6 +42,13 @@ const routes: Routes = [
           {path: 'glitch', component: GlitchComponent},
           {path: 'test', component: TestComponent},
           {path: 'jobsearch', component: JobScraperComponent},
+          {path: 'bugtracker',  children: [
+            {path: '', component: ListBugsComponent,pathMatch:'full'},
+            {path: 'addbug', component:AddBugComponent, canActivate: [AngularFireAuthGuard],data: { authGuardPipe: redirectUnauthorizedToLogin }},
+            {path: 'login', component:LoginRegisterComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToItems }},
+            {path: ':id', component:BugDetailsComponent},
+            {path: 'editbug/:id', component:AddBugComponent, canActivate: [AngularFireAuthGuard],data: { authGuardPipe: redirectUnauthorizedToLogin }},
+          ]},
   ] },
   {path: '**',redirectTo: ''}
 ];

@@ -1,0 +1,17 @@
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.mainContainer > * {
+  flex: 1;
+  margin-right: 15px;
+}
+mat-card{
+  max-width: 800px;
+  // height: 400px;
+  display: block;
+  margin-left:auto;
+  margin-right:auto;
+}

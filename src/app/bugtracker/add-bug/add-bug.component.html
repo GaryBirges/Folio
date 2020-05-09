@@ -1,0 +1,47 @@
+<mat-card>
+  <mat-card-title *ngIf="!this.editMode"> Report a bug</mat-card-title>
+  <mat-card-title *ngIf="this.editMode"> Edit bug: {{this.bugId}}</mat-card-title>
+<form [formGroup]="bugForm">
+  <div class="mainContainer">
+    <mat-form-field >
+      <input formControlName="title" matInput placeholder="title" appearance="fill">
+    </mat-form-field>
+    <mat-form-field>
+      <input formControlName="assignee" matInput placeholder="assignee" >
+    </mat-form-field>
+  </div>
+  <div class="mainContainer">
+    <mat-form-field>
+      <textarea formControlName="description" matInput placeholder="description"></textarea>
+      <!-- <input formControlName="description" matInput placeholder="description" > -->
+    </mat-form-field>
+  </div>
+  <div class="mainContainer">
+    <mat-form-field>
+      <input formControlName="project" matInput placeholder="project" >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="status" formControlName='status'>
+        <mat-option value="open">Open</mat-option>
+        <mat-option value="pending">Pending</mat-option>
+        <mat-option value="inProgress">inProgress</mat-option>
+        <mat-option value="closed">Closed</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <!-- <input formControlName="severity" matInput placeholder="severity" > -->
+      <mat-label>Severity</mat-label>
+      <mat-select placeholder="Severity" formControlName="severity">
+        <mat-option  value="minor">Minor</mat-option>
+        <mat-option  value="mayor">Mayor</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div >
+    <button mat-raised-button [disabled]='!bugForm.valid' *ngIf="!this.editMode" (click)="addBug()" >Add Bug</button>
+    <button mat-raised-button [disabled]='!bugForm.valid' *ngIf="this.editMode" (click)="editBug()" >Edit Bug</button>
+    <button mat-button  [routerLink]="['/bugtracker']" >back</button>
+  </div>
+</form>
+</mat-card>
