@@ -62,7 +62,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 .imageSize{
   width:80vw;
-  height:60vh;
+  height:auto;
 
 }
 form{

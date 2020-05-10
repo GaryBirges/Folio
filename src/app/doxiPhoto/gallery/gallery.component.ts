@@ -87,6 +87,9 @@ export class GalleryComponent implements OnInit, OnDestroy {
       height: '90vh',
       maxWidth:'86%',
       maxHeight:'90%',
+      /* // width: '450px',
+      maxWidth:'80%',
+      maxHeight:'90%',*/
       data: {image: this.galleryImages[index].img, toCompare:pair[0]} //only one pair should be returned...
     });
     dialogRef.afterClosed().subscribe(result => {
