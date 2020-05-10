@@ -84,13 +84,14 @@ export class GalleryComponent implements OnInit, OnDestroy {
     console.log(pair)
     let dialogRef = this.dialog.open(CompareImageComponent, {
       width: '86vw',
-      height: '90vh',
+      height: 'auto',
       maxWidth:'86%',
       maxHeight:'90%',
       /* // width: '450px',
       maxWidth:'80%',
       maxHeight:'90%',*/
-      data: {image: this.galleryImages[index].img, toCompare:pair[0]} //only one pair should be returned...
+      data: {image: this.galleryImages[index].img, toCompare:pair[0]}, //only one pair should be returned...
+      autoFocus: false
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
