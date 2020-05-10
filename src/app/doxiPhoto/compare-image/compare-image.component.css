@@ -16,8 +16,8 @@
 
 .image-slider img {
   display: block;
-   user-select: none; 
-   box-sizing: border-box; 
+   user-select: none;
+   box-sizing: border-box;
 }
 
 
@@ -58,4 +58,15 @@ input[type="range"]::-webkit-slider-thumb {
 
 #top-image {
   border-right: 2px solid antiquewhite;
+}
+
+.imageSize{
+  width:80vw;
+  height:60vh;
+
+}
+form{
+  /* text-align: center; */
+  overflow: hidden;
+
 }
