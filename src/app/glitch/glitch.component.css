@@ -1,6 +1,8 @@
 
   .glitchCard{
     max-width: 800px;
+      /*height added to solve mat-toolbar height issue*/
+      /* height:650px; */
   }
   #bar1{
       height:15px;

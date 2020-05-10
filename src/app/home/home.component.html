@@ -44,19 +44,42 @@
                     fixedTopGap="56">
         <mat-nav-list>
           <a mat-list-item routerLink="/">Home</a>
-          <hr>
+          <!-- <hr> -->
           <a mat-list-item routerLink="/bugtracker">Bug Tracker</a>
-          <hr>
+          <!-- <hr> -->
           <a mat-list-item routerLink="/gallery">Gallery</a>
-          <!-- <a mat-list-item routerLink="/upload">Upload</a> -->
-          <hr>
-          <a mat-list-item routerLink="/puzzle">Puzzle</a>
-          <!-- <a mat-list-item routerLink="/puzzle2">puzzle2</a> -->
+          <!-- <hr> -->
+
+          <!-- <mat-accordion> -->
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Games
+                </mat-panel-title>
+                <!-- <mat-panel-description>
+                  Type your name and age
+                </mat-panel-description> -->
+              </mat-expansion-panel-header>
+              <a mat-list-item routerLink="/puzzle">Puzzle</a>
+              <!-- <a mat-list-item routerLink="/puzzle2">puzzle2</a> -->
+              <a mat-list-item routerLink="/snake">Snake</a>
+              <a mat-list-item routerLink="/pong">Pong</a>
+              <a mat-list-item routerLink="/sudoku">Sudoku</a>
+              <a mat-list-item routerLink="/tetris">Tetris</a>
+
+
+            </mat-expansion-panel>
+            <!-- </mat-accordion> -->
+
+
+
+            <!-- <a mat-list-item routerLink="/puzzle2">puzzle2</a> -->
+          <!-- <a mat-list-item routerLink="/puzzle">Puzzle</a>
           <a mat-list-item routerLink="/snake">Snake</a>
           <a mat-list-item routerLink="/pong">Pong</a>
           <a mat-list-item routerLink="/sudoku">Sudoku</a>
           <a mat-list-item routerLink="/tetris">Tetris</a>
-          <hr>
+          <hr> -->
           <a mat-list-item routerLink="/scoreboard">Score Board</a>
           <hr>
           <a mat-list-item routerLink="/glitch">Visualizer</a>

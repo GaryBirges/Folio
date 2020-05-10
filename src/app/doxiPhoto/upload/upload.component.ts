@@ -48,7 +48,7 @@ export class UploadComponent implements OnInit {
         this.CreateUploadForm()
         this. thumbnailReady=false
         this.thumbnailEditedReady=false
-        this.message.add("upload complete")
+        this.message.add("upload complete", 5000)
         this.uploadInProgress=false
       }
     })

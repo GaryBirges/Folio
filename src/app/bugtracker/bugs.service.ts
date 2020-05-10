@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class BugsService {
   bugsListSubj = new BehaviorSubject(null)
 
   bugsCollection : AngularFirestoreCollection
-  constructor(db: AngularFirestore,) {
+  constructor(db: AngularFirestore,
+              private auth:AuthService) {
     this.bugsCollection= db.collection('BugsList', ref=>ref.orderBy('createdDate', 'desc'))
     this.bugsCollection.valueChanges({ idField: 'id' }).subscribe(res=>{
       this.bugsList=res
@@ -27,7 +29,7 @@ export class BugsService {
     this.bugsCollection.add(bug).then((docRef)=> {
       console.log(docRef.id)
       const event = {
-        createdBy: bug.reportedBy,
+        createdBy: this.auth.displayName,
         createdDate: bug.createdDate,
         action: 'Bug Created',
         message: ''
@@ -42,7 +44,7 @@ export class BugsService {
 
    addComment(collection, comment){
     const event = {
-      createdBy: "current user",
+      createdBy: this.auth.displayName,
       createdDate: Date.now(),
       action: 'Commented',
       message:comment
@@ -54,7 +56,7 @@ export class BugsService {
    changeStatus(bug, statusFrom, statusTo){
     this.bugsCollection.doc(bug.id).update(bug)
     const event = {
-      createdBy: "current user",
+      createdBy: this.auth.displayName,
       createdDate: Date.now(),
       action: `Status changed from ${statusFrom} to ${statusTo}`,
       message:''
@@ -67,7 +69,7 @@ export class BugsService {
    editBug(bug){
      this.bugsCollection.doc(bug.id).update(bug)
      const event = {
-      createdBy: "current user",
+      createdBy: this.auth.displayName,
       createdDate: Date.now(),
       action: `Bug edited`,
       message:''
