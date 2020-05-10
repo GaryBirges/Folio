@@ -38,7 +38,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   private getFilters() {
     this.upload.getFilters().subscribe(res => {
       this.filters = res;
-      
+
     });
   }
 
@@ -69,12 +69,12 @@ export class GalleryComponent implements OnInit, OnDestroy {
   private SetNgGallery() {
     this.galleryOptions = [
       { "previewCloseOnClick": true, "previewCloseOnEsc": true, "imageArrows": true, previewCustom: this.openPreview.bind(this) },
-      {  "width": "100%", "height": "600px", "thumbnailsColumns": 3,previewCustom: this.openPreview.bind(this) },
-      { "breakpoint": 800, "width": "100%", "height": "200px",  "thumbnailsColumns": 2,"imageSwipe": true, previewCustom: this.openPreview.bind(this) }
+      {  "width": "100%", "height" : "570px" , "thumbnailsColumns": 3,previewCustom: this.openPreview.bind(this) },
+      { "breakpoint": 800, "width": "100%", "height": "400px",  "thumbnailsColumns": 2,"imageSwipe": true, previewCustom: this.openPreview.bind(this) }
     ];
     this.galleryImages=[]
   }
-
+ //"height": "575px"
   openPreview(index){
     const pair=this.pairs.filter(image => {
       if( image.name==this.galleryImages[index].img.pairof){
@@ -94,15 +94,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     // this.openLogin()
   }
 
-  openLogin(){
-    let dialogRef = this.dialog.open(LoginComponent, {
-      width: '450px',
-      data: {name: name}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-    });
-  }
+
 
   imageFilter(items:any[], criteria: string):any {
     if(criteria==='all'){

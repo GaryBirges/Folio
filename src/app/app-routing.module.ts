@@ -35,10 +35,6 @@ const routes: Routes = [
           {path : 'sudoku', component: SudokuGameComponent},
           {path : 'tetris', component: TetrisComponent},
           {path : 'scoreboard', component: ScoreBoardComponent},
-          {path : 'gallery', component: GalleryComponent},
-          {path: 'upload', component: UploadComponent,},// canActivate: [AuthGuard]},
-          {path: 'login', component: LoginComponent},
-          {path: 'upload', component: UploadComponent},
           {path: 'glitch', component: GlitchComponent},
           {path: 'test', component: TestComponent},
           {path: 'jobsearch', component: JobScraperComponent},
@@ -48,6 +44,11 @@ const routes: Routes = [
             {path: 'login', component:LoginRegisterComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToItems }},
             {path: ':id', component:BugDetailsComponent},
             {path: 'editbug/:id', component:AddBugComponent, canActivate: [AngularFireAuthGuard],data: { authGuardPipe: redirectUnauthorizedToLogin }},
+          ]},
+          {path : 'gallery', children: [
+            {path: '', component: GalleryComponent, pathMatch:'full',},
+            {path: 'upload', component: UploadComponent},
+            {path: 'login', component: LoginComponent},
           ]},
   ] },
   {path: '**',redirectTo: ''}

@@ -53,8 +53,14 @@
       </div>
       Progress: {{this.uploadService?.uploadPercent| number:'1.0-2'}}% Completed
     </div>
-    <div matTooltip="Just a really special person can upload files" class="uploadHolder">
+    <div 
+        class="uploadHolder"
+        *ngIf="authState | async"
+        >
       <button mat-raised-button [disabled]='!uploadForm.valid'  (click)="uploadFiles()" >Upload Images</button>
+    </div>
+    <div class="uploadHolder" *ngIf="!(authState | async)">
+      <button mat-raised-button (click)="openLogin()">Login</button>
     </div>
   </form>
 </mat-card>

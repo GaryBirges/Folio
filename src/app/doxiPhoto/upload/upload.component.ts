@@ -6,6 +6,9 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { MessageService } from 'src/app/games/services/messages/message.service';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginComponent } from '../login/login.component';
+import { AuthenticationService } from '../services/authentication.service';
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
@@ -27,10 +30,14 @@ export class UploadComponent implements OnInit {
   thumbnailReady=false
   thumbnailEditedReady=false
   uploadInProgress=false
-  
+
+  authState
+
   constructor(public uploadService: UploadService,
               private fb: FormBuilder,
-              private message:MessageService) { }
+              private message:MessageService,
+              public dialog: MatDialog,
+              public auth:AuthenticationService) { }
 
   ngOnInit() {
     this.CreateUploadForm()
@@ -45,6 +52,7 @@ export class UploadComponent implements OnInit {
         this.uploadInProgress=false
       }
     })
+    this.authState=this.auth.authUser()
   }
   CreateUploadForm(): any {
    this.uploadForm= this.fb.group({
@@ -60,20 +68,20 @@ export class UploadComponent implements OnInit {
       resizeImage({maxSize:1920,file:this.fileOriginal[0]}).then(resizedOriginal=>{
         // console.log(this.fileOriginal[0])
         resizeImage({maxSize:1920,file:this.fileEdited[0]}).then(resizedEdited=>{
-          let blobOrig={file:resizedOriginal, 
-                    caption:this.uploadForm.value.caption, 
-                    name:this.fileOriginal[0].name, 
+          let blobOrig={file:resizedOriginal,
+                    caption:this.uploadForm.value.caption,
+                    name:this.fileOriginal[0].name,
                     filter:this.uploadForm.value.filters
                   }
-          let blobEdited={file:resizedEdited, 
-            caption:this.uploadForm.value.caption, 
-            name:this.fileEdited[0].name, 
+          let blobEdited={file:resizedEdited,
+            caption:this.uploadForm.value.caption,
+            name:this.fileEdited[0].name,
             filter:this.uploadForm.value.filters,
             pairOf:this.fileOriginal[0].name
           }
           this.uploadService.uploadFile([blobOrig,blobEdited])
         })
-      
+
       this.uploadForm.value.filters.forEach(f => {
         let existingFilter = false;
         for (let i = 0; i < this.allFilters.length; i++) {
@@ -85,7 +93,7 @@ export class UploadComponent implements OnInit {
           this.addFilter({name:f})
         }
       });
-    
+
     })
       // this.upload = new Upload(this.fileOriginal[0])
       // this.upload.pairOf=(btoa(this.fileOriginal[0].name))
@@ -172,6 +180,15 @@ export class UploadComponent implements OnInit {
   addFilter(filter){
     this.uploadService.addFilter(filter)
   }
+  openLogin(){
+    let dialogRef = this.dialog.open(LoginComponent, {
+      width: '450px',
+      data: {name: name}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+  }
 }
 interface IResizeImageOptions {
   maxSize: number;
@@ -227,5 +244,7 @@ const resizeImage = (settings: IResizeImageOptions) => {
         image.src = readerEvent.target.result;
       };
       reader.readAsDataURL(file);
-  })    
+  })
+
+
 };

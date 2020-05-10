@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   password: string;
   errorMsg: string;
   // data={email:'', pw:''}
-  constructor(private auth: AuthenticationService, 
+  constructor(private auth: AuthenticationService,
               private router: Router,
               public dialogRef: MatDialogRef<LoginComponent>,
               @Inject(MAT_DIALOG_DATA) public data:{email:'', pw:''}) { }
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     this.auth.login({email: this.data.email, password: this.data.pw})
     .then(resolve=>{
       this.dialogRef.close();
-      this.router.navigate(['upload'])
+      // this.router.navigate(['upload'])
     }).catch(error=>this.errorMsg=error.message)
     // .then(a=>console.log(this.auth.isLoggedin()))
   }
