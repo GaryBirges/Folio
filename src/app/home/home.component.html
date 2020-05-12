@@ -66,33 +66,29 @@
               <a mat-list-item routerLink="/pong">Pong</a>
               <a mat-list-item routerLink="/sudoku">Sudoku</a>
               <a mat-list-item routerLink="/tetris">Tetris</a>
+              <hr>
+              <a mat-list-item routerLink="/scoreboard">Score Board</a>
 
 
             </mat-expansion-panel>
             <!-- </mat-accordion> -->
-
-
-
-            <!-- <a mat-list-item routerLink="/puzzle2">puzzle2</a> -->
-          <!-- <a mat-list-item routerLink="/puzzle">Puzzle</a>
-          <a mat-list-item routerLink="/snake">Snake</a>
-          <a mat-list-item routerLink="/pong">Pong</a>
-          <a mat-list-item routerLink="/sudoku">Sudoku</a>
-          <a mat-list-item routerLink="/tetris">Tetris</a>
-          <hr> -->
-          <a mat-list-item routerLink="/scoreboard">Score Board</a>
-          <hr>
-          <a mat-list-item routerLink="/glitch">Visualizer</a>
+          <a mat-list-item routerLink="/glitch">Visualizer <small> - WebAudio API</small></a>
+          <a mat-list-item routerLink="/jobsearch">Job Scraper <small> - NodeJs</small></a>
           <!-- <hr>
           <a mat-list-item routerLink="/test">test</a> -->
           <hr>
-          <a mat-list-item routerLink="/jobsearch">Job Scraper</a>
+          <small class="externalLinks">
+            External links:
+          </small>
+          <!-- <a mat-list-item routerLink="/swapi">sw API <small> - Ionic</small></a> -->
+          <a mat-list-item href='https://ionic-test-bcf6c.web.app/'>sw API <small> - Ionic</small></a>
+          <a mat-list-item href='https://garybirges.github.io/doxi.yoga'>Doxi Yoga</a>
+          <a mat-list-item href='https://dg-codetest-api-gb020320.azurewebsites.net'>DnG Codetest</a>
         </mat-nav-list>
         <small class="version">ver.{{this.version}}</small>
       </mat-sidenav>
 
       <mat-sidenav-content>
-        <!-- <p *ngFor="let content of fillerContent">{{content}}</p> -->
         <router-outlet></router-outlet>
         <!-- <p>
             vsdfvsdvsdvsdv

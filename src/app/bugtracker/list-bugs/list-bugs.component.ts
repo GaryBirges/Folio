@@ -13,7 +13,7 @@ import { AuthService } from '../auth.service';
 export class ListBugsComponent implements OnInit, OnDestroy {
   bugsList
   bugListData: any;
-  bugListDisplayedColumns: string[] = ['title', 'description', 'assignee', 'project', 'status', 'severity', 'reportedBy', 'createdDate'];
+  bugListDisplayedColumns: string[] = ['title', 'assignee', 'project', 'status', 'severity', 'reportedBy', 'createdDate'];
   @ViewChild('bugListPaginator', { static: true }) paginatorBugList: MatPaginator;
   @ViewChild('bugListSort', { static: true }) sortBugList: MatSort;
 
