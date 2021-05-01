@@ -1,0 +1,10 @@
+<button *ngIf="!(getAuthState())" mat-raised-button routerLink="/messenger/login">Login/Register</button>
+
+<div *ngFor="let message of this.messages">
+  <p>{{message.sender}} : {{message.message}}</p>
+</div>
+
+<form [formGroup]="messageForm">
+  <input formControlName="message" matInput placeholder="message" >
+  <button mat-button [disabled]='!messageForm.valid' (click)="addMessage()">Add message</button>
+</form>

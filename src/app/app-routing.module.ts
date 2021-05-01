@@ -21,6 +21,7 @@ import { AddBugComponent } from './bugtracker/add-bug/add-bug.component';
 import { BugDetailsComponent } from './bugtracker/bug-details/bug-details.component';
 import { AngularFireAuthGuard,  redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/auth-guard';
 import { LoginRegisterComponent } from './bugtracker/login-register/login-register.component';
+import { MessengerComponent } from './messenger/messenger/messenger.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['bugtracker/login']);
 const redirectLoggedInToItems = () => redirectLoggedInTo(['bugtracker']);
@@ -38,6 +39,11 @@ const routes: Routes = [
           {path: 'glitch', component: GlitchComponent},
           {path: 'test', component: TestComponent},
           {path: 'jobsearch', component: JobScraperComponent},
+          {path: 'messenger', component: MessengerComponent},
+          {path: 'messenger',children: [
+            {path:'', component: MessengerComponent},
+            {path: 'login', component: LoginRegisterComponent},
+          ]},
           {path: 'bugtracker',  children: [
             {path: '', component: ListBugsComponent,pathMatch:'full'},
             {path: 'addbug', component:AddBugComponent, canActivate: [AngularFireAuthGuard],data: { authGuardPipe: redirectUnauthorizedToLogin }},

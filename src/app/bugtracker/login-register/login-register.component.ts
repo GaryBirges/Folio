@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-register',
@@ -15,6 +15,7 @@ export class LoginRegisterComponent implements OnInit {
   newUser=false;
   pw2:string;
   constructor(private auth:AuthService,
+    private route: ActivatedRoute,
     private router:Router) { }
 
   ngOnInit() {
@@ -35,7 +36,8 @@ export class LoginRegisterComponent implements OnInit {
       console.log(res)
       this.loggedIn=true
       this.auth.authState= true
-      this.router.navigate(['bugtracker'])
+      // this.router.navigate(['bugtracker'])
+      this.router.navigate(['../'],  {relativeTo: this.route})
     }).catch(error=>this.errorMsg=error.message)
   }
 
@@ -44,6 +46,7 @@ export class LoginRegisterComponent implements OnInit {
       this.errorMsg='';
       this.auth.signUp({email:this.email, password: this.pw}).then(res=>{
         console.log(res)
+        this.router.navigate(['../'],  {relativeTo: this.route})
       }).catch(error=>this.errorMsg=error.message)
     }else{
       this.errorMsg="Passwords must match";

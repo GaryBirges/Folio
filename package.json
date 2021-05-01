@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build-prod": "npm version patch && node ./src/app/preBuild.js && ng build --prod --output-path=docs --base-href=https://garybirges.github.io/Folio/",
+    "build-npulse": "npm version patch && node ./src/app/preBuild.js && ng build --prod --output-path=docs --base-href=https://garybirges.npulse.cc/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

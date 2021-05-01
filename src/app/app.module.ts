@@ -81,6 +81,7 @@ import { ListBugsComponent } from './bugtracker/list-bugs/list-bugs.component';
 import { BugDetailsComponent } from './bugtracker/bug-details/bug-details.component';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 import { LoginRegisterComponent } from './bugtracker/login-register/login-register.component';
+import { MessengerComponent } from './messenger/messenger/messenger.component';
 
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any> {
@@ -115,6 +116,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     ListBugsComponent,
     BugDetailsComponent,
     LoginRegisterComponent,
+    MessengerComponent,
 
   ],
   imports: [

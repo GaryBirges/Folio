@@ -16,9 +16,8 @@ export class AuthService {
     this.user.pipe(
       tap(user => {
         if (user) {
-          console.log(user)
           this.authState=true
-          this.displayName=user.displayName
+          this.displayName=user.displayName || user.email
         } else {
           this.authState=false
         }
@@ -45,6 +44,7 @@ export class AuthService {
   //    return this.user;
   //  }
    getAuthState(){
+     console.log(this.authState)
     return this.authState
    }
 }
