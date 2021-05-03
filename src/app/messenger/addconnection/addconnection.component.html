@@ -1,0 +1,9 @@
+<h2>Select an user</h2>
+<div>
+  <mat-list>
+      <mat-list-item *ngFor="let member of this.users" (click)="userSelected(member)">
+        <div mat-line>{{member.name}}</div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+  </mat-list>
+</div>

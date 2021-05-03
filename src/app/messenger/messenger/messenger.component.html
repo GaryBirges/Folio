@@ -1,10 +1,28 @@
 <button *ngIf="!(getAuthState())" mat-raised-button routerLink="/messenger/login">Login/Register</button>
-
-<div *ngFor="let message of this.messages">
-  <p>{{message.sender}} : {{message.message}}</p>
+<div>
+  <h3>Connections</h3>
+  <div>
+    <mat-list>
+        <mat-list-item *ngFor="let member of this.connections?.messagecomplex" (click)="selectConnection(member)">
+          <div mat-line>{{member.user}}</div>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+        <mat-list-item (click)="addConnection()">+ Add Connection</mat-list-item>
+    </mat-list>
+  </div>
 </div>
+<hr>
+<div *ngIf="this.currentReceiver">
+  <div>
+    <h3>Messages</h3>
+  </div>
+  <div *ngFor="let message of this.messages">
+    <p>{{message.sender}} : {{message.message}}</p>
+  </div>
 
-<form [formGroup]="messageForm">
-  <input formControlName="message" matInput placeholder="message" >
-  <button mat-button [disabled]='!messageForm.valid' (click)="addMessage()">Add message</button>
-</form>
+  <form [formGroup]="messageForm">
+    <input formControlName="message" matInput placeholder="message" >
+    <button mat-button [disabled]='!messageForm.valid' (click)="addMessage()">Add message</button>
+  </form>
+
+</div>

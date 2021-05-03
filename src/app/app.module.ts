@@ -82,6 +82,7 @@ import { BugDetailsComponent } from './bugtracker/bug-details/bug-details.compon
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 import { LoginRegisterComponent } from './bugtracker/login-register/login-register.component';
 import { MessengerComponent } from './messenger/messenger/messenger.component';
+import { AddconnectionComponent } from './messenger/addconnection/addconnection.component';
 
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any> {
@@ -117,7 +118,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     BugDetailsComponent,
     LoginRegisterComponent,
     MessengerComponent,
-
+    AddconnectionComponent,
   ],
   imports: [
     BrowserModule,
@@ -174,7 +175,7 @@ export class MyHammerConfig extends HammerGestureConfig {
       useClass: MyHammerConfig,
     },
   ],
-  entryComponents: [AskForNameComponent, CompareImageComponent],
+  entryComponents: [AskForNameComponent, CompareImageComponent, AddconnectionComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

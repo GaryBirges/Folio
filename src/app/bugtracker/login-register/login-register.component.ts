@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-login-register',
@@ -16,7 +17,8 @@ export class LoginRegisterComponent implements OnInit {
   pw2:string;
   constructor(private auth:AuthService,
     private route: ActivatedRoute,
-    private router:Router) { }
+    private router:Router,
+    private db: AngularFirestore) { }
 
   ngOnInit() {
     // this.auth.authUser().subscribe(res=>{
@@ -46,6 +48,10 @@ export class LoginRegisterComponent implements OnInit {
       this.errorMsg='';
       this.auth.signUp({email:this.email, password: this.pw}).then(res=>{
         console.log(res)
+        this.db.collection('messengerUsers').doc(this.email as string).set({
+          name:this.email,
+          messagecomplex:[]
+        })
         this.router.navigate(['../'],  {relativeTo: this.route})
       }).catch(error=>this.errorMsg=error.message)
     }else{
