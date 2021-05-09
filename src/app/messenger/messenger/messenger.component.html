@@ -1,28 +1,40 @@
 <button *ngIf="!(getAuthState())" mat-raised-button routerLink="/messenger/login">Login/Register</button>
-<div>
-  <h3>Connections</h3>
-  <div>
+<hr>
+<div  class="messenger">
+  <div  class="connections">
+    <h3>Connections</h3>
     <mat-list>
-        <mat-list-item *ngFor="let member of this.connections?.messagecomplex" (click)="selectConnection(member)">
-          <div mat-line>{{member.user}}</div>
+        <mat-list-item  *ngFor="let member of this.connections?.messagecomplex" (click)="selectConnection(member)">
+          <div class="connection"  [ngClass]="{'selected-connection': member?.user == currentReceiver?.user}">
+            <div mat-line>{{member.user}}</div>
+            <div mat-line *ngIf = "member.lastMessage"><small>{{member.lastMessage}}</small></div>
+          </div>
+          <span *ngIf = "member.newMessageCount > 0"  matBadgeOverlap="false" matBadge="{{member.newMessageCount}}"></span>
           <mat-divider></mat-divider>
         </mat-list-item>
         <mat-list-item (click)="addConnection()">+ Add Connection</mat-list-item>
     </mat-list>
   </div>
-</div>
-<hr>
-<div *ngIf="this.currentReceiver">
-  <div>
-    <h3>Messages</h3>
-  </div>
-  <div *ngFor="let message of this.messages">
-    <p>{{message.sender}} : {{message.message}}</p>
-  </div>
+  
+  <div *ngIf="this.currentReceiver" class="messagesWrapper">
+    <div>
+      <h3>Messages</h3>
+    </div>
+    <div class="messages">
+      <div *ngFor="let message of this.messages" >
+        <div class="message" [ngClass]="{'my-message': message.sender == this.auth.displayName}">
+          <div [ngClass]="{'my-message': message.sender == this.auth.displayName}">{{message.message}}</div>
+        </div>
+      </div>
+    </div>
 
-  <form [formGroup]="messageForm">
-    <input formControlName="message" matInput placeholder="message" >
-    <button mat-button [disabled]='!messageForm.valid' (click)="addMessage()">Add message</button>
-  </form>
-
+    <form [formGroup]="messageForm" class="messageForm" autocomplete="off">
+      <mat-form-field >
+        <input formControlName="message" matInput placeholder="message" appearance="fill">
+      </mat-form-field>
+      <button mat-button [disabled]='!messageForm.valid' (click)="addMessage()">
+        <mat-icon aria-hidden="false" aria-label="send message">send</mat-icon>
+      </button>
+    </form>
+  </div>
 </div>

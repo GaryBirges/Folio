@@ -83,6 +83,7 @@ import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 import { LoginRegisterComponent } from './bugtracker/login-register/login-register.component';
 import { MessengerComponent } from './messenger/messenger/messenger.component';
 import { AddconnectionComponent } from './messenger/addconnection/addconnection.component';
+import {MatBadgeModule} from '@angular/material/badge';
 
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any> {
@@ -148,6 +149,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatSortModule,
     MatCardModule,
     MatExpansionModule,
+    MatBadgeModule,
     MatGridListModule,
     DragDropModule,
     GridsterModule,
